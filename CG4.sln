@@ -13,6 +13,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CG4.Benchmark.Tests", "src\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CG4.Story.Tests", "src\CG4.Story.Tests\CG4.Story.Tests.csproj", "{2E4F8C20-AB36-4DDD-A7CB-BC4991041740}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CG4.Impl.Memory", "src\CG4.Impl.Memory\CG4.Impl.Memory.csproj", "{99666D46-A912-4618-9673-D8AA68FEDA38}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CG4.Impl.Kafka", "src\CG4.Impl.Kafka\CG4.Impl.Kafka.csproj", "{DD7310DF-37A1-4D93-90C4-83B0527302E1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +39,14 @@ Global
 		{2E4F8C20-AB36-4DDD-A7CB-BC4991041740}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2E4F8C20-AB36-4DDD-A7CB-BC4991041740}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2E4F8C20-AB36-4DDD-A7CB-BC4991041740}.Release|Any CPU.Build.0 = Release|Any CPU
+		{99666D46-A912-4618-9673-D8AA68FEDA38}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{99666D46-A912-4618-9673-D8AA68FEDA38}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{99666D46-A912-4618-9673-D8AA68FEDA38}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{99666D46-A912-4618-9673-D8AA68FEDA38}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD7310DF-37A1-4D93-90C4-83B0527302E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD7310DF-37A1-4D93-90C4-83B0527302E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD7310DF-37A1-4D93-90C4-83B0527302E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD7310DF-37A1-4D93-90C4-83B0527302E1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
