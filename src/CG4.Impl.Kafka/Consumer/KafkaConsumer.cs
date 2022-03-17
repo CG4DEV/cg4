@@ -223,7 +223,7 @@ namespace CG4.Impl.Kafka.Consumer
                 var key = consumeResult.Message.Key;
 
                 var argument = new MessageReceivedEventArgs(consumeResult.Partition.Value, consumeResult.Offset.Value, key, data, consumeResult.Message.Timestamp.UtcDateTime);
-                await MessageReceived?.InvokeAsync(this, argument);
+                await MessageReceived?.Invoke(this, argument);
             }
             catch (Exception exc)
             {

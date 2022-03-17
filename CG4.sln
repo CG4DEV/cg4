@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CG4.Impl.Memory", "src\CG4.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CG4.Impl.Kafka", "src\CG4.Impl.Kafka\CG4.Impl.Kafka.csproj", "{DD7310DF-37A1-4D93-90C4-83B0527302E1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CG4.Impl.MongoDB", "src\CG4.Impl.MongoDB\CG4.Impl.MongoDB.csproj", "{C819862B-8946-4B7F-A512-C5EC37570E80}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +49,10 @@ Global
 		{DD7310DF-37A1-4D93-90C4-83B0527302E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DD7310DF-37A1-4D93-90C4-83B0527302E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DD7310DF-37A1-4D93-90C4-83B0527302E1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C819862B-8946-4B7F-A512-C5EC37570E80}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C819862B-8946-4B7F-A512-C5EC37570E80}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C819862B-8946-4B7F-A512-C5EC37570E80}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C819862B-8946-4B7F-A512-C5EC37570E80}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
