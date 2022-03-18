@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CG4.Impl.Kafka", "src\CG4.I
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CG4.Impl.MongoDB", "src\CG4.Impl.MongoDB\CG4.Impl.MongoDB.csproj", "{C819862B-8946-4B7F-A512-C5EC37570E80}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CG4.Impl.ElasticSearch", "src\CG4.Impl.ElasticSearch\CG4.Impl.ElasticSearch.csproj", "{9DAF7B87-F182-4B6B-9335-9F04A889C894}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,6 +55,10 @@ Global
 		{C819862B-8946-4B7F-A512-C5EC37570E80}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C819862B-8946-4B7F-A512-C5EC37570E80}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C819862B-8946-4B7F-A512-C5EC37570E80}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9DAF7B87-F182-4B6B-9335-9F04A889C894}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9DAF7B87-F182-4B6B-9335-9F04A889C894}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9DAF7B87-F182-4B6B-9335-9F04A889C894}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9DAF7B87-F182-4B6B-9335-9F04A889C894}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
