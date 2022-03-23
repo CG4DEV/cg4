@@ -7,7 +7,7 @@ namespace CG4.Extensions
     /// <summary>
     /// Utility class to provide documentation for various types where available with the assembly
     /// </summary>
-    public static class DocumenationExtensions
+    public static class DocumentationExtensions
     {
         /// <summary>
         /// A cache used to remember Xml documentation for assemblies
@@ -31,9 +31,9 @@ namespace CG4.Extensions
         }
 
         /// <summary>
-        /// Returns the Xml documenation summary comment for this method
+        /// Returns the Xml documentation summary comment for this method
         /// </summary>
-        /// <param name="memberInfo"></param>
+        /// <param name="methodInfo"></param>
         /// <returns></returns>
         public static string GetSummary(this MethodInfo methodInfo)
         {

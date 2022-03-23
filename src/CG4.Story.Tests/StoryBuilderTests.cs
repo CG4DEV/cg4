@@ -45,7 +45,7 @@ namespace CG4.Story.Tests
         }
 
         [Fact]
-        public void StoryBuilder_ResolveNotRegisteredVioidStoryContext_Exception()
+        public void StoryBuilder_ResolveNotRegisteredVoidStoryContext_Exception()
         {
             var builder = new StoryExecutor(_provider);
             Assert.Throws<InvalidOperationException>(() => { builder.Execute((IResult)new NotRegisteredStoryContext()); });

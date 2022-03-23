@@ -10,8 +10,8 @@
         {
         }
 
-        protected override Type GetResultedExcution() => typeof(IStory<,>);
+        protected override Type GetResultedExecution() => typeof(IStory<,>);
 
-        protected override Type GetVoidExcution() => typeof(IStory<>);
+        protected override Type GetVoidExecution() => typeof(IStory<>);
     }
 }

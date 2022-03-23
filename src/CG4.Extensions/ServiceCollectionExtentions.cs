@@ -2,7 +2,7 @@
 
 namespace CG4.Extensions
 {
-    public static class ServiceCollectionExtentions
+    public static class ServiceCollectionExtensions
     {
         public static IServiceCollection AddSingleton<TService1, TService2, TImpl>(this IServiceCollection services)
             where TImpl : class, TService1, TService2

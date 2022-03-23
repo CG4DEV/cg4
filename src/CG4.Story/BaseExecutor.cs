@@ -13,9 +13,9 @@ namespace CG4.Story
             _provider = provider;
         }
 
-        protected abstract Type GetResultedExcution();
+        protected abstract Type GetResultedExecution();
 
-        protected abstract Type GetVoidExcution();
+        protected abstract Type GetVoidExecution();
 
         /// <inheritdoc/>
         public Task<TStoryResult> Execute<TStoryResult>(IResult<TStoryResult> context)
@@ -45,12 +45,12 @@ namespace CG4.Story
                 Type baseInterface;
                 if (resultType != null)
                 {
-                    type = GetResultedExcution().MakeGenericType(contextType, resultType);
+                    type = GetResultedExecution().MakeGenericType(contextType, resultType);
                     baseInterface = typeof(IExecution<,>).MakeGenericType(contextType, resultType);
                 }
                 else
                 {
-                    type = GetVoidExcution().MakeGenericType(contextType);
+                    type = GetVoidExecution().MakeGenericType(contextType);
                     baseInterface = typeof(IExecution<>).MakeGenericType(contextType);
                 }
 
