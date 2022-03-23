@@ -25,6 +25,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Template", "Template", "{80
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CG4.Impl.Prometheus", "src\CG4.Impl.Prometheus\CG4.Impl.Prometheus.csproj", "{5B064D63-7F23-4593-A1A9-8ABF33CED1FC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CG4.Impl.Rabbit", "src\CG4.Impl.Rabbit\CG4.Impl.Rabbit.csproj", "{1E6F9E88-E887-41A8-8E07-E1E881AD4D14}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -67,6 +69,10 @@ Global
 		{5B064D63-7F23-4593-A1A9-8ABF33CED1FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5B064D63-7F23-4593-A1A9-8ABF33CED1FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5B064D63-7F23-4593-A1A9-8ABF33CED1FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E6F9E88-E887-41A8-8E07-E1E881AD4D14}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E6F9E88-E887-41A8-8E07-E1E881AD4D14}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E6F9E88-E887-41A8-8E07-E1E881AD4D14}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E6F9E88-E887-41A8-8E07-E1E881AD4D14}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using CG4.Story.Impl;
 
 namespace CG4.Story.Tests.Preparation
 {

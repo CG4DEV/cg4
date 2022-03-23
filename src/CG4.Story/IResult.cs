@@ -4,7 +4,7 @@
     /// Интерфейс описывающий возращаемое значение из стори.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public interface IResult<T>
+    public interface IResult<T> : IResult
     {
     }
 
