@@ -1,17 +1,18 @@
 ﻿using System.Data;
 using System.Data.Common;
 using System.Linq.Expressions;
-using CG4.Impl.EF.Helpers;
+using CG4.DataAccess;
+using CG4.DataAccess.Helpers;
 using Microsoft.EntityFrameworkCore;
 
 namespace CG4.Impl.EF
 {
 
-    public class EfBulkCrudService : IRepository, ISqlRepository, ICrud
+    public class EfRepository : IRepository, ISqlRepository, ICrudRepository
     {
         private readonly IDbContextFactory _dbContextFactory;
 
-        public EfBulkCrudService(IDbContextFactory dbContextFactory)
+        public EfRepository(IDbContextFactory dbContextFactory)
         {
             this._dbContextFactory = dbContextFactory;
         }
@@ -19,6 +20,7 @@ namespace CG4.Impl.EF
         public T Get<T>(string sql, object param = null, IDbConnection connection = null, IDbTransaction transaction = null) where T : class
         {
             using var context = _dbContextFactory.CreateContext(connection as DbConnection);
+            context.Database.UseTransaction(transaction as DbTransaction);
             return context.Set<T>().FromSqlRaw(sql, SqlHelper.GetSqlParameter(param)).First();
         }
 
@@ -26,12 +28,14 @@ namespace CG4.Impl.EF
             where T : class
         {
             using var context = _dbContextFactory.CreateContext(connection as DbConnection);
+            context.Database.UseTransaction(transaction as DbTransaction);
             return context.Set<T>().FromSqlRaw(sql, SqlHelper.GetSqlParameter(param));
         }
 
         public T Get<T>(Expression<Func<T, bool>> predicate, IDbConnection connection = null, IDbTransaction transaction = null) where T : class
         {
             using var context = _dbContextFactory.CreateContext(connection as DbConnection);
+            context.Database.UseTransaction(transaction as DbTransaction);
             return context.Set<T>().Where(predicate).First();
         }
 
@@ -39,6 +43,7 @@ namespace CG4.Impl.EF
             where T : class
         {
             using var context = _dbContextFactory.CreateContext(connection as DbConnection);
+            context.Database.UseTransaction(transaction as DbTransaction);
             IEnumerable<T> result = context.Set<T>().Where(predicate);
             return result;
         }
@@ -47,6 +52,7 @@ namespace CG4.Impl.EF
             where T : class
         {
             using var context = _dbContextFactory.CreateContext(connection as DbConnection);
+            context.Database.UseTransaction(transaction as DbTransaction);
             IEnumerable<T> result = context.Set<T>().Where(predicate);
             if (orderSelector != null)
             {
@@ -148,12 +154,14 @@ namespace CG4.Impl.EF
         public IEnumerable<T> Query<T>(string sql, object param = null, IDbConnection connection = null, IDbTransaction transaction = null) where T : class
         {
             using var context = _dbContextFactory.CreateContext(connection as DbConnection);
+            context.Database.UseTransaction(transaction as DbTransaction);
             return context.Set<T>().FromSqlRaw(sql, SqlHelper.GetSqlParameter(param));
         }
 
         public int Execute(string sql, object param = null, IDbConnection connection = null, IDbTransaction transaction = null)
         {
             using var context = _dbContextFactory.CreateContext(connection as DbConnection);
+            context.Database.UseTransaction(transaction as DbTransaction);
             return context.Database.ExecuteSqlRaw(sql, SqlHelper.GetSqlParameter(param));
         }
     }

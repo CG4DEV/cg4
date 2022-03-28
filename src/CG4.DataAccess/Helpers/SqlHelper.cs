@@ -1,6 +1,6 @@
 ﻿using System.Data.SqlClient;
 
-namespace CG4.Impl.EF.Helpers
+namespace CG4.DataAccess.Helpers
 {
     public static class SqlHelper
     {

@@ -8,7 +8,10 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="6.0.3" />
-    <PackageReference Include="System.Data.SqlClient" Version="4.8.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CG4.DataAccess\CG4.DataAccess.csproj" />
   </ItemGroup>
 
 </Project>
