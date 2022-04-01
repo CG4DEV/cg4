@@ -9,9 +9,5 @@
             : base(provider)
         {
         }
-
-        protected override Type GetResultedExecution() => typeof(IStory<,>);
-
-        protected override Type GetVoidExecution() => typeof(IStory<>);
     }
 }

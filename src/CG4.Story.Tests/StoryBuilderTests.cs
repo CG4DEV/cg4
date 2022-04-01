@@ -1,4 +1,5 @@
 using System;
+using CG4.Story.Extensions;
 using CG4.Story.Impl;
 using CG4.Story.Tests.Preparation;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,8 +14,11 @@ namespace CG4.Story.Tests
         public StoryBuilderTests()
         {
             var collection = new ServiceCollection();
-            collection.AddSingleton<IStory<TestStoryContext, int>, TestStory>();
-            collection.AddSingleton<IStory<TestVoidStoryContext>, TestStory>();
+            collection.AddExecutors(config =>
+            {
+                var executionTypes = new[] { typeof(IStory<>), typeof(IStory<,>) };
+                config.AddExecutionTypes(executionTypes, ServiceLifetime.Transient);
+            }, typeof(StoryBuilderTests).Assembly);
             _provider = collection.BuildServiceProvider();
         }
 
