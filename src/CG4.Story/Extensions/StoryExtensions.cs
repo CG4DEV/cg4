@@ -40,17 +40,12 @@ public static class StoryExtensions
 
     private static void AddExecutorsClasses(IServiceCollection services, TypeInfo[] typeInfos, ExecutorServiceConfiguration config)
     {
-        var executorInterfaces = new[]
+        var executionTypes = config.ExecutionTypes;
+        
+        foreach (var internalType in executionTypes)
         {
-            typeof(IExecution<>),
-            typeof(IExecution<,>),
-        };
-
-        var internalTypes = config?.ExecutionTypes.ToArray() ?? executorInterfaces;
-        foreach (var internalType in internalTypes)
-        {
-            var impls = new List<Type>(); //concrete classes
-            var baseInterfaces = new List<Type>(); //executor child interfaces
+            var executionInterfaces = new List<Type>(); //execution interfaces
+            var executionImpls = new List<Type>(); //concrete classes
 
             foreach (var type in typeInfos)
             {
@@ -58,41 +53,55 @@ public static class StoryExtensions
                 if (!similarInterfaces.Any())
                     continue;
 
-                if (type.IsClassImplementation())
-                {
-                    impls.Add(type);
-                }
-
                 foreach (var similar in similarInterfaces)
                 {
-                    if (baseInterfaces.Contains(similar))
+                    if (executionInterfaces.Contains(similar))
                         continue;
 
-                    baseInterfaces.Add(similar);
+                    executionInterfaces.Add(similar);
+                }
+
+                if (type.IsClassImplementation())
+                {
+                    executionImpls.Add(type);
                 }
             }
 
-            foreach (var @interface in baseInterfaces)
+            foreach (var executionInterface in executionInterfaces)
             {
-                var exactMatches = impls.Where(x => x.CanBeCastTo(@interface)).ToList();
+                var exactMatchesExecutions = executionImpls.Where(x => x.CanBeCastTo(executionInterface)).ToList();
 
-                if (exactMatches.Count > 1)
+                if (exactMatchesExecutions.Count > 1)
                 {
-                    exactMatches.RemoveAll(m => !IsMatchingWithInterface(m, @interface));
+                    exactMatchesExecutions.RemoveAll(m => !IsMatchingWithInterface(m, executionInterface));
                 }
 
-                foreach (var type in exactMatches)
+                foreach (var type in exactMatchesExecutions)
                 {
                     var lengthArguments = internalType.GetGenericArguments().Length;
-                    var baseInterface = executorInterfaces.First(x => x.GetGenericArguments().Length == lengthArguments) ?? throw InvalidOperationException(type.Name);
-                    baseInterface = baseInterface.MakeGenericType(@interface.GetGenericArguments());
-                    var method = baseInterface.GetMethod("ExecuteAsync") ?? throw InvalidOperationException(type.Name);
-                    (Type st, MethodInfo mtd) storyType = new (@interface, method);
-                    CacheExecutor.TryAdd(@interface.GetGenericArguments().First(), storyType);
-                    services.TryAdd(new ServiceDescriptor(@interface, type, config?.ExecutionTypesLifetime ?? ServiceLifetime.Transient));
+                    var method = GetBaseMethod(lengthArguments, executionInterface);
+                    
+                    (Type, MethodInfo) storyType = new (executionInterface, method);
+                    CacheExecutor.TryAdd(executionInterface.GetGenericArguments().First(), storyType);
+                    
+                    services.TryAdd(new ServiceDescriptor(executionInterface, type, config.ExecutionTypesLifetime ?? ServiceLifetime.Transient));
                 }
             }
         }
+    }
+
+    private static MethodInfo GetBaseMethod(int argumentsLength, Type executionInterface)
+    {
+        var executorInterfaces = new[]
+        {
+            typeof(IExecution<>),
+            typeof(IExecution<,>),
+        };
+
+        var baseInterface = executorInterfaces.First(x => x.GetGenericArguments().Length == argumentsLength) ?? throw InvalidOperationException(executionInterface.Name);
+        baseInterface = baseInterface.MakeGenericType(executionInterface.GetGenericArguments());
+        
+        return baseInterface.GetMethod("ExecuteAsync") ?? throw InvalidOperationException(executionInterface.Name);
     }
 
     private static InvalidOperationException InvalidOperationException(string nameType)
@@ -102,11 +111,6 @@ public static class StoryExtensions
 
     private static bool IsMatchingWithInterface(Type handlerType, Type handlerInterface)
     {
-        if (handlerType == null || handlerInterface == null)
-        {
-            return false;
-        }
-
         if (handlerType.IsInterface)
         {
             if (handlerType.GenericTypeArguments.SequenceEqual(handlerInterface.GenericTypeArguments))

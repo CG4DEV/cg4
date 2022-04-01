@@ -18,7 +18,7 @@ namespace CG4.Story
         {
             if (!CacheExecutor.TryGetValue(context.GetType(), out var type))
             {
-                throw new InvalidOperationException($"{context.GetType().Name} must have implementation {typeof(IExecution<,>).Name} or {typeof(IExecution<>).Name}");
+                throw InvalidOperationException(context.GetType().Name);;
             }
 
             return (Task<TStoryResult>)Invoke(type.Method, type.ExecutionType, context);
@@ -29,7 +29,7 @@ namespace CG4.Story
         {
             if (!CacheExecutor.TryGetValue(context.GetType(), out var type))
             {
-                throw new InvalidOperationException($"{context.GetType().Name} must have implementation {typeof(IExecution<,>).Name} or {typeof(IExecution<>).Name}");
+                throw InvalidOperationException(context.GetType().Name);
             }
 
             return (Task)Invoke(type.Method, type.ExecutionType, context);
