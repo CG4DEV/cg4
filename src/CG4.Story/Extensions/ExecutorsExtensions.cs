@@ -4,16 +4,33 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace CG4.Story.Extensions;
 
+/// <summary>
+/// Extensions for scan and registers executor and executions types.
+/// </summary>
 public static class ExecutorsExtensions
 {
+    /// <summary>
+    /// Registers executor and executions types from the specified assemblies.
+    /// </summary>
+    /// <param name="services">The <see cref="IServiceCollection"/>.</param>
+    /// <param name="options">Options to configure executor and executions types.</param>
+    /// <param name="handlerAssemblyMarkerTypes">Mark type to find assemblies to scan</param>
+    /// <returns></returns>
     public static IServiceCollection AddExecutors(
         this IServiceCollection services,
-        Action<ExecutorOptions> configuration,
+        Action<ExecutorOptions> options,
         params Type[] handlerAssemblyMarkerTypes)
-        => services.AddExecutors(configuration, handlerAssemblyMarkerTypes.Select(t => t.GetTypeInfo().Assembly).ToArray());
+        => services.AddExecutors(options, handlerAssemblyMarkerTypes.Select(t => t.GetTypeInfo().Assembly).ToArray());
 
+    /// <summary>
+    /// Registers executor and executions types from the specified assemblies.
+    /// </summary>
+    /// <param name="services">The <see cref="IServiceCollection"/>.</param>
+    /// <param name="options">Options to configure executor and executions types.</param>
+    /// <param name="assembliesToScan">Assemblies to scan.</param>
+    /// <returns></returns>
     public static IServiceCollection AddExecutors(this IServiceCollection services,
-        Action<ExecutorOptions> configuration,
+        Action<ExecutorOptions> options,
         params Assembly[] assembliesToScan)
     {
         if (!assembliesToScan.Any())
@@ -21,35 +38,50 @@ public static class ExecutorsExtensions
             throw new ArgumentException("No assemblies found to scan. Supply at least one assembly to scan for handlers.");
         }
 
-        if (configuration == null)
+        if (options == null)
         {
-            throw new ArgumentNullException(nameof(configuration));
+            throw new ArgumentNullException(nameof(options));
         }
 
-        var serviceConfig = new ExecutorOptions();
-        configuration.Invoke(serviceConfig);
+        var executorOptions = new ExecutorOptions();
+        options.Invoke(executorOptions);
 
-        if (serviceConfig.ExecutorImplementationType == null)
-        {
-            throw new ArgumentNullException(nameof(serviceConfig.ExecutorImplementationType) + " must be set!");
-        }
+        ValidateOptions(executorOptions);
 
         var typeInfos = assembliesToScan
             .SelectMany(t => t.DefinedTypes)
             .Distinct()
             .ToArray();
 
-        AddExecutorsClasses(services, typeInfos, serviceConfig);
-        services.TryAdd(new ServiceDescriptor(
-            serviceConfig.ExecutorInterfaceType ?? serviceConfig.ExecutorImplementationType,
-            serviceConfig.ExecutorImplementationType,
-            serviceConfig.ExecutorLifetime));
+        AddExecutionsClasses(services, typeInfos, executorOptions);
+        AddExecutorClass(services, executorOptions);
         return services;
     }
 
-    private static void AddExecutorsClasses(IServiceCollection services, TypeInfo[] typeInfos, ExecutorOptions config)
+    private static void AddExecutorClass(IServiceCollection services, ExecutorOptions executorOptions)
     {
-        var executionTypes = config.ExecutionTypes;
+        services.TryAdd(new ServiceDescriptor(
+            executorOptions.ExecutorInterfaceType ?? executorOptions.ExecutorImplementationType,
+            executorOptions.ExecutorImplementationType,
+            executorOptions.ExecutorLifetime));
+    }
+
+    private static void ValidateOptions(ExecutorOptions executorOptions)
+    {
+        if (executorOptions.ExecutorImplementationType == null)
+        {
+            throw new ArgumentNullException(nameof(executorOptions.ExecutorImplementationType) + " must be set!");
+        }
+        
+        if (executorOptions.ExecutionTypes == null)
+        {
+            throw new ArgumentNullException(nameof(executorOptions.ExecutionTypes) + " must be set!");
+        }
+    }
+
+    private static void AddExecutionsClasses(IServiceCollection services, TypeInfo[] typeInfos, ExecutorOptions options)
+    {
+        var executionTypes = options.ExecutionTypes;
 
         foreach (var internalType in executionTypes)
         {
@@ -93,7 +125,7 @@ public static class ExecutorsExtensions
                     (Type, MethodInfo) storyType = new (executionInterface, method);
                     CacheExecutor.TryAdd(executionInterface.GetGenericArguments().First(), storyType);
 
-                    services.TryAdd(new ServiceDescriptor(executionInterface, type, config.ExecutionTypesLifetime ?? ServiceLifetime.Transient));
+                    services.TryAdd(new ServiceDescriptor(executionInterface, type, options.ExecutionTypesLifetime ?? ServiceLifetime.Transient));
                 }
             }
         }

@@ -2,6 +2,9 @@
 
 namespace CG4.Story.Extensions;
 
+/// <summary>
+/// Options to configure executor and executions types.
+/// </summary>
 public class ExecutorOptions
 {
     /// <summary>
@@ -31,7 +34,7 @@ public class ExecutorOptions
     public ServiceLifetime? ExecutionTypesLifetime { get; set; } = ServiceLifetime.Transient;
     
     /// <summary>
-    /// Types that implements <see cref="IExecution{TExecutionContext,TExecutionResult}"/>
+    /// Types that implements <see cref="IExecution{TExecutionContext,TExecutionResult}"/>. Required property. 
     /// </summary>
-    public Type[]? ExecutionTypes { get; set; }
+    public Type[] ExecutionTypes { get; set; }
 }
