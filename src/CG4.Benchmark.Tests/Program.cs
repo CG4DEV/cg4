@@ -6,7 +6,7 @@ namespace CG4.Benchmark.Tests
     {
         public static void Main()
         {
-            var summary = BenchmarkRunner.Run<StoryBuilderTests>();
+            var summary = BenchmarkRunner.Run<ExecutorBuilderTests>();
         }
     }
 }

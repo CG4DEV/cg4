@@ -1,4 +1,4 @@
-﻿namespace CG4.Story.Impl
+﻿namespace CG4.Executor.Story
 {
     /// <summary>
     /// Интерфейс стори.

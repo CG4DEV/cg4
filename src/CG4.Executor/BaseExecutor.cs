@@ -1,8 +1,8 @@
 ﻿using System.Reflection;
-using CG4.Story.Extensions;
+using CG4.Executor.Extensions;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace CG4.Story
+namespace CG4.Executor
 {
     public abstract class BaseExecutor
     {

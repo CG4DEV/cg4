@@ -1,7 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using CG4.Story;
-using CG4.Story.Impl;
+using CG4.Executor;
+using CG4.Executor.Story;
 using MediatR;
 
 namespace CG4.Benchmark.Tests.Preparation

@@ -1,17 +1,18 @@
 using System;
-using CG4.Story.Extensions;
-using CG4.Story.Impl;
+using CG4.Executor;
+using CG4.Executor.Extensions;
+using CG4.Executor.Story;
 using CG4.Story.Tests.Preparation;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 
 namespace CG4.Story.Tests
 {
-    public class StoryBuilderTests
+    public class ExecutorBuilderTests
     {
         private readonly ServiceProvider _provider;
 
-        public StoryBuilderTests()
+        public ExecutorBuilderTests()
         {
             var collection = new ServiceCollection();
             collection.AddExecutors(options =>
@@ -22,42 +23,42 @@ namespace CG4.Story.Tests
                 options.ExecutorLifetime = ServiceLifetime.Singleton;
                 options.ExecutionTypes = executionTypes;
                 options.ExecutionTypesLifetime = ServiceLifetime.Transient;
-            }, typeof(StoryBuilderTests).Assembly);
+            }, typeof(ExecutorBuilderTests).Assembly);
 
             _provider = collection.BuildServiceProvider();
         }
 
         [Fact]
-        public void StoryBuilder_ResolveByTestStoryContext_WasResolved()
+        public void StoryBuilder_ResolveByTestExecutorContext_WasResolved()
         {
             var builder = (IStoryExecutor)_provider.GetRequiredService(typeof(IStoryExecutor));
-            var result = builder.Execute(new TestStoryContext());
+            var result = builder.Execute(new TestExecutorContext());
             Assert.NotNull(result);
             Assert.True(result.IsCompleted);
             Assert.Equal(0, result.Result);
         }
 
         [Fact]
-        public void StoryBuilder_ResolveByTestVoidStoryContext_WasResolved()
+        public void StoryBuilder_ResolveByTestVoidExecutorContext_WasResolved()
         {
             var builder = (IStoryExecutor)_provider.GetRequiredService(typeof(IStoryExecutor));
-            var result = builder.Execute(new TestVoidStoryContext());
+            var result = builder.Execute(new TestVoidExecutorContext());
             Assert.NotNull(result);
             Assert.True(result.IsCompleted);
         }
 
         [Fact]
-        public void StoryBuilder_ResolveNotRegisteredStoryContext_Exception()
+        public void StoryBuilder_ResolveNotRegisteredExecutorContext_Exception()
         {
             var builder = (IStoryExecutor)_provider.GetRequiredService(typeof(IStoryExecutor));
-            Assert.Throws<InvalidOperationException>(() => { builder.Execute((IResult<int>)new NotRegisteredStoryContext()); });
+            Assert.Throws<InvalidOperationException>(() => { builder.Execute((IResult<int>)new NotRegisteredExecutorContext()); });
         }
 
         [Fact]
-        public void StoryBuilder_ResolveNotRegisteredVoidStoryContext_Exception()
+        public void StoryBuilder_ResolveNotRegisteredVoidStoryExecutor_Exception()
         {
             var builder = (IStoryExecutor)_provider.GetRequiredService(typeof(IStoryExecutor));
-            Assert.Throws<InvalidOperationException>(() => { builder.Execute((IResult)new NotRegisteredStoryContext()); });
+            Assert.Throws<InvalidOperationException>(() => { builder.Execute((IResult)new NotRegisteredExecutorContext()); });
         }
     }
 }

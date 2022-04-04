@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace CG4.Story.Extensions;
+namespace CG4.Executor.Extensions;
 
 /// <summary>
 /// Options to configure executor and executions types.

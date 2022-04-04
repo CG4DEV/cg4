@@ -1,36 +1,37 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using BenchmarkDotNet.Attributes;
 using bgTeam;
 using bgTeam.Impl;
 using CG4.Benchmark.Tests.Preparation;
-using CG4.Story.Extensions;
-using CG4.Story.Impl;
+using CG4.Executor.Extensions;
+using CG4.Executor.Story;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace CG4.Benchmark.Tests
 {
     [MemoryDiagnoser]
-    public class StoryBuilderTests
+    public class ExecutorBuilderTests
     {
         private readonly IStoryExecutor _newBuilder;
         private readonly StoryBuilder _oldBuilder;
         private readonly IMediator _mediatr;
 
-        public StoryBuilderTests()
+        public ExecutorBuilderTests()
         {
             var collection = new ServiceCollection();
             collection.AddTransient<bgTeam.IStory<TestStoryContext, int>, TestStory>();
             collection.AddMediatR(typeof(Program));
             collection.AddExecutors(options =>
             {
-                var executionTypes = new[] { typeof(IStory<>), typeof(Story.Impl.IStory<,>) };
+                var executionTypes = new[] { typeof(IStory<>), typeof(Executor.Story.IStory<,>) };
                 options.ExecutorInterfaceType = typeof(IStoryExecutor);
                 options.ExecutorImplementationType = typeof(StoryExecutor);
                 options.ExecutorLifetime = ServiceLifetime.Singleton;
                 options.ExecutionTypes = executionTypes;
                 options.ExecutionTypesLifetime = ServiceLifetime.Transient;
-            }, typeof(StoryBuilderTests).Assembly);
+            }, AppDomain.CurrentDomain.GetAssemblies());
 
 
             var provider = collection.BuildServiceProvider();
