@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
-using CG4.Impl.EF.Helpers;
+using CG4.DataAccess.Helpers;
 using Xunit;
 
 namespace CG4.Impl.EF.Tests
@@ -17,7 +17,7 @@ namespace CG4.Impl.EF.Tests
         }
 
         [Fact]
-        public void GetSqlParameter_DictionatyType_WasReturnedArray()
+        public void GetSqlParameter_DictionaryType_WasReturnedArray()
         {
             var result = SqlHelper.GetSqlParameter(new Dictionary<string, object>() { { "Id", 1 } });
             Assert.Single(result);

@@ -76,14 +76,14 @@ namespace CG4.Impl.EF
             return result.Skip(page * resultsPerPage).Take(resultsPerPage);
         }
 
-        public IEnumerable<T> GetPage<T, TKey>(Expression<Func<T, bool>> predicate = null, Func<T, TKey> orderSelector = null, bool isAcending = true, int page = 0, int resultsPerPage = 10)
+        public IEnumerable<T> GetPage<T, TKey>(Expression<Func<T, bool>> predicate = null, Func<T, TKey> orderSelector = null, bool isAscending = true, int page = 0, int resultsPerPage = 10)
             where T : class
         {
             using var context = _dbContextFactory.CreateContext();
             IEnumerable<T> result = context.Set<T>().Where(predicate);
             if (orderSelector != null)
             {
-                if (isAcending)
+                if (isAscending)
                 {
                     result = result.OrderBy(orderSelector);
                 }
