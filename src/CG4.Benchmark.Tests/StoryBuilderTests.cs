@@ -20,18 +20,22 @@ namespace CG4.Benchmark.Tests
         public StoryBuilderTests()
         {
             var collection = new ServiceCollection();
-            // collection.AddTransient<IStory<TestStoryContext, int>, TestStory>();
             collection.AddTransient<bgTeam.IStory<TestStoryContext, int>, TestStory>();
             collection.AddMediatR(typeof(Program));
-            collection.AddExecutors(config =>
+            collection.AddExecutors(options =>
             {
                 var executionTypes = new[] { typeof(IStory<>), typeof(Story.Impl.IStory<,>) };
-                config.AddExecutionTypes(executionTypes);
-            }, typeof(StoryBuilderTests));
+                options.ExecutorInterfaceType = typeof(IStoryExecutor);
+                options.ExecutorImplementationType = typeof(StoryExecutor);
+                options.ExecutorLifetime = ServiceLifetime.Singleton;
+                options.ExecutionTypes = executionTypes;
+                options.ExecutionTypesLifetime = ServiceLifetime.Transient;
+            }, typeof(StoryBuilderTests).Assembly);
+
 
             var provider = collection.BuildServiceProvider();
 
-            _newBuilder = new StoryExecutor(provider);
+            _newBuilder = provider.GetRequiredService<IStoryExecutor>();
             var factory = new StoryFactory(provider);
             _oldBuilder = new StoryBuilder(factory);
             _mediatr = provider.GetRequiredService<IMediator>();

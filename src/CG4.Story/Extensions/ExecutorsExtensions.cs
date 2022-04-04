@@ -4,16 +4,16 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace CG4.Story.Extensions;
 
-public static class StoryExtensions
+public static class ExecutorsExtensions
 {
     public static IServiceCollection AddExecutors(
         this IServiceCollection services,
-        Action<ExecutorServiceConfiguration> configuration,
+        Action<ExecutorOptions> configuration,
         params Type[] handlerAssemblyMarkerTypes)
         => services.AddExecutors(configuration, handlerAssemblyMarkerTypes.Select(t => t.GetTypeInfo().Assembly).ToArray());
 
     public static IServiceCollection AddExecutors(this IServiceCollection services,
-        Action<ExecutorServiceConfiguration> configuration,
+        Action<ExecutorOptions> configuration,
         params Assembly[] assembliesToScan)
     {
         if (!assembliesToScan.Any())
@@ -26,22 +26,31 @@ public static class StoryExtensions
             throw new ArgumentNullException(nameof(configuration));
         }
 
+        var serviceConfig = new ExecutorOptions();
+        configuration.Invoke(serviceConfig);
+
+        if (serviceConfig.ExecutorImplementationType == null)
+        {
+            throw new ArgumentNullException(nameof(serviceConfig.ExecutorImplementationType) + " must be set!");
+        }
+
         var typeInfos = assembliesToScan
             .SelectMany(t => t.DefinedTypes)
             .Distinct()
             .ToArray();
 
-        var serviceConfig = new ExecutorServiceConfiguration();
-        configuration.Invoke(serviceConfig);
-
         AddExecutorsClasses(services, typeInfos, serviceConfig);
+        services.TryAdd(new ServiceDescriptor(
+            serviceConfig.ExecutorInterfaceType ?? serviceConfig.ExecutorImplementationType,
+            serviceConfig.ExecutorImplementationType,
+            serviceConfig.ExecutorLifetime));
         return services;
     }
 
-    private static void AddExecutorsClasses(IServiceCollection services, TypeInfo[] typeInfos, ExecutorServiceConfiguration config)
+    private static void AddExecutorsClasses(IServiceCollection services, TypeInfo[] typeInfos, ExecutorOptions config)
     {
         var executionTypes = config.ExecutionTypes;
-        
+
         foreach (var internalType in executionTypes)
         {
             var executionInterfaces = new List<Type>(); //execution interfaces
@@ -80,10 +89,10 @@ public static class StoryExtensions
                 {
                     var lengthArguments = internalType.GetGenericArguments().Length;
                     var method = GetBaseMethod(lengthArguments, executionInterface);
-                    
+
                     (Type, MethodInfo) storyType = new (executionInterface, method);
                     CacheExecutor.TryAdd(executionInterface.GetGenericArguments().First(), storyType);
-                    
+
                     services.TryAdd(new ServiceDescriptor(executionInterface, type, config.ExecutionTypesLifetime ?? ServiceLifetime.Transient));
                 }
             }
@@ -98,9 +107,10 @@ public static class StoryExtensions
             typeof(IExecution<,>),
         };
 
-        var baseInterface = executorInterfaces.First(x => x.GetGenericArguments().Length == argumentsLength) ?? throw InvalidOperationException(executionInterface.Name);
+        var baseInterface = executorInterfaces.First(x => x.GetGenericArguments().Length == argumentsLength) ??
+                            throw InvalidOperationException(executionInterface.Name);
         baseInterface = baseInterface.MakeGenericType(executionInterface.GetGenericArguments());
-        
+
         return baseInterface.GetMethod("ExecuteAsync") ?? throw InvalidOperationException(executionInterface.Name);
     }
 
@@ -162,6 +172,6 @@ public static class StoryExtensions
         }
     }
 
-    private static bool IsClassImplementation(this Type type) 
+    private static bool IsClassImplementation(this Type type)
         => !type.GetTypeInfo().IsAbstract && !type.GetTypeInfo().IsInterface;
 }

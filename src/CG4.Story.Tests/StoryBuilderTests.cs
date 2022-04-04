@@ -14,18 +14,23 @@ namespace CG4.Story.Tests
         public StoryBuilderTests()
         {
             var collection = new ServiceCollection();
-            collection.AddExecutors(config =>
+            collection.AddExecutors(options =>
             {
                 var executionTypes = new[] { typeof(IStory<>), typeof(IStory<,>) };
-                config.AddExecutionTypes(executionTypes, ServiceLifetime.Transient);
+                options.ExecutorInterfaceType = typeof(IStoryExecutor);
+                options.ExecutorImplementationType = typeof(StoryExecutor);
+                options.ExecutorLifetime = ServiceLifetime.Singleton;
+                options.ExecutionTypes = executionTypes;
+                options.ExecutionTypesLifetime = ServiceLifetime.Transient;
             }, typeof(StoryBuilderTests).Assembly);
+
             _provider = collection.BuildServiceProvider();
         }
 
         [Fact]
         public void StoryBuilder_ResolveByTestStoryContext_WasResolved()
         {
-            var builder = new StoryExecutor(_provider);
+            var builder = (IStoryExecutor)_provider.GetRequiredService(typeof(IStoryExecutor));
             var result = builder.Execute(new TestStoryContext());
             Assert.NotNull(result);
             Assert.True(result.IsCompleted);
@@ -35,7 +40,7 @@ namespace CG4.Story.Tests
         [Fact]
         public void StoryBuilder_ResolveByTestVoidStoryContext_WasResolved()
         {
-            var builder = new StoryExecutor(_provider);
+            var builder = (IStoryExecutor)_provider.GetRequiredService(typeof(IStoryExecutor));
             var result = builder.Execute(new TestVoidStoryContext());
             Assert.NotNull(result);
             Assert.True(result.IsCompleted);
@@ -44,14 +49,14 @@ namespace CG4.Story.Tests
         [Fact]
         public void StoryBuilder_ResolveNotRegisteredStoryContext_Exception()
         {
-            var builder = new StoryExecutor(_provider);
+            var builder = (IStoryExecutor)_provider.GetRequiredService(typeof(IStoryExecutor));
             Assert.Throws<InvalidOperationException>(() => { builder.Execute((IResult<int>)new NotRegisteredStoryContext()); });
         }
 
         [Fact]
         public void StoryBuilder_ResolveNotRegisteredVoidStoryContext_Exception()
         {
-            var builder = new StoryExecutor(_provider);
+            var builder = (IStoryExecutor)_provider.GetRequiredService(typeof(IStoryExecutor));
             Assert.Throws<InvalidOperationException>(() => { builder.Execute((IResult)new NotRegisteredStoryContext()); });
         }
     }
