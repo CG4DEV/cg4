@@ -180,12 +180,12 @@ namespace CG4.Impl.Rabbit
 
         private IModel CreateChannel()
         {
-            if (_channel == null || !_channel.IsOpen)
+            if (_channel is not { IsOpen: true })
             {
                 //Лочим на всякий, вдруг один экземпляр провайдера попадет в несколько потоков
                 lock (_lockChannel)
                 {
-                    if (_channel == null || !_channel.IsOpen)
+                    if (_channel is not { IsOpen: true })
                     {
                         _channel = _factory.CreateConnection().CreateModel();
                     }

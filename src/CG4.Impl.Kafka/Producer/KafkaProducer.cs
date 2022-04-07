@@ -1,7 +1,6 @@
 ﻿using System.Text.Json;
 using Confluent.Kafka;
 using Microsoft.Extensions.Logging;
-using Tolar.Kafka;
 
 namespace CG4.Impl.Kafka.Producer
 {

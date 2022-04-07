@@ -2,16 +2,16 @@
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 
-namespace CG4.Impl.Rabbit
+namespace CG4.Impl.Rabbit.Consumer
 {
-    public class QueueConsumerAsyncRabbitMQ : BaseQueueConsumerRabbitMQ<AsyncEventingBasicConsumer>, IQueueWatcher<IQueueMessage>
+    public class QueueConsumerRabbitMQ : BaseQueueConsumerRabbitMQ<EventingBasicConsumer>, IQueueWatcher<IQueueMessage>
     {
-        public QueueConsumerAsyncRabbitMQ(IConnectionFactory connectionFactory, IMessageProvider provider)
-            : this(connectionFactory, provider, PREFETCHCOUNT)
+        public QueueConsumerRabbitMQ(IConnectionFactory connectionFactory, IMessageProvider provider)
+            : this(connectionFactory, provider, PREFETCH_COUNT)
         {
         }
 
-        public QueueConsumerAsyncRabbitMQ(
+        public QueueConsumerRabbitMQ(
             IConnectionFactory connectionFactory,
             IMessageProvider provider,
             ushort prefetchCount)
@@ -27,17 +27,17 @@ namespace CG4.Impl.Rabbit
                 _consumer.Shutdown -= ShutdownHandler;
             }
 
-            _consumer = new AsyncEventingBasicConsumer(_model);
+            _consumer = new EventingBasicConsumer(_model);
             _consumer.Received += ReceiverHandler;
             _consumer.Shutdown += ShutdownHandler;
         }
 
-        private async Task ReceiverHandler(object sender, BasicDeliverEventArgs e)
+        private void ReceiverHandler(object sender, BasicDeliverEventArgs e)
         {
             var message = _provider.ExtractObject(Encoding.UTF8.GetString(e.Body.ToArray()));
             try
             {
-                await OnSubscribe(message);
+                OnSubscribe(message).Wait();
             }
             catch (Exception ex)
             {
@@ -45,17 +45,15 @@ namespace CG4.Impl.Rabbit
             }
             finally
             {
-                var model = ((AsyncEventingBasicConsumer)sender).Model;
+                var model = ((EventingBasicConsumer)sender).Model;
                 model.BasicAck(e.DeliveryTag, false);
             }
         }
 
-        private Task ShutdownHandler(object sender, ShutdownEventArgs e)
+        private void ShutdownHandler(object sender, ShutdownEventArgs e)
         {
             InitConsumer();
             StartWatch(_watchingQueueName);
-
-            return Task.CompletedTask;
         }
     }
 }
