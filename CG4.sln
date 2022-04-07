@@ -5,7 +5,7 @@ VisualStudioVersion = 17.0.31919.166
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CG4.Extensions", "src\CG4.Extensions\CG4.Extensions.csproj", "{39BA42BE-B44C-46CD-BD8D-AB0A6DDBB474}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CG4.Story", "src\CG4.Story\CG4.Story.csproj", "{FFFF3614-A198-4AB5-931E-06B3CC602039}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CG4.Executor", "src\CG4.Executor\CG4.Executor.csproj", "{FFFF3614-A198-4AB5-931E-06B3CC602039}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{8662AF30-E855-4891-8E88-4F99B18B9B06}"
 EndProject

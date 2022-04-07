@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace CG4.Story.Extensions;
+namespace CG4.Executor.Extensions;
 
 /// <summary>
 /// Cache for implementation of <see cref="IExecution{TExecutionContext,TExecutionResult}"/>.

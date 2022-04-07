@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CG4.Story\CG4.Story.csproj" />
+    <ProjectReference Include="..\CG4.Executor\CG4.Executor.csproj" />
   </ItemGroup>
 
 </Project>

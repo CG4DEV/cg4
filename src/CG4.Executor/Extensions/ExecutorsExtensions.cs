@@ -2,7 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
-namespace CG4.Story.Extensions;
+namespace CG4.Executor.Extensions;
 
 /// <summary>
 /// Extensions for scan and registers executor and executions types.

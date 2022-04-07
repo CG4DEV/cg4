@@ -1,4 +1,4 @@
-﻿namespace CG4.Story
+﻿namespace CG4.Executor
 {
     /// <summary>
     /// Интерфейс описывающий возращаемое значение из стори.

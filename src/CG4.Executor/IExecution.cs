@@ -1,4 +1,4 @@
-﻿namespace CG4.Story
+﻿namespace CG4.Executor
 {
     public interface IExecution<in TExecutionContext, TExecutionResult>
         where TExecutionContext : IResult<TExecutionResult>
