@@ -1,0 +1,251 @@
+﻿using System.Text;
+using CG4.Impl.Dapper.Poco.Expressions;
+
+namespace CG4.Impl.Dapper.Poco
+{
+    public class ExprPostgreSqlVisitor : IExprVisitor
+    {
+        readonly StringBuilder _stringBuilder;
+
+        public ExprPostgreSqlVisitor()
+        {
+            _stringBuilder = new();
+        }
+
+        public ExprPostgreSqlVisitor(StringBuilder stringBuilder)
+        {
+            _stringBuilder = stringBuilder;
+        }
+
+        public void VisitAnd(ExprBoolAnd and)
+        {
+            and.Left.Accept(this);
+            _stringBuilder.Append(" AND ");
+            and.Right.Accept(this);
+        }
+
+        public void VisitOr(ExprBoolOr or)
+        {
+            _stringBuilder.Append('(');
+            or.Left.Accept(this);
+            _stringBuilder.Append(" OR ");
+            or.Right.Accept(this);
+            _stringBuilder.Append(')');
+        }
+
+        public void VisitColumn(ExprColumn column)
+        {
+            _stringBuilder.Append(column.Alias);
+            _stringBuilder.Append('.');
+            _stringBuilder.Append('"');
+            _stringBuilder.Append(column.Name);
+            _stringBuilder.Append('"');
+        }
+
+        public void VisitOrderColumn(ExprOrderColumn order)
+        {
+            VisitColumn(order);
+
+            _stringBuilder.Append(' ');
+            _stringBuilder.Append(order.Order);
+        }
+
+        public void VisitOrderBy(ExprOrderBy orderBy)
+        {
+            if (!orderBy.Any())
+            {
+                return;
+            }
+
+            _stringBuilder.Append("ORDER BY ");
+            AcceptList(orderBy);
+            _stringBuilder.AppendLine();
+        }
+
+        public void VisitSelectedColumn(ExprSelectedColumn selectedColumn)
+        {
+            VisitColumn(selectedColumn);
+
+            _stringBuilder.Append(" AS \"");
+            _stringBuilder.Append(selectedColumn.ResultName);
+            _stringBuilder.Append('"');
+        }
+
+        public void VisitEqPredicate(ExprBoolEqPredicate eqPredicate)
+        {
+            eqPredicate.Column.Accept(this);
+            _stringBuilder.Append(" = ");
+            eqPredicate.Value.Accept(this);
+        }
+
+        public void VisitNotEqPredicate(ExprBoolNotEqPredicate notEqPredicate)
+        {
+            notEqPredicate.Column.Accept(this);
+            _stringBuilder.Append(" != ");
+            notEqPredicate.Value.Accept(this);
+        }
+
+        public string Build()
+        {
+            return _stringBuilder.ToString();
+        }
+
+        public void VisitStr(ExprStr str)
+        {
+            _stringBuilder.Append('\'');
+            _stringBuilder.Append(str.Value.Replace("'", "''"));
+            _stringBuilder.Append('\'');
+        }
+
+        public void VisitLong(ExprLong @long)
+        {
+            _stringBuilder.Append(@long.Value);
+        }
+
+        public void VisitInt(ExprInt @int)
+        {
+            _stringBuilder.Append(@int.Value);
+        }
+
+        public void VisitDateTime(ExprDateTimeOffset dateTime)
+        {
+            _stringBuilder.Append('\'');
+            _stringBuilder.Append(dateTime.Value.ToString("yyyy-MM-dd HH:mm:ss.fff zzz"));
+            _stringBuilder.Append('\'');
+        }
+
+        public void VisitListColumns(ExprListColumns listColumns)
+        {
+            AcceptList(listColumns);
+        }
+
+        public void VisitParam(ExprParam param)
+        {
+            _stringBuilder.Append('@');
+            _stringBuilder.Append(param.Name);
+        }
+
+        public void VisitListJoins(ExprListJoins listJoins)
+        {
+            AcceptList(listJoins, string.Empty);
+        }
+
+        public void VisitTableName(ExprTableName table)
+        {
+            _stringBuilder.Append('"');
+            _stringBuilder.Append(table.TableName);
+            _stringBuilder.Append('"');
+            _stringBuilder.Append(" AS ");
+            _stringBuilder.Append(table.Alias);
+        }
+
+        public void VisitFrom(ExprFrom from)
+        {
+            _stringBuilder.Append("FROM ");
+            from.TableName.Accept(this);
+            _stringBuilder.AppendLine();
+
+            if (from.Joins.Any())
+            {
+                from.Joins.Accept(this);
+                _stringBuilder.AppendLine();
+            }
+        }
+
+        public void VisitJoin(ExprJoin join)
+        {
+            _stringBuilder.Append("JOIN ");
+            join.TableName.Accept(this);
+            _stringBuilder.Append(" ON ");
+            join.TableColumn.Accept(this);
+            _stringBuilder.Append(" = ");
+            join.OtherColumn.Accept(this);
+        }
+
+        public void VisitInnerJoin(ExprInnerJoin innerJoin)
+        {
+            _stringBuilder.Append("INNER ");
+            VisitJoin(innerJoin);
+        }
+
+        public void VisitLeftJoin(ExprLeftJoin leftJoin)
+        {
+            _stringBuilder.Append("LEFT ");
+            VisitJoin(leftJoin);
+        }
+
+        public void VisitRightJoin(ExprRightJoin rightJoin)
+        {
+            _stringBuilder.Append("RIGHT ");
+            VisitJoin(rightJoin);
+        }
+
+        public void VisitSelect(ExprSelect select)
+        {
+            _stringBuilder.Append("SELECT ");
+            if (select.Any())
+            {
+                AcceptList(select);
+            }
+            else
+            {
+                _stringBuilder.Append('*');
+            }
+
+            _stringBuilder.AppendLine();
+        }
+
+        public void VisitSql(ExprSql sql)
+        {
+            sql.Select.Accept(this);
+            sql.From.Accept(this);
+            sql.Where.Accept(this);
+            sql.OrderBy.Accept(this);
+
+            if (sql.Limit.HasValue)
+            {
+                _stringBuilder.Append("LIMIT ");
+                _stringBuilder.Append(sql.Limit.Value);
+            }
+
+            if (sql.Limit.HasValue && sql.Offset.HasValue)
+            {
+                _stringBuilder.Append(' ');
+            }
+
+            if (sql.Offset.HasValue)
+            {
+                _stringBuilder.Append("OFFSET ");
+                _stringBuilder.Append(sql.Offset.Value);
+            }
+        }
+
+        public void VisitWhere(ExprWhere where)
+        {
+            if (where.Expression == null)
+            {
+                return;
+            }
+
+            _stringBuilder.Append("WHERE ");
+            where.Expression.Accept(this);
+            _stringBuilder.AppendLine();
+        }
+
+        private void AcceptList(IEnumerable<Expr> expressions, string separator = ", ")
+        {
+            bool isFirst = true;
+
+            foreach (var expr in expressions)
+            {
+                if (!isFirst)
+                {
+                    _stringBuilder.Append(separator);
+                }
+
+                isFirst = false;
+                expr.Accept(this);
+            }
+        }
+    }
+}
