@@ -1,21 +1,15 @@
-﻿using System.Text;
+﻿using CG4.Impl.Rabbit.Extensions;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 
 namespace CG4.Impl.Rabbit.Consumer
 {
-    public class QueueConsumerRabbitMQ : BaseQueueConsumerRabbitMQ<EventingBasicConsumer>, IQueueWatcher<IQueueMessage>
+    public class QueueConsumerRabbitMQ : BaseQueueConsumerRabbitMQ<EventingBasicConsumer>, IQueueConsumer
     {
-        public QueueConsumerRabbitMQ(IConnectionFactory connectionFactory, IMessageProvider provider)
-            : this(connectionFactory, provider, PREFETCH_COUNT)
-        {
-        }
-
         public QueueConsumerRabbitMQ(
             IConnectionFactory connectionFactory,
-            IMessageProvider provider,
-            ushort prefetchCount)
-            : base(connectionFactory, provider, prefetchCount)
+            ushort prefetchCount = PREFETCH_COUNT)
+            : base(connectionFactory, prefetchCount)
         {
         }
 
@@ -34,7 +28,7 @@ namespace CG4.Impl.Rabbit.Consumer
 
         private void ReceiverHandler(object sender, BasicDeliverEventArgs e)
         {
-            var message = _provider.ExtractObject(Encoding.UTF8.GetString(e.Body.ToArray()));
+            var message = e.Body.ToArray().ConvertFromBody();
             try
             {
                 OnSubscribe(message).Wait();

@@ -9,10 +9,9 @@
             Errors = new List<string>();
         }
 
-        public QueueMessageRabbitMQ(string body)
+        public QueueMessageRabbitMQ(string body) : this()
         {
             Body = body;
-            Errors = new List<string>();
         }
 
         public Guid Uid { get; set; }
@@ -23,7 +22,7 @@
         {
             get
             {
-                if (Errors == null || !Errors.Any())
+                if (!Errors.Any())
                 {
                     return 0;
                 }

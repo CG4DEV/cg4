@@ -1,9 +1,6 @@
 ﻿namespace CG4.Impl.Rabbit
 {
-    public delegate Task QueueMessageReceive<in TEntity>(object queue, TEntity message)
-        where TEntity : IQueueMessage;
-
-    public interface IQueueWatcher<TQueueMessage>
+    public interface IQueueConsumer
     {
         event QueueMessageHandler Subscribe;
 

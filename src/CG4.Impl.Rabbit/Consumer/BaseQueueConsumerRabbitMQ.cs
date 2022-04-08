@@ -8,7 +8,6 @@ namespace CG4.Impl.Rabbit.Consumer
         protected const ushort PREFETCH_COUNT = 50;
 
         protected readonly IConnectionFactory _connectionFactory;
-        protected readonly IMessageProvider _provider;
         protected readonly ushort _prefetchCount;
 
         protected T _consumer;
@@ -16,18 +15,11 @@ namespace CG4.Impl.Rabbit.Consumer
         protected IModel _model;
         protected string _watchingQueueName;
 
-        protected BaseQueueConsumerRabbitMQ(IConnectionFactory connectionFactory, IMessageProvider provider)
-            : this(connectionFactory, provider, PREFETCH_COUNT)
-        {
-        }
-
         protected BaseQueueConsumerRabbitMQ(
             IConnectionFactory connectionFactory,
-            IMessageProvider provider,
-            ushort prefetchCount)
+            ushort prefetchCount = PREFETCH_COUNT)
         {
             _connectionFactory = connectionFactory ?? throw new ArgumentNullException(nameof(connectionFactory));
-            _provider = provider ?? throw new ArgumentNullException(nameof(provider));
             _prefetchCount = prefetchCount;
 
             Init();

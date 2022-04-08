@@ -1,4 +1,5 @@
 ﻿using CG4.Extensions;
+using CG4.Impl.Rabbit.Extensions;
 using RabbitMQ.Client;
 
 namespace CG4.Impl.Rabbit
@@ -17,18 +18,15 @@ namespace CG4.Impl.Rabbit
         private readonly bool _useDelay;
         private List<string> _queues;
         private IConnectionFactory _factory;
-        private IMessageProvider _msgProvider;
 
         private IModel _channel;
 
         public QueueProviderRabbitMQ(
-            IMessageProvider msgProvider,
             IConnectionFactory factory,
             bool useDelay = false,
             string defaultExchange = "CG4.direct",
             params string[] queues)
         {
-            _msgProvider = msgProvider ?? throw new ArgumentNullException(nameof(msgProvider));
             _factory = factory ?? throw new ArgumentNullException(nameof(factory));
 
             if (queues.NullOrEmpty())
@@ -41,6 +39,11 @@ namespace CG4.Impl.Rabbit
             _defaultExchange = _useDelay ? $"{defaultExchange}.delay" : defaultExchange;
 
             Init(queues);
+        }
+
+        public QueueProviderRabbitMQ(IConnectionFactory factory, IQueueProviderSettings providerSettings)
+            : this(factory, providerSettings.UseDelay, providerSettings.DefaultExchange, providerSettings.Queues)
+        {
         }
 
         ~QueueProviderRabbitMQ()
@@ -101,7 +104,6 @@ namespace CG4.Impl.Rabbit
                 // освобождаем неуправляемые объекты
                 _channel = null;
                 _factory = null;
-                _msgProvider = null;
                 _queues = null;
 
                 _disposed = true;
@@ -124,7 +126,7 @@ namespace CG4.Impl.Rabbit
         private void PushMessageInternal(IEnumerable<string> queues, IQueueMessage message)
         {
             var channel = CreateChannel();
-            var body = _msgProvider.PrepareMessageByte(message);
+            var body = message.ConvertToBody();
 
             foreach (var item in queues)
             {
