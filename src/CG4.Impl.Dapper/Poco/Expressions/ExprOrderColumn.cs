@@ -4,14 +4,14 @@
     {
         public ExprOrderColumn(bool ask)
         {
-            Order = ask ? "ASK" : "DESC";
+            Order = ask ? "ASC" : "DESC";
         }
 
         public ExprOrderColumn(ExprColumn column, bool ask)
         {
             Alias = column.Alias;
             Name = column.Name;
-            Order = ask ? "ASK" : "DESC";
+            Order = ask ? "ASC" : "DESC";
         }
 
         public string Order { get; set; }
