@@ -1,12 +1,11 @@
 using System;
-using CG4.Executor;
 using CG4.Executor.Extensions;
 using CG4.Executor.Story;
-using CG4.Story.Tests.Preparation;
+using CG4.Executor.Tests.Preparation;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 
-namespace CG4.Story.Tests
+namespace CG4.Executor.Tests
 {
     public class ExecutorBuilderTests
     {

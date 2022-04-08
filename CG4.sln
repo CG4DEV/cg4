@@ -11,7 +11,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{8662AF30
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CG4.Benchmark.Tests", "src\CG4.Benchmark.Tests\CG4.Benchmark.Tests.csproj", "{2BB1E07C-FB9B-487A-9A52-531C3AE97805}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CG4.Story.Tests", "src\CG4.Story.Tests\CG4.Story.Tests.csproj", "{2E4F8C20-AB36-4DDD-A7CB-BC4991041740}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CG4.Executor.Tests", "src\CG4.Executor.Tests\CG4.Executor.Tests.csproj", "{2E4F8C20-AB36-4DDD-A7CB-BC4991041740}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CG4.Impl.Memory", "src\CG4.Impl.Memory\CG4.Impl.Memory.csproj", "{99666D46-A912-4618-9673-D8AA68FEDA38}"
 EndProject
@@ -32,6 +32,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CG4.Impl.EF.Tests", "src\CG4.Impl.EF.Tests\CG4.Impl.EF.Tests.csproj", "{E043B595-3DCD-4192-B3F2-7A2490E0DB6D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CG4.DataAccess", "src\CG4.DataAccess\CG4.DataAccess.csproj", "{0C8E9D96-D0B7-428C-BABC-BBA1A8EE4E32}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CG4.Impl.Rabbit.Tests", "CG4.Impl.Rabbit.Tests\CG4.Impl.Rabbit.Tests.csproj", "{E3732D6B-BDBA-4E66-BC89-1D4936127163}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -91,6 +93,10 @@ Global
 		{0C8E9D96-D0B7-428C-BABC-BBA1A8EE4E32}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0C8E9D96-D0B7-428C-BABC-BBA1A8EE4E32}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0C8E9D96-D0B7-428C-BABC-BBA1A8EE4E32}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E3732D6B-BDBA-4E66-BC89-1D4936127163}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E3732D6B-BDBA-4E66-BC89-1D4936127163}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E3732D6B-BDBA-4E66-BC89-1D4936127163}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E3732D6B-BDBA-4E66-BC89-1D4936127163}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -99,6 +105,7 @@ Global
 		{2BB1E07C-FB9B-487A-9A52-531C3AE97805} = {8662AF30-E855-4891-8E88-4F99B18B9B06}
 		{2E4F8C20-AB36-4DDD-A7CB-BC4991041740} = {8662AF30-E855-4891-8E88-4F99B18B9B06}
 		{E043B595-3DCD-4192-B3F2-7A2490E0DB6D} = {8662AF30-E855-4891-8E88-4F99B18B9B06}
+		{E3732D6B-BDBA-4E66-BC89-1D4936127163} = {8662AF30-E855-4891-8E88-4F99B18B9B06}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {56DD2A7B-26EE-4795-8477-EAE931A73E14}

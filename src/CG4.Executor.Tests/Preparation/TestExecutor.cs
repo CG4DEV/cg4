@@ -2,7 +2,7 @@
 using CG4.Executor;
 using CG4.Executor.Story;
 
-namespace CG4.Story.Tests.Preparation
+namespace CG4.Executor.Tests.Preparation
 {
     public class TestExecutor : IStory<TestExecutorContext, int>, IStory<TestVoidExecutorContext>
     {
