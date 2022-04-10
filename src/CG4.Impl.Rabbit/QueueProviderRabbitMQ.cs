@@ -73,7 +73,7 @@ namespace CG4.Impl.Rabbit
             var queue = _queues.SingleOrDefault(x => x.Equals(queueName, StringComparison.InvariantCultureIgnoreCase));
             if (queue == null)
             {
-                throw new ArgumentException($"Не найдена очередь с именем {queueName}");
+                throw new ArgumentNullException($"Не найдена очередь с именем {queueName}");
             }
 
             using (var channel = CreateChannel())
