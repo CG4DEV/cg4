@@ -1,14 +1,13 @@
 ﻿using RabbitMQ.Client;
 
-namespace CG4.Impl.Rabbit
+namespace CG4.Impl.Rabbit.Consumer
 {
     public abstract class BaseQueueConsumerRabbitMQ<T>
         where T : IBasicConsumer
     {
-        protected const ushort PREFETCHCOUNT = 50;
+        protected const ushort PREFETCH_COUNT = 50;
 
         protected readonly IConnectionFactory _connectionFactory;
-        protected readonly IMessageProvider _provider;
         protected readonly ushort _prefetchCount;
 
         protected T _consumer;
@@ -16,18 +15,11 @@ namespace CG4.Impl.Rabbit
         protected IModel _model;
         protected string _watchingQueueName;
 
-        protected BaseQueueConsumerRabbitMQ(IConnectionFactory connectionFactory, IMessageProvider provider)
-            : this(connectionFactory, provider, PREFETCHCOUNT)
-        {
-        }
-
         protected BaseQueueConsumerRabbitMQ(
             IConnectionFactory connectionFactory,
-            IMessageProvider provider,
-            ushort prefetchCount)
+            ushort prefetchCount = PREFETCH_COUNT)
         {
             _connectionFactory = connectionFactory ?? throw new ArgumentNullException(nameof(connectionFactory));
-            _provider = provider ?? throw new ArgumentNullException(nameof(provider));
             _prefetchCount = prefetchCount;
 
             Init();

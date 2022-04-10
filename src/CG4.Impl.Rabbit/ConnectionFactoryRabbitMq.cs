@@ -10,12 +10,12 @@ namespace CG4.Impl.Rabbit
     public class ConnectionFactoryRabbitMQ : IConnectionFactory, IDisposable
     {
         private readonly object _lock = new object();
-        private bool disposed = false;
+        private bool disposed;
         private ConnectionFactory _connectionFactory;
         private IConnection _connection;
 
         // Maybe pass IConnection Factory in constructor? - Can't test this
-        public ConnectionFactoryRabbitMQ(IQueueProviderSettings settings)
+        public ConnectionFactoryRabbitMQ(IConnectionFactorySettings settings)
         {
             if (settings == null)
             {
@@ -41,92 +41,92 @@ namespace CG4.Impl.Rabbit
 
         public IDictionary<string, object> ClientProperties
         {
-            get { return _connectionFactory.ClientProperties; }
-            set { _connectionFactory.ClientProperties = value; }
+            get => _connectionFactory.ClientProperties;
+            set => _connectionFactory.ClientProperties = value;
         }
 
         public string Password
         {
-            get { return _connectionFactory.Password; }
-            set { _connectionFactory.Password = value; }
+            get => _connectionFactory.Password;
+            set => _connectionFactory.Password = value;
         }
 
         public ushort RequestedChannelMax
         {
-            get { return _connectionFactory.RequestedChannelMax; }
-            set { _connectionFactory.RequestedChannelMax = value; }
+            get => _connectionFactory.RequestedChannelMax;
+            set => _connectionFactory.RequestedChannelMax = value;
         }
 
         public uint RequestedFrameMax
         {
-            get { return _connectionFactory.RequestedFrameMax; }
-            set { _connectionFactory.RequestedFrameMax = value; }
+            get => _connectionFactory.RequestedFrameMax;
+            set => _connectionFactory.RequestedFrameMax = value;
         }
 
         public TimeSpan RequestedHeartbeat
         {
-            get { return _connectionFactory.RequestedHeartbeat; }
-            set { _connectionFactory.RequestedHeartbeat = value; }
+            get => _connectionFactory.RequestedHeartbeat;
+            set => _connectionFactory.RequestedHeartbeat = value;
         }
 
         public bool UseBackgroundThreadsForIO
         {
-            get { return _connectionFactory.UseBackgroundThreadsForIO; }
-            set { _connectionFactory.UseBackgroundThreadsForIO = value; }
+            get => _connectionFactory.UseBackgroundThreadsForIO;
+            set => _connectionFactory.UseBackgroundThreadsForIO = value;
         }
 
         public string UserName
         {
-            get { return _connectionFactory.UserName; }
-            set { _connectionFactory.UserName = value; }
+            get => _connectionFactory.UserName;
+            set => _connectionFactory.UserName = value;
         }
 
         public string VirtualHost
         {
-            get { return _connectionFactory.VirtualHost; }
-            set { _connectionFactory.VirtualHost = value; }
+            get => _connectionFactory.VirtualHost;
+            set => _connectionFactory.VirtualHost = value;
         }
 
         public string HostName
         {
-            get { return _connectionFactory.HostName; }
-            set { _connectionFactory.HostName = value; }
+            get => _connectionFactory.HostName;
+            set => _connectionFactory.HostName = value;
         }
 
         public int Port
         {
-            get { return _connectionFactory.Port; }
-            set { _connectionFactory.Port = value; }
+            get => _connectionFactory.Port;
+            set => _connectionFactory.Port = value;
         }
 
         public Uri Uri
         {
-            get { return _connectionFactory.Uri; }
-            set { _connectionFactory.Uri = value; }
+            get => _connectionFactory.Uri;
+            set => _connectionFactory.Uri = value;
         }
 
         public TimeSpan HandshakeContinuationTimeout
         {
-            get { return _connectionFactory.HandshakeContinuationTimeout; }
-            set { _connectionFactory.HandshakeContinuationTimeout = value; }
+            get => _connectionFactory.HandshakeContinuationTimeout;
+            set => _connectionFactory.HandshakeContinuationTimeout = value;
         }
 
         public TimeSpan ContinuationTimeout
         {
-            get { return _connectionFactory.ContinuationTimeout; }
-            set { _connectionFactory.ContinuationTimeout = value; }
+            get => _connectionFactory.ContinuationTimeout;
+            set => _connectionFactory.ContinuationTimeout = value;
         }
 
         public TimeSpan NetworkRecoveryInterval
         {
-            get { return _connectionFactory.NetworkRecoveryInterval; }
-            set { _connectionFactory.NetworkRecoveryInterval = value; }
+            get => _connectionFactory.NetworkRecoveryInterval;
+            set => _connectionFactory.NetworkRecoveryInterval = value;
         }
 
         public bool AutomaticRecoveryEnabled
         {
-            get { return _connectionFactory.AutomaticRecoveryEnabled; }
-            set { _connectionFactory.AutomaticRecoveryEnabled = value; }
+            get => _connectionFactory.AutomaticRecoveryEnabled;
+            set => _connectionFactory.AutomaticRecoveryEnabled = value;
         }
 
         public string ClientProvidedName { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }

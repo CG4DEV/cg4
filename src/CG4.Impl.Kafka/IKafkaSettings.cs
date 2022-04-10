@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Tolar.Kafka
+﻿namespace CG4.Impl.Kafka
 {
     public interface IKafkaSettings
     {

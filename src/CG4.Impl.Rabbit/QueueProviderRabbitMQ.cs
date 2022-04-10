@@ -1,4 +1,5 @@
 ﻿using CG4.Extensions;
+using CG4.Impl.Rabbit.Extensions;
 using RabbitMQ.Client;
 
 namespace CG4.Impl.Rabbit
@@ -11,23 +12,21 @@ namespace CG4.Impl.Rabbit
         private static readonly object _locker = new object();
         private static readonly object _lockChannel = new object();
 
-        private bool _disposed = false;
-        private readonly string EXCHANGE_DEFAULT = "bgTeam.direct";
+        private bool _disposed;
+        private readonly string _defaultExchange;
 
         private readonly bool _useDelay;
         private List<string> _queues;
         private IConnectionFactory _factory;
-        private IMessageProvider _msgProvider;
 
         private IModel _channel;
 
         public QueueProviderRabbitMQ(
-            IMessageProvider msgProvider,
             IConnectionFactory factory,
             bool useDelay = false,
+            string defaultExchange = "CG4.direct",
             params string[] queues)
         {
-            _msgProvider = msgProvider ?? throw new ArgumentNullException(nameof(msgProvider));
             _factory = factory ?? throw new ArgumentNullException(nameof(factory));
 
             if (queues.NullOrEmpty())
@@ -37,13 +36,14 @@ namespace CG4.Impl.Rabbit
 
             _useDelay = useDelay;
             _queues = queues.ToList();
-
-            if (_useDelay)
-            {
-                EXCHANGE_DEFAULT = $"{EXCHANGE_DEFAULT}.delay";
-            }
+            _defaultExchange = _useDelay ? $"{defaultExchange}.delay" : defaultExchange;
 
             Init(queues);
+        }
+
+        public QueueProviderRabbitMQ(IConnectionFactory factory, IQueueProviderSettings providerSettings)
+            : this(factory, providerSettings.UseDelay, providerSettings.DefaultExchange, providerSettings.Queues)
+        {
         }
 
         ~QueueProviderRabbitMQ()
@@ -58,7 +58,13 @@ namespace CG4.Impl.Rabbit
 
         public void PushMessage(IQueueMessage message, params string[] queues)
         {
-            queues = GetDistinctQueues(queues);
+            if (queues.Length == 0)
+            {
+                PushMessage(message);
+            }
+
+            queues = queues.Distinct().ToArray();
+            RegisterMissQueues(queues);
             PushMessageInternal(queues, message);
         }
 
@@ -67,7 +73,7 @@ namespace CG4.Impl.Rabbit
             var queue = _queues.SingleOrDefault(x => x.Equals(queueName, StringComparison.InvariantCultureIgnoreCase));
             if (queue == null)
             {
-                throw new ArgumentException($"Не найдена очередь с именем {queueName}");
+                throw new ArgumentNullException($"Не найдена очередь с именем {queueName}");
             }
 
             using (var channel = CreateChannel())
@@ -98,45 +104,29 @@ namespace CG4.Impl.Rabbit
                 // освобождаем неуправляемые объекты
                 _channel = null;
                 _factory = null;
-                _msgProvider = null;
                 _queues = null;
 
                 _disposed = true;
             }
         }
 
-        private string[] GetDistinctQueues(string[] queues)
+        private void RegisterMissQueues(IEnumerable<string> queues)
         {
-            queues = queues.CheckNullOrEmpty(nameof(queues)).Distinct().ToArray();
-
-            var queuesToSend = queues
-                        .Where(x => _queues.Any(q => q.Equals(x, StringComparison.InvariantCultureIgnoreCase)))
-                        .ToArray();
-
-            if (queuesToSend.Count() != queues.Count())
+            lock (_locker)
             {
-                lock (_locker)
+                var queuesToSend = queues.Except(_queues).ToArray();
+                if (queuesToSend.Length > 0)
                 {
-                    var queuesToSend2 = queues
-                            .Where(x => _queues.Any(q => q.Equals(x, StringComparison.InvariantCultureIgnoreCase)))
-                            .ToArray();
-
-                    if (queuesToSend2.Count() != queues.Count())
-                    {
-                        var toInitQueues = queues.Except(queuesToSend2).ToArray();
-                        Init(toInitQueues);
-                        _queues.AddRange(toInitQueues);
-                    }
+                    Init(queuesToSend);
+                    _queues.AddRange(queuesToSend);
                 }
             }
-
-            return queues;
         }
 
         private void PushMessageInternal(IEnumerable<string> queues, IQueueMessage message)
         {
             var channel = CreateChannel();
-            var body = _msgProvider.PrepareMessageByte(message);
+            var body = message.ConvertToBody();
 
             foreach (var item in queues)
             {
@@ -147,7 +137,7 @@ namespace CG4.Impl.Rabbit
                 bProp.Headers = bHeaders;
                 bProp.DeliveryMode = 2;
 
-                channel.BasicPublish(EXCHANGE_DEFAULT, item, bProp, body);
+                channel.BasicPublish(_defaultExchange, item, bProp, body);
             }
         }
 
@@ -164,28 +154,28 @@ namespace CG4.Impl.Rabbit
                     {
                         // при подключении плагина на задержку времени
                         var args = new Dictionary<string, object> { { "x-delayed-type", "direct" } };
-                        channel.ExchangeDeclare(EXCHANGE_DEFAULT, "x-delayed-message", true, false, args);
+                        channel.ExchangeDeclare(_defaultExchange, "x-delayed-message", true, false, args);
                     }
                     else
                     {
                         // без плагина
-                        channel.ExchangeDeclare(EXCHANGE_DEFAULT, "direct", true, false, null);
+                        channel.ExchangeDeclare(_defaultExchange, "direct", true, false, null);
                     }
 
                     var queue = channel.QueueDeclare(item, true, false, false, null);
-                    channel.QueueBind(queue, EXCHANGE_DEFAULT, item);
+                    channel.QueueBind(queue, _defaultExchange, item);
                 }
             }
         }
 
         private IModel CreateChannel()
         {
-            if (_channel == null || !_channel.IsOpen)
+            if (_channel is not { IsOpen: true })
             {
                 //Лочим на всякий, вдруг один экземпляр провайдера попадет в несколько потоков
                 lock (_lockChannel)
                 {
-                    if (_channel == null || !_channel.IsOpen)
+                    if (_channel is not { IsOpen: true })
                     {
                         _channel = _factory.CreateConnection().CreateModel();
                     }
