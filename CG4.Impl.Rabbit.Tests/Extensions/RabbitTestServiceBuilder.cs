@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using RabbitMQ.Client;
 using Xunit;
 
-namespace CG4.Impl.Rabbit.Tests;
+namespace CG4.Impl.Rabbit.Tests.Extensions;
 
 public class RabbitTestServiceBuilder
 {
