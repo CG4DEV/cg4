@@ -49,6 +49,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Benchmark", "Benchmark", "{
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CG4.Impl.Memory.Tests", "src\CG4.Impl.Memory.Tests\CG4.Impl.Memory.Tests.csproj", "{29B74221-37A3-4C37-83C5-4A5FDFF0A5D4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CG4.Impl.MongoDB.Tests", "src\CG4.Impl.MongoDB.Tests\CG4.Impl.MongoDB.Tests.csproj", "{407D81B9-EA94-45AE-AB92-4F9B4353918F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -127,6 +129,10 @@ Global
 		{29B74221-37A3-4C37-83C5-4A5FDFF0A5D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{29B74221-37A3-4C37-83C5-4A5FDFF0A5D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{29B74221-37A3-4C37-83C5-4A5FDFF0A5D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{407D81B9-EA94-45AE-AB92-4F9B4353918F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{407D81B9-EA94-45AE-AB92-4F9B4353918F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{407D81B9-EA94-45AE-AB92-4F9B4353918F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{407D81B9-EA94-45AE-AB92-4F9B4353918F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -141,6 +147,7 @@ Global
 		{2E7A56D0-513B-4D8C-8FB8-383A8D4EF89A} = {8662AF30-E855-4891-8E88-4F99B18B9B06}
 		{E3732D6B-BDBA-4E66-BC89-1D4936127163} = {8662AF30-E855-4891-8E88-4F99B18B9B06}
 		{29B74221-37A3-4C37-83C5-4A5FDFF0A5D4} = {8662AF30-E855-4891-8E88-4F99B18B9B06}
+		{407D81B9-EA94-45AE-AB92-4F9B4353918F} = {8662AF30-E855-4891-8E88-4F99B18B9B06}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {56DD2A7B-26EE-4795-8477-EAE931A73E14}
