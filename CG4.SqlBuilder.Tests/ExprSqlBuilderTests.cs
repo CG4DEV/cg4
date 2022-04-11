@@ -104,7 +104,7 @@ LIMIT 10 OFFSET 10",
                 @"SELECT t0.""code"" AS ""Code"", t0.""number"" AS ""Number"", t0.""test_second_entity_id"" AS ""SecondId"", t0.""id"" AS ""Id"", t0.""create_date"" AS ""CreateDate"", t0.""update_date"" AS ""UpdateDate""
 FROM ""test_entity"" AS t0
 WHERE t0.""code"" = 'test'
-ORDER BY t0.""create_date"" ASK, t0.""number"" DESC
+ORDER BY t0.""create_date"" ASC, t0.""number"" DESC
 ",
                 sql);
         }
@@ -158,7 +158,7 @@ WHERE t0.""code"" = 'test'
             Assert.Contains("INNER JOIN \"test_second_entity\" AS t1 ON t1.\"id\" = t0.\"test_second_entity_id\"", sql);
             Assert.Contains("t0.\"code\" = 'my code'", sql);
             Assert.Contains("t1.\"name\" = 'my name'", sql);
-            Assert.Contains("ORDER BY t0.\"create_date\" ASK, t1.\"create_date\" ASK", sql);
+            Assert.Contains("ORDER BY t0.\"create_date\" ASC, t1.\"create_date\" ASC", sql);
         }
 
         [Table("test_entity")]
