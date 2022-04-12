@@ -41,9 +41,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CG4.Impl.Dapper.PostgreSql"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CG4.SqlBuilder.Benchmark.Tests", "src\CG4.SqlBuilder.Benchmark.Tests\CG4.SqlBuilder.Benchmark.Tests.csproj", "{075166B5-DD82-4B59-B6F3-869C3D433547}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CG4.SqlBuilder.Tests", "CG4.SqlBuilder.Tests\CG4.SqlBuilder.Tests.csproj", "{2E7A56D0-513B-4D8C-8FB8-383A8D4EF89A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CG4.SqlBuilder.Tests", "src\CG4.SqlBuilder.Tests\CG4.SqlBuilder.Tests.csproj", "{2E7A56D0-513B-4D8C-8FB8-383A8D4EF89A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CG4.Impl.Rabbit.Tests", "CG4.Impl.Rabbit.Tests\CG4.Impl.Rabbit.Tests.csproj", "{E3732D6B-BDBA-4E66-BC89-1D4936127163}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CG4.Impl.Rabbit.Tests", "src\CG4.Impl.Rabbit.Tests\CG4.Impl.Rabbit.Tests.csproj", "{E3732D6B-BDBA-4E66-BC89-1D4936127163}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Benchmark", "Benchmark", "{828FAB0E-9503-4C9F-8EE7-3F0B64A24467}"
 EndProject
