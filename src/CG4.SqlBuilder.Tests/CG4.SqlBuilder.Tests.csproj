@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\CG4.Impl.Dapper\CG4.Impl.Dapper.csproj" />
+    <ProjectReference Include="..\CG4.Impl.Dapper\CG4.Impl.Dapper.csproj" />
   </ItemGroup>
 
 </Project>

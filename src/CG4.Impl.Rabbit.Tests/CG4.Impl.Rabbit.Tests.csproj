@@ -24,7 +24,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\src\CG4.Impl.Rabbit\CG4.Impl.Rabbit.csproj" />
+      <ProjectReference Include="..\CG4.Impl.Rabbit\CG4.Impl.Rabbit.csproj" />
     </ItemGroup>
 
 </Project>
