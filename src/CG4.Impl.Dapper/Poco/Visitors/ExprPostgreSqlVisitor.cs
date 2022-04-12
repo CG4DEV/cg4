@@ -232,6 +232,43 @@ namespace CG4.Impl.Dapper.Poco
             _stringBuilder.AppendLine();
         }
 
+        public void VisitFunction(ExprFunction function)
+        {
+            _stringBuilder.Append(function.Name);
+            _stringBuilder.Append('(');
+            AcceptList(function.Parametrs);
+            _stringBuilder.Append(')');
+
+            if (!string.IsNullOrEmpty(function.ResultName))
+            {
+                _stringBuilder.Append(" AS \"");
+                _stringBuilder.Append(function.ResultName);
+                _stringBuilder.Append('"');
+            }
+        }
+
+        public void VisitStar(ExprStar star)
+        {
+            _stringBuilder.Append('*');
+        }
+
+        public void VisitNull(ExprNull exprNull)
+        {
+            _stringBuilder.Append("NULL");
+        }
+
+        public void VisitBool(ExprBool @bool)
+        {
+            if (@bool.Value)
+            {
+                _stringBuilder.Append("TRUE");
+            }
+            else
+            {
+                _stringBuilder.Append("FALSE");
+            }
+        }
+
         private void AcceptList(IEnumerable<Expr> expressions, string separator = ", ")
         {
             bool isFirst = true;

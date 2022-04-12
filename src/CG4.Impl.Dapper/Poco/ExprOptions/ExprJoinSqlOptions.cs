@@ -59,15 +59,17 @@ namespace CG4.Impl.Dapper.Poco.ExprOptions
             var mapEntity = PocoHub.GetMap<TEntity>();
             var mapJoin = PocoHub.GetMap<TJoin>();
 
-            exprJoin.TableColumn = new ExprColumn { Alias = alias, Name = mapEntity.Properties.First(x => x.IsPrymaryKey || x.IsIdentity).ColumnName };
-            exprJoin.OtherColumn = expr;
-            exprJoin.TableName = new ExprTableName { Alias = alias, TableName = mapJoin.TableName };
+            var aliasJoin = exprSqlOptions.GetAlias();
 
-            foreach (var p in mapJoin.Properties.Where(x => !x.IsIdentity && !x.IsPrymaryKey))
+            exprJoin.TableColumn = new ExprColumn { Alias = aliasJoin, Name = mapEntity.Properties.First(x => x.IsPrymaryKey || x.IsIdentity).ColumnName };
+            exprJoin.OtherColumn = expr;
+            exprJoin.TableName = new ExprTableName { Alias = aliasJoin, TableName = mapJoin.TableName };
+
+            foreach (var p in mapJoin.Properties.Where(x => !x.IsIdentity && !x.IsPrymaryKey && !x.IsIgnored))
             {
                 exprSqlOptions.Sql.Select.Add(new()
                 {
-                    Alias = alias,
+                    Alias = aliasJoin,
                     Name = p.ColumnName,
                     ResultName = alias + p.Name,
                 });
@@ -75,15 +77,10 @@ namespace CG4.Impl.Dapper.Poco.ExprOptions
 
             exprSqlOptions.Sql.From.Joins.Add(exprJoin);
 
-            var join = new ExprJoinSqlOptions<TEntity, TJoin>(exprSqlOptions, alias)
-            {
-                JoinExpr = expr,
-            };
+            var join = new ExprJoinSqlOptions<TEntity, TJoin>(exprSqlOptions, aliasJoin);
 
             return join;
         }
-
-        public ExprColumn JoinExpr { get; set; }
 
         public string Alias { get; }
 

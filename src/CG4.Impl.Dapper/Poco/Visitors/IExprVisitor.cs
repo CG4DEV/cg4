@@ -51,5 +51,13 @@ namespace CG4.Impl.Dapper.Poco
         void VisitWhere(ExprWhere where);
 
         void VisitOrderBy(ExprOrderBy orderBy);
+
+        void VisitFunction(ExprFunction function);
+
+        void VisitStar(ExprStar star);
+
+        void VisitNull(ExprNull exprNull);
+
+        void VisitBool(ExprBool exprBool);
     }
 }
