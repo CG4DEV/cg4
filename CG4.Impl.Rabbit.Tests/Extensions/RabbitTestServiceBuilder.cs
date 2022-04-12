@@ -8,7 +8,7 @@ namespace CG4.Impl.Rabbit.Tests.Extensions;
 
 public class RabbitTestServiceBuilder
 {
-    [Fact]
+    [Fact(Skip = "Integration")]
     public void RegisterRabbitServices_WithoutExtensions_WasResolved()
     {
         var collection = new ServiceCollection();
@@ -34,7 +34,7 @@ public class RabbitTestServiceBuilder
         Assert.Equal("localhost", factorySettings.Host);
     }
 
-    [Fact]
+    [Fact(Skip = "Integration")]
     public void RegisterRabbitServices_WithExtensions_WasResolved()
     {
         var collection = new ServiceCollection();
@@ -45,7 +45,7 @@ public class RabbitTestServiceBuilder
             settings.ProviderSettings = new MockQueueProviderSettings();
         });
         var serviceProvider = collection.BuildServiceProvider();
-        
+
         var factorySettings = serviceProvider.GetRequiredService<IConnectionFactorySettings>();
         var connectionFactory = serviceProvider.GetRequiredService<IConnectionFactory>();
         var providerSettings = serviceProvider.GetRequiredService<IQueueProviderSettings>();
