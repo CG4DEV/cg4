@@ -6,7 +6,7 @@ namespace CG4.Impl.Dapper.Poco.ExprOptions
 {
     public class ExprSqlBuilder : ISqlBuilder
     {
-        internal const string ALIAS = "t0";
+        internal const string ALIAS = "t";
         private const string ID = "Id";
         private const string SQL_ID = "id";
 

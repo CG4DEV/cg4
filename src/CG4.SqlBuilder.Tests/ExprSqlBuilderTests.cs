@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 using CG4.DataAccess.Domain;
 using CG4.Impl.Dapper.Poco;
 using CG4.Impl.Dapper.Poco.ExprOptions;
@@ -116,14 +117,14 @@ ORDER BY t0.""create_date"" ASC, t0.""number"" DESC
 
             var sql = builder.GetAll<TestEntity>(
                 x => x.Where(p => p.Code == "test")
-                    .Join<TestSecondEntity, long>(p => p.SecondId, "t1"));
+                    .Join<TestSecondEntity, long>(p => p.SecondId, "Second"));
 
             Assert.NotNull(sql);
             Assert.Equal(
-                @"SELECT t0.""code"" AS ""Code"", t0.""number"" AS ""Number"", t0.""test_second_entity_id"" AS ""SecondId"", t0.""id"" AS ""Id"", t0.""create_date"" AS ""CreateDate"", t0.""update_date"" AS ""UpdateDate"", t1.""name"" AS ""t1Name"", t1.""create_date"" AS ""t1CreateDate"", t1.""update_date"" AS ""t1UpdateDate""
-FROM ""test_entity"" AS t0
-INNER JOIN ""test_second_entity"" AS t1 ON t1.""id"" = t0.""test_second_entity_id""
-WHERE t0.""code"" = 'test'
+                @"SELECT t.""code"" AS ""Code"", t.""number"" AS ""Number"", t.""test_second_entity_id"" AS ""SecondId"", t.""id"" AS ""Id"", t.""create_date"" AS ""CreateDate"", t.""update_date"" AS ""UpdateDate"", t0.""name"" AS ""SecondName"", t0.""create_date"" AS ""SecondCreateDate"", t0.""update_date"" AS ""SecondUpdateDate""
+FROM ""test_entity"" AS t
+INNER JOIN ""test_second_entity"" AS t0 ON t0.""id"" = t.""test_second_entity_id""
+WHERE t.""code"" = 'test'
 ",
                 sql);
         }
@@ -150,15 +151,64 @@ WHERE t0.""code"" = 'test'
             var sql = builder.GetAll<TestEntity>(
                 x => x.Where(p => p.Code == "my code")
                     .OrderBy(p => p.CreateDate)
-                    .Join<TestSecondEntity, long>(j => j.SecondId, "t1")
+                    .Join<TestSecondEntity, long>(j => j.SecondId, "Second")
                     .OrderBy(p => p.CreateDate)
                     .Where(p => p.Name == "my name"));
 
             Assert.NotNull(sql);
-            Assert.Contains("INNER JOIN \"test_second_entity\" AS t1 ON t1.\"id\" = t0.\"test_second_entity_id\"", sql);
-            Assert.Contains("t0.\"code\" = 'my code'", sql);
-            Assert.Contains("t1.\"name\" = 'my name'", sql);
-            Assert.Contains("ORDER BY t0.\"create_date\" ASC, t1.\"create_date\" ASC", sql);
+            Assert.Contains("INNER JOIN \"test_second_entity\" AS t0 ON t0.\"id\" = t.\"test_second_entity_id\"", sql);
+            Assert.Contains("t.\"code\" = 'my code'", sql);
+            Assert.Contains("t0.\"name\" = 'my name'", sql);
+            Assert.Contains("ORDER BY t.\"create_date\" ASC, t0.\"create_date\" ASC", sql);
+        }
+
+        [Fact]
+        public void GetAll_WithNullableIntFilter_ReturnCorrectSql()
+        {
+            var builder = new ExprSqlBuilder(_sqlSettings);
+
+            var sql = builder.GetAll<TestEntityNullableTypes>(
+                x => x.Where(p => p.NilInt == 1));
+
+            Assert.NotNull(sql);
+            Assert.Contains("t.\"nil_int\" = 1", sql);
+        }
+
+        [Fact]
+        public void GetAll_WithNullableLongFilter_ReturnCorrectSql()
+        {
+            var builder = new ExprSqlBuilder(_sqlSettings);
+
+            var sql = builder.GetAll<TestEntityNullableTypes>(
+                x => x.Where(p => p.NilLong == 1));
+
+            Assert.NotNull(sql);
+            Assert.Contains("t.\"nil_long\" = 1", sql);
+        }
+
+        [Fact]
+        public void GetAll_WithNullableDateTimeOffsetFilter_ReturnCorrectSql()
+        {
+            var builder = new ExprSqlBuilder(_sqlSettings);
+            var dt = DateTimeOffset.FromUnixTimeMilliseconds(1649755688682);
+
+            var sql = builder.GetAll<TestEntityNullableTypes>(
+                x => x.Where(p => p.NilDateTimeOffset == dt));
+
+            Assert.NotNull(sql);
+            Assert.Contains("t.\"nil_date_time_offset\" = '2022-04-12 09:28:08.682 +00:00'", sql);
+        }
+
+        [Fact]
+        public void GetAll_WithNullableBoolFilter_ReturnCorrectSql()
+        {
+            var builder = new ExprSqlBuilder(_sqlSettings);
+
+            var sql = builder.GetAll<TestEntityNullableTypes>(
+                x => x.Where(p => p.NilBool == true));
+
+            Assert.NotNull(sql);
+            Assert.Contains("t.\"nil_bool\" = TRUE", sql);
         }
 
         [Table("test_entity")]
@@ -179,6 +229,22 @@ WHERE t0.""code"" = 'test'
         {
             [Column("name")]
             public string Name { get; set; }
+        }
+
+        [Table("nullable_types")]
+        public class TestEntityNullableTypes : EntityBase
+        {
+            [Column("nil_int")]
+            public int? NilInt { get; set; }
+
+            [Column("nil_long")]
+            public long? NilLong { get; set; }
+
+            [Column("nil_date_time_offset")]
+            public DateTimeOffset? NilDateTimeOffset { get; set; }
+
+            [Column("nil_bool")]
+            public bool? NilBool { get; set; }
         }
     }
 }

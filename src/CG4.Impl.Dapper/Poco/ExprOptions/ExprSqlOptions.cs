@@ -6,9 +6,13 @@ namespace CG4.Impl.Dapper.Poco.ExprOptions
     public class ExprSqlOptions<TEntity> : IClassSqlOptions<TEntity>
         where TEntity : class
     {
-        public ExprSqlOptions(string alias)
+        private readonly string _defAlias;
+        private int _index = 0;
+
+        public ExprSqlOptions(string defaultAlias)
         {
-            Alias = alias;
+            _defAlias = defaultAlias;
+            Alias = defaultAlias;
             var map = PocoHub.GetMap<TEntity>();
 
             Sql = new ExprSql
@@ -16,7 +20,7 @@ namespace CG4.Impl.Dapper.Poco.ExprOptions
                 Select = new ExprSelect(),
                 From = new ExprFrom
                 {
-                    TableName = new() { Alias = alias, TableName = map.TableName },
+                    TableName = new() { Alias = Alias, TableName = map.TableName },
                 },
                 Where = new ExprWhere(),
                 OrderBy = new ExprOrderBy(),
@@ -24,13 +28,15 @@ namespace CG4.Impl.Dapper.Poco.ExprOptions
 
             foreach (var p in map.Properties)
             {
-                Sql.Select.Add(new() { Alias = alias, Name = p.ColumnName, ResultName = p.Name });
+                Sql.Select.Add(new() { Alias = Alias, Name = p.ColumnName, ResultName = p.Name });
             }
         }
 
         internal ExprSql Sql { get; set; }
 
         public string Alias { get; }
+
+        internal string GetAlias() => $"{_defAlias}{_index++}";
 
         public Type GetCurrentType()
         {
