@@ -16,11 +16,11 @@ jobs:
         language: ['csharp']
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v2
-      with:
-        dotnet-version: 6.0.x
+    # - uses: actions/checkout@v3
+    # - name: Setup .NET
+    #   uses: actions/setup-dotnet@v2
+    #   with:
+    #     dotnet-version: 6.0.x
 
     # - name: Restore dependencies
     #   run: dotnet restore
@@ -29,5 +29,6 @@ jobs:
     #   run: dotnet build --no-restore
     - name: test
       shell: bash
-      run: echo " ================ ${{secrets.TEST_VAR}}"
-
+      run: echo " ================ $TEST_VAR"
+      env:
+        TEST_VAR: ${{secrets.TEST_VAR}}
