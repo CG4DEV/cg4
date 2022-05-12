@@ -6,9 +6,9 @@ on:
   pull_request:
     branches: [ build ]
 
-# env:
-#   NUGET_KEY: ${{ secrets.NUGET_API }}
-#   VERSION_STATIC: 0.1.${{ github.run_number }}-beta
+env:
+  NUGET_KEY: ${{ secrets.NUGET_API }}
+  VERSION_STATIC: 0.1.${{ github.run_number }}-beta
 
 jobs:
   build_and_publish:
@@ -23,6 +23,7 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v2
       with:
+        source-url: https://api.nuget.org/v3/index.json
         dotnet-version: 6.0.x
 
     - name: Restore dependencies
@@ -31,8 +32,8 @@ jobs:
     - name: Build and publish
       run: |
         mkdir __out
-        dotnet pack --no-restore -o __out
-        dotnet nuget push "./__out/*.nupkg" --skip-duplicate --no-symbols true --api-key ${{secrets.NUGET_API}} --source https://api.nuget.org/v3/index.json
+        dotnet pack --no-restore -o __out -p:PackageVersion=$VERSION_STATIC
+        dotnet nuget push "./__out/*.nupkg" --skip-duplicate --no-symbols true --api-key $NUGET_KEY
     
     # - name: Publish CG4.Benchmark.Tests
     #   uses: rohith/publish-nuget@v2
