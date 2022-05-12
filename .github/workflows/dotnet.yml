@@ -28,8 +28,7 @@ jobs:
     # - name: Build
     #   run: dotnet build --no-restore
     - name: test
-      with:
-        NUGET_KEY: ${{secrets.TEST_VAR}}
       shell: bash
       run: echo "${NUGET_KEY}  ${PROJECT_FILE_PATH}"
-
+      with:
+        NUGET_KEY: ${{secrets.TEST_VAR}}
