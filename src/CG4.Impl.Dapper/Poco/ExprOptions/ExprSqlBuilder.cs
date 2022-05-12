@@ -36,7 +36,7 @@ namespace CG4.Impl.Dapper.Poco.ExprOptions
             where T : class
         {
             var options = GetSqlOptionsResult(predicate);
-            var exprById = (new ExprColumn { Alias = ALIAS, Name = SQL_ID }) == (new ExprParam { Name = ID });
+            var exprById = new ExprColumn(ALIAS, SQL_ID) == new ExprParam { Name = ID };
 
             options.Sql.Where.And(exprById);
 

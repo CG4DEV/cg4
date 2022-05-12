@@ -1,4 +1,5 @@
 ﻿using System.Linq.Expressions;
+using CG4.Impl.Dapper.Poco.Expressions;
 
 namespace CG4.Impl.Dapper.Poco
 {
@@ -20,6 +21,7 @@ namespace CG4.Impl.Dapper.Poco
             where TNewJoin : class;
 
         IClassJoinSqlOptions<TEntity, TJoin> Where(Expression<Func<TJoin, bool>> predicate);
+        IClassJoinSqlOptions<TEntity, TJoin> Where(ExprBoolean predicate);
 
         IClassSqlOptions<TEntity> ToBackMain();
     }

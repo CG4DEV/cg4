@@ -1,4 +1,5 @@
 ﻿using System.Linq.Expressions;
+using CG4.Impl.Dapper.Poco.Expressions;
 
 namespace CG4.Impl.Dapper.Poco
 {
@@ -6,6 +7,7 @@ namespace CG4.Impl.Dapper.Poco
         where TEntity : class
     {
         IClassSqlOptions<TEntity> Where(Expression<Func<TEntity, bool>> predicate);
+        IClassSqlOptions<TEntity> Where(ExprBoolean predicate);
 
         IClassSqlOptions<TEntity> OrderBy<TKey>(Expression<Func<TEntity, TKey>> keySelector);
 

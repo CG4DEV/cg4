@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using CG4.DataAccess.Domain;
 using CG4.Impl.Dapper.Poco;
+using CG4.Impl.Dapper.Poco.Expressions;
 using CG4.Impl.Dapper.Poco.ExprOptions;
 using Xunit;
 
@@ -209,6 +210,29 @@ WHERE t.""code"" = 'test'
 
             Assert.NotNull(sql);
             Assert.Contains("t.\"nil_bool\" = TRUE", sql);
+        }
+
+        [Fact]
+        public void GetAll_TreeOfExpressions_ReturnCorrectSql()
+        {
+            var builder = new ExprSqlBuilder(_sqlSettings);
+
+            var idColumn = new ExprColumn("t", "id");
+            var codeColumn = new ExprColumn("t", "code");
+            var numberColumn = new ExprColumn("t", "number");
+            var nameColumn = new ExprColumn("t0", "name");
+
+            var expr = idColumn == 12L
+                & (codeColumn == "123" | codeColumn == "222")
+                & numberColumn != 44
+                & nameColumn == "test";
+
+            var sql = builder.GetAll<TestEntity>(x =>
+            x.Join<TestSecondEntity, long>(s => s.SecondId, "Second")
+            .Where(expr));
+
+            Assert.NotNull(sql);
+            Assert.Contains(@"WHERE t.""id"" = 12 AND (t.""code"" = '123' OR t.""code"" = '222') AND t.""number"" != 44 AND t0.""name"" = 'test'", sql);
         }
 
         [Table("test_entity")]

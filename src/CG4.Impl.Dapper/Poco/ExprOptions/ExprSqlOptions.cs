@@ -99,6 +99,12 @@ namespace CG4.Impl.Dapper.Poco.ExprOptions
             return this;
         }
 
+        public IClassSqlOptions<TEntity> Where(ExprBoolean predicate)
+        {
+            Sql.Where.And(predicate);
+            return this;
+        }
+
         public IClassSqlOptions<TEntity> Offset(int offset)
         {
             Sql.Offset = offset;

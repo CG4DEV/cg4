@@ -61,7 +61,7 @@ namespace CG4.Impl.Dapper.Poco.ExprOptions
 
             var aliasJoin = exprSqlOptions.GetAlias();
 
-            exprJoin.TableColumn = new ExprColumn { Alias = aliasJoin, Name = mapEntity.Properties.First(x => x.IsPrymaryKey || x.IsIdentity).ColumnName };
+            exprJoin.TableColumn = new ExprColumn(aliasJoin, mapEntity.Properties.First(x => x.IsPrymaryKey || x.IsIdentity).ColumnName);
             exprJoin.OtherColumn = expr;
             exprJoin.TableName = new ExprTableName { Alias = aliasJoin, TableName = mapJoin.TableName };
 
@@ -113,6 +113,12 @@ namespace CG4.Impl.Dapper.Poco.ExprOptions
             var expr = SqlExprHelper.GenerateWhere(predicate, Alias);
             _exprSqlOptions.Sql.Where.And(expr);
 
+            return this;
+        }
+
+        public IClassJoinSqlOptions<TEntity, TJoin> Where(ExprBoolean predicate)
+        {
+            _exprSqlOptions.Sql.Where.And(predicate);
             return this;
         }
 
