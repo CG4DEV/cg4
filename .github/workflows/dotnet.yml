@@ -20,6 +20,12 @@ jobs:
       uses: actions/setup-dotnet@v2
       with:
         dotnet-version: 6.0.x
+
+    - name: Restore dependencies
+      run: dotnet restore
+
+    - name: Build
+      run: dotnet build --no-restore
     
     - name: Publish CG4.Benchmark.Tests
       uses: brandedoutcast/publish-nuget@v2.5.2
