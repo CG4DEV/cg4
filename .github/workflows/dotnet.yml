@@ -29,6 +29,7 @@ jobs:
     #   run: dotnet build --no-restore
     - name: test
       shell: bash
-      run: echo " ================ $TEST_VAR"
       env:
         TEST_VAR: ${{ secrets.TEST_VAR }}
+      run: echo " ================ $TEST_VAR"
+
