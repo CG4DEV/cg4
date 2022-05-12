@@ -32,7 +32,7 @@ jobs:
       run: |
         mkdir __out
         dotnet pack --no-restore -o __out
-        dotnet nuget push "./__out/*.nupkg" --skip-duplicate --no-symbols true --api-key ${{secrets.NUGET_API}}
+        dotnet nuget push "./__out/*.nupkg" --skip-duplicate --no-symbols true --api-key ${{secrets.NUGET_API}} --source https://api.nuget.org/v3/index.json
     
     # - name: Publish CG4.Benchmark.Tests
     #   uses: rohith/publish-nuget@v2
