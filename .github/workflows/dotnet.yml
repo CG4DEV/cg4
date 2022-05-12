@@ -18,7 +18,9 @@ jobs:
     steps:
 
     - name: Dump secrets
-      run: echo '${{ toJSON(secrets.TEST_VAR) }}'
+      run: echo '${{ toJSON(secrets) }}'
+    - name: Dump github
+      run: echo '${{ toJSON(github) }}'
     # - uses: actions/checkout@v3
     # - name: Setup .NET
     #   uses: actions/setup-dotnet@v2
