@@ -6,6 +6,10 @@ on:
   pull_request:
     branches: [ build ]
 
+env:
+  NUGET_KEY: ${{ secrets.NUGET_API }}
+  VERSION_STATIC: 0.1.${{ github.run_number }}-beta
+
 jobs:
   build_and_publish:
     runs-on: ubuntu-latest
@@ -31,8 +35,7 @@ jobs:
       uses: brandedoutcast/publish-nuget@v2.5.2
       with:
           PROJECT_FILE_PATH: src/CG4.Benchmark.Tests/CG4.Benchmark.Tests.csproj
-          NUGET_KEY: ${{ secrets.NUGET_API }}
-          VERSION_STATIC: 0.1.${{ github.run_number }}-beta
+
 
     # - name: Publish CG4.DataAccess
     #   uses: brandedoutcast/publish-nuget@v2.5.2
