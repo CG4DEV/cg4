@@ -31,4 +31,4 @@ jobs:
       shell: bash
       run: echo " ================ $TEST_VAR"
       env:
-        TEST_VAR: ${{secrets.TEST_VAR}}
+        TEST_VAR: ${{ secrets.TEST_VAR }}
