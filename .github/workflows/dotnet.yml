@@ -13,26 +13,26 @@ env:
 jobs:
   build_and_publish:
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        language: ['csharp']
+    # strategy:
+    #   fail-fast: false
+    #   matrix:
+    #     language: ['csharp']
 
     steps:
     - uses: actions/checkout@v3
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v2
-      with:
-        dotnet-version: 6.0.x
+    # - name: Setup .NET
+    #   uses: actions/setup-dotnet@v2
+    #   with:
+    #     dotnet-version: 6.0.x
 
-    - name: Restore dependencies
-      run: dotnet restore
+    # - name: Restore dependencies
+    #   run: dotnet restore
 
-    - name: Build
-      run: dotnet build --no-restore
+    # - name: Build
+    #   run: dotnet build --no-restore
     
     - name: Publish CG4.Benchmark.Tests
-      uses: brandedoutcast/publish-nuget@v2.5.2
+      uses: rohith/publish-nuget@v2
       with:
           PROJECT_FILE_PATH: src/CG4.Benchmark.Tests/CG4.Benchmark.Tests.csproj
 
