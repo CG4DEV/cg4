@@ -33,7 +33,7 @@ jobs:
       run: |
         mkdir __out
         dotnet pack --no-restore -o __out -p:PackageVersion=${VERSION_STATIC}
-        dotnet nuget push "./__out/*.nupkg" --skip-duplicate --no-symbols true --api-key ${{secrets.NUGET_API}}
+        dotnet nuget push "./__out/*.nupkg" --skip-duplicate --no-symbols true --api-key ${{secrets.NUGET_API}} || true
         rm -rf __out
     
     # - name: Publish CG4.Benchmark.Tests
