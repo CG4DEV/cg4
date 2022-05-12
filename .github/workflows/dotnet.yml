@@ -2,9 +2,9 @@ name: .NET
 
 on:
   push:
-    branches: [ build ]
+    branches: [ main ]
   pull_request:
-    branches: [ build ]
+    branches: [ main ]
 
 env:
   NUGET_AUTH_TOKEN: ${{ secrets.NUGET_API }}
