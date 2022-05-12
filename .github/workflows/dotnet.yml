@@ -21,8 +21,8 @@ jobs:
 
     - name: Dump secrets
       env:
-        super_secret: ${{ secrets.TEST_VAR }}
-      run: echo '${{ super_secret }}'
+        TEST_VAR: ${{ secrets.TEST_VAR }}
+      run: echo '${{ TEST_VAR }}'
     # - uses: actions/checkout@v3
     # - name: Setup .NET
     #   uses: actions/setup-dotnet@v2
