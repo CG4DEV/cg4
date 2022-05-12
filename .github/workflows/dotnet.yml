@@ -32,5 +32,5 @@ jobs:
       uses: brandedoutcast/publish-nuget@v2.5.2
       with:
           PROJECT_FILE_PATH: src/CG4.Benchmark.Tests/CG4.Benchmark.Tests.csproj
-          NUGET_KEY: ${{secrets.NUGET_API}}
-          VERSION_STATIC: 0.1.${{env.GITHUB_RUN_ID}}-beta
+          NUGET_KEY: ${{ secrets.NUGET_API }}
+          VERSION_STATIC: 0.1.${{ github.run_id }}-beta
