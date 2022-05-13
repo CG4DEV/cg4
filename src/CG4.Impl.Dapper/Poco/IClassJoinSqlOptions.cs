@@ -7,6 +7,8 @@ namespace CG4.Impl.Dapper.Poco
         where TEntity : class
         where TJoin : class
     {
+        IClassJoinSqlOptions<TEntity, TJoin> As(string tableAlias);
+
         IClassJoinSqlOptions<TEntity, TJoin> OrderBy<TKey>(Expression<Func<TJoin, TKey>> keySelector);
 
         IClassJoinSqlOptions<TEntity, TJoin> OrderByDesc<TKey>(Expression<Func<TJoin, TKey>> keySelector);
@@ -21,6 +23,7 @@ namespace CG4.Impl.Dapper.Poco
             where TNewJoin : class;
 
         IClassJoinSqlOptions<TEntity, TJoin> Where(Expression<Func<TJoin, bool>> predicate);
+
         IClassJoinSqlOptions<TEntity, TJoin> Where(ExprBoolean predicate);
 
         IClassSqlOptions<TEntity> ToBackMain();

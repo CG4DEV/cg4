@@ -3,6 +3,7 @@
     public interface ISqlOption
     {
         string Alias { get; }
+
         Type GetCurrentType();
     }
 }

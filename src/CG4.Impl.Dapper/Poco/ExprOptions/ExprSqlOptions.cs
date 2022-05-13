@@ -9,6 +9,9 @@ namespace CG4.Impl.Dapper.Poco.ExprOptions
         private readonly string _defAlias;
         private int _index = 0;
 
+        private readonly List<ExprColumn> _columns = new();
+        private readonly List<ExprBoolean> _booleans = new();
+
         public ExprSqlOptions(string defaultAlias)
         {
             _defAlias = defaultAlias;
@@ -28,13 +31,15 @@ namespace CG4.Impl.Dapper.Poco.ExprOptions
 
             foreach (var p in map.Properties)
             {
-                Sql.Select.Add(new() { Alias = Alias, Name = p.ColumnName, ResultName = p.Name });
+                var col = new ExprSelectedColumn() { Alias = Alias, Name = p.ColumnName, ResultName = p.Name };
+                _columns.Add(col);
+                Sql.Select.Add(col);
             }
         }
 
         internal ExprSql Sql { get; set; }
 
-        public string Alias { get; }
+        public string Alias { get; set; }
 
         internal string GetAlias() => $"{_defAlias}{_index++}";
 
@@ -49,6 +54,24 @@ namespace CG4.Impl.Dapper.Poco.ExprOptions
             {
                 Sql = Sql,
             };
+        }
+
+        public IClassSqlOptions<TEntity> As(string tableAlias)
+        {
+            Alias = tableAlias;
+            Sql.From.TableName.Alias = tableAlias;
+
+            foreach (var item in _columns)
+            {
+                item.Alias = tableAlias;
+            }
+
+            foreach (var item in _booleans)
+            {
+                SqlExprHelper.SetAlias(item, tableAlias);
+            }
+
+            return this;
         }
 
         public IClassJoinSqlOptions<TEntity, TJoin> Join<TJoin, TKey>(Expression<Func<TEntity, TKey>> keySelector, string alias)
@@ -94,6 +117,7 @@ namespace CG4.Impl.Dapper.Poco.ExprOptions
         public IClassSqlOptions<TEntity> Where(Expression<Func<TEntity, bool>> predicate)
         {
             var expr = SqlExprHelper.GenerateWhere(predicate, Alias);
+            _booleans.Add(expr);
             Sql.Where.And(expr);
 
             return this;

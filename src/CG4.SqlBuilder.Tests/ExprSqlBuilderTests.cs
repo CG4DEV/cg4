@@ -235,6 +235,34 @@ WHERE t.""code"" = 'test'
             Assert.Contains(@"WHERE t.""id"" = 12 AND (t.""code"" = '123' OR t.""code"" = '222') AND t.""number"" != 44 AND t0.""name"" = 'test'", sql);
         }
 
+        [Fact]
+        public void GetAll_TreeOfExpressions_SwapAliases()
+        {
+            var builder = new ExprSqlBuilder(_sqlSettings);
+
+            var idColumn = new ExprColumn("a1", "id");
+            var codeColumn = new ExprColumn("a1", "code");
+            var numberColumn = new ExprColumn("a1", "number");
+            var nameColumn = new ExprColumn("a2", "name");
+
+            var expr = idColumn == 12L
+                & (codeColumn == "123" | codeColumn == "222")
+                & numberColumn != 44
+                & nameColumn == "test";
+
+            var sql = builder.GetAll<TestEntity>(x =>
+            x.As("a1")
+            .Join<TestSecondEntity, long>(s => s.SecondId, "Second")
+            .As("a2")
+            .Where(expr));
+
+            Assert.NotNull(sql);
+
+            Assert.Contains(@"FROM ""test_entity"" AS a1", sql);
+            Assert.Contains(@"INNER JOIN ""test_second_entity"" AS a2 ON a2.""id"" = a1.""test_second_entity_id""", sql);
+            Assert.Contains(@"WHERE a1.""id"" = 12 AND (a1.""code"" = '123' OR a1.""code"" = '222') AND a1.""number"" != 44 AND a2.""name"" = 'test'", sql);
+        }
+
         [Table("test_entity")]
         public class TestEntity : EntityBase
         {
