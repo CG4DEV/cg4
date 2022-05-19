@@ -58,25 +58,17 @@ namespace CG4.Impl.Dapper.Poco.Expressions
 
         public Expr ParseMember(MemberExpression expression)
         {
-            Expr expr;
-
             if (expression.Expression.NodeType == ExpressionType.Parameter)
             {
-                expr = ParseExpr(expression.Expression);
-            }
-            else
-            {
-                expr = ParseMemberConstant(expression);
-            }
-
-            if (expr is ExprColumn col)
-            {
+                var col = ParseParametr((ParameterExpression)expression.Expression);
                 var name = expression.Member.Name;
                 var columntName = _map.Properties.FirstOrDefault(x => x.Name == name).ColumnName;
                 col.Name = columntName ?? name;
+
+                return col;
             }
 
-            return expr;
+            return ParseMemberConstant(expression);
         }
 
         public ExprColumn ParseParametr(ParameterExpression expression)

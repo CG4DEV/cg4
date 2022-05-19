@@ -42,5 +42,28 @@ namespace CG4.Impl.Dapper.Poco
 
             throw new InvalidOperationException("Должно быть выбрано поле сущности");
         }
+
+        public static void SetAlias(ExprBoolean expr, string alias)
+        {
+            switch (expr)
+            {
+                case ExprBoolAnd exprAnd:
+                    SetAlias(exprAnd.Left, alias);
+                    SetAlias(exprAnd.Right, alias);
+                    return;
+                case ExprBoolOr exprOr:
+                    SetAlias(exprOr.Left, alias);
+                    SetAlias(exprOr.Right, alias);
+                    return;
+                case ExprBoolEqPredicate eqPred:
+                    eqPred.Column.Alias = alias;
+                    return;
+                case ExprBoolNotEqPredicate neqPred:
+                    neqPred.Column.Alias = alias;
+                    return;
+                default:
+                    throw new ArgumentException($"Type {expr.GetType().Name} not supported");
+            }
+        }
     }
 }

@@ -9,10 +9,15 @@ namespace CG4.Impl.Dapper.Poco.ExprOptions
     {
         private readonly ExprSqlOptions<TEntity> _exprSqlOptions;
 
-        private ExprJoinSqlOptions(ExprSqlOptions<TEntity> exprSqlOptions, string alias)
+        private readonly List<ExprColumn> _columns = new();
+        private readonly List<ExprBoolean> _booleans = new();
+        private readonly ExprJoin _join;
+
+        private ExprJoinSqlOptions(ExprSqlOptions<TEntity> exprSqlOptions, string alias, ExprJoin exprJoin)
         {
             _exprSqlOptions = exprSqlOptions;
             Alias = alias;
+            _join = exprJoin;
         }
 
         public static ExprJoinSqlOptions<TEntity, TJoin> CreateJoin<TKey>(
@@ -61,46 +66,64 @@ namespace CG4.Impl.Dapper.Poco.ExprOptions
 
             var aliasJoin = exprSqlOptions.GetAlias();
 
-            exprJoin.TableColumn = new ExprColumn { Alias = aliasJoin, Name = mapEntity.Properties.First(x => x.IsPrymaryKey || x.IsIdentity).ColumnName };
+            exprJoin.TableColumn = new ExprColumn(aliasJoin, mapEntity.Properties.First(x => x.IsPrymaryKey || x.IsIdentity).ColumnName);
             exprJoin.OtherColumn = expr;
             exprJoin.TableName = new ExprTableName { Alias = aliasJoin, TableName = mapJoin.TableName };
 
+            var join = new ExprJoinSqlOptions<TEntity, TJoin>(exprSqlOptions, aliasJoin, exprJoin);
+
             foreach (var p in mapJoin.Properties.Where(x => !x.IsIdentity && !x.IsPrymaryKey && !x.IsIgnored))
             {
-                exprSqlOptions.Sql.Select.Add(new()
+                var col = new ExprSelectedColumn()
                 {
                     Alias = aliasJoin,
                     Name = p.ColumnName,
                     ResultName = alias + p.Name,
-                });
+                };
+
+                join._columns.Add(col);
+                exprSqlOptions.Sql.Select.Add(col);
             }
 
             exprSqlOptions.Sql.From.Joins.Add(exprJoin);
 
-            var join = new ExprJoinSqlOptions<TEntity, TJoin>(exprSqlOptions, aliasJoin);
-
             return join;
         }
 
-        public string Alias { get; }
+        public string Alias { get; set; }
 
         public Type GetCurrentType()
         {
             return typeof(TJoin);
         }
 
+        public IClassJoinSqlOptions<TEntity, TJoin> As(string tableAlias)
+        {
+            Alias = tableAlias;
+            _join.TableColumn.Alias = tableAlias;
+            _join.TableName.Alias = tableAlias;
+
+            foreach (var item in _columns)
+            {
+                item.Alias = tableAlias;
+            }
+
+            foreach (var item in _booleans)
+            {
+                SqlExprHelper.SetAlias(item, tableAlias);
+            }
+
+            return this;
+        }
+
         public IClassJoinSqlOptions<TEntity, TJoin> OrderBy<TKey>(Expression<Func<TJoin, TKey>> keySelector)
         {
-            var column = SqlExprHelper.GenerateColumn(keySelector, Alias);
-            _exprSqlOptions.Sql.OrderBy.Add(new ExprOrderColumn(column, true));
-            return this;
+            return OrderByInternal(keySelector, true);
         }
 
         public IClassJoinSqlOptions<TEntity, TJoin> OrderByDesc<TKey>(Expression<Func<TJoin, TKey>> keySelector)
         {
-            var column = SqlExprHelper.GenerateColumn(keySelector, Alias);
-            _exprSqlOptions.Sql.OrderBy.Add(new ExprOrderColumn(column, false));
-            return this;
+            return OrderByInternal(keySelector, false);
         }
 
         public IClassSqlOptions<TEntity> ToBackMain()
@@ -111,8 +134,16 @@ namespace CG4.Impl.Dapper.Poco.ExprOptions
         public IClassJoinSqlOptions<TEntity, TJoin> Where(Expression<Func<TJoin, bool>> predicate)
         {
             var expr = SqlExprHelper.GenerateWhere(predicate, Alias);
+
+            _booleans.Add(expr);
             _exprSqlOptions.Sql.Where.And(expr);
 
+            return this;
+        }
+
+        public IClassJoinSqlOptions<TEntity, TJoin> Where(ExprBoolean predicate)
+        {
+            _exprSqlOptions.Sql.Where.And(predicate);
             return this;
         }
 
@@ -129,6 +160,15 @@ namespace CG4.Impl.Dapper.Poco.ExprOptions
         public IClassJoinSqlOptions<TEntity, TNewJoin> JoinRight<TNewJoin, TKey>(Expression<Func<TEntity, TKey>> predicate, string alias) where TNewJoin : class
         {
             return ExprJoinSqlOptions<TEntity, TNewJoin>.CreateRightJoin(_exprSqlOptions, predicate, alias);
+        }
+
+        private IClassJoinSqlOptions<TEntity, TJoin> OrderByInternal<TKey>(Expression<Func<TJoin, TKey>> keySelector, bool ask)
+        {
+            var column = SqlExprHelper.GenerateColumn(keySelector, Alias);
+            var order = new ExprOrderColumn(column, ask);
+            _columns.Add(order);
+            _exprSqlOptions.Sql.OrderBy.Add(order);
+            return this;
         }
     }
 }
