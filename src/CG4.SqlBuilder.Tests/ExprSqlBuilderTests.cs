@@ -54,9 +54,9 @@ namespace CG4.SqlBuilder.Tests
 
             Assert.NotNull(sql);
             Assert.Equal(
-                @"SELECT t0.""code"" AS ""Code"", t0.""number"" AS ""Number"", t0.""test_second_entity_id"" AS ""SecondId"", t0.""id"" AS ""Id"", t0.""create_date"" AS ""CreateDate"", t0.""update_date"" AS ""UpdateDate""
-FROM ""test_entity"" AS t0
-WHERE t0.""number"" = 10 AND t0.""id"" = @Id
+                @"SELECT t.""code"" AS ""Code"", t.""number"" AS ""Number"", t.""test_second_entity_id"" AS ""SecondId"", t.""id"" AS ""Id"", t.""create_date"" AS ""CreateDate"", t.""update_date"" AS ""UpdateDate""
+FROM ""test_entity"" AS t
+WHERE t.""number"" = 10 AND t.""id"" = @Id
 ",
                 sql);
         }
@@ -70,8 +70,8 @@ WHERE t0.""number"" = 10 AND t0.""id"" = @Id
 
             Assert.NotNull(sql);
             Assert.Equal(
-                @"SELECT t0.""code"" AS ""Code"", t0.""number"" AS ""Number"", t0.""test_second_entity_id"" AS ""SecondId"", t0.""id"" AS ""Id"", t0.""create_date"" AS ""CreateDate"", t0.""update_date"" AS ""UpdateDate""
-FROM ""test_entity"" AS t0
+                @"SELECT t.""code"" AS ""Code"", t.""number"" AS ""Number"", t.""test_second_entity_id"" AS ""SecondId"", t.""id"" AS ""Id"", t.""create_date"" AS ""CreateDate"", t.""update_date"" AS ""UpdateDate""
+FROM ""test_entity"" AS t
 ",
                 sql);
         }
@@ -85,8 +85,8 @@ FROM ""test_entity"" AS t0
 
             Assert.NotNull(sql);
             Assert.Equal(
-                @"SELECT t0.""code"" AS ""Code"", t0.""number"" AS ""Number"", t0.""test_second_entity_id"" AS ""SecondId"", t0.""id"" AS ""Id"", t0.""create_date"" AS ""CreateDate"", t0.""update_date"" AS ""UpdateDate""
-FROM ""test_entity"" AS t0
+                @"SELECT t.""code"" AS ""Code"", t.""number"" AS ""Number"", t.""test_second_entity_id"" AS ""SecondId"", t.""id"" AS ""Id"", t.""create_date"" AS ""CreateDate"", t.""update_date"" AS ""UpdateDate""
+FROM ""test_entity"" AS t
 LIMIT 10 OFFSET 10",
                 sql);
         }
@@ -103,10 +103,10 @@ LIMIT 10 OFFSET 10",
 
             Assert.NotNull(sql);
             Assert.Equal(
-                @"SELECT t0.""code"" AS ""Code"", t0.""number"" AS ""Number"", t0.""test_second_entity_id"" AS ""SecondId"", t0.""id"" AS ""Id"", t0.""create_date"" AS ""CreateDate"", t0.""update_date"" AS ""UpdateDate""
-FROM ""test_entity"" AS t0
-WHERE t0.""code"" = 'test'
-ORDER BY t0.""create_date"" ASC, t0.""number"" DESC
+                @"SELECT t.""code"" AS ""Code"", t.""number"" AS ""Number"", t.""test_second_entity_id"" AS ""SecondId"", t.""id"" AS ""Id"", t.""create_date"" AS ""CreateDate"", t.""update_date"" AS ""UpdateDate""
+FROM ""test_entity"" AS t
+WHERE t.""code"" = 'test'
+ORDER BY t.""create_date"" ASC, t.""number"" DESC
 ",
                 sql);
         }
@@ -140,8 +140,8 @@ WHERE t.""code"" = 'test'
         //            .Join<Position, long?>(j => j.PositionId, "Position"));
 
         //    Assert.NotNull(sql);
-        //    Assert.Contains("JOIN \"departments\" AS Department ON Department.\"id\" = t0.\"department_id\"", sql);
-        //    Assert.Contains("JOIN \"positions\" AS Position ON Position.\"id\" = t0.\"position_id\"", sql);
+        //    Assert.Contains("JOIN \"departments\" AS Department ON Department.\"id\" = t.\"department_id\"", sql);
+        //    Assert.Contains("JOIN \"positions\" AS Position ON Position.\"id\" = t.\"position_id\"", sql);
         //}
 
         [Fact]
@@ -220,7 +220,7 @@ WHERE t.""code"" = 'test'
             var idColumn = new ExprColumn("t", "id");
             var codeColumn = new ExprColumn("t", "code");
             var numberColumn = new ExprColumn("t", "number");
-            var nameColumn = new ExprColumn("t0", "name");
+            var nameColumn = new ExprColumn("t", "name");
 
             var expr = idColumn == 12L
                 & (codeColumn == "123" | codeColumn == "222")
@@ -232,7 +232,7 @@ WHERE t.""code"" = 'test'
             .Where(expr));
 
             Assert.NotNull(sql);
-            Assert.Contains(@"WHERE t.""id"" = 12 AND (t.""code"" = '123' OR t.""code"" = '222') AND t.""number"" != 44 AND t0.""name"" = 'test'", sql);
+            Assert.Contains(@"WHERE t.""id"" = 12 AND (t.""code"" = '123' OR t.""code"" = '222') AND t.""number"" != 44 AND t.""name"" = 'test'", sql);
         }
 
         [Fact]

@@ -18,5 +18,8 @@ namespace CG4.Impl.Dapper.Poco
 
         string DeleteById<T>()
             where T : class;
+
+        string Count<T>(Expression<Action<IClassSqlOptions<T>>> predicate = null)
+            where T : class;
     }
 }
