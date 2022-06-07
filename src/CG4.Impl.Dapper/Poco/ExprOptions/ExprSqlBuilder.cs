@@ -64,6 +64,22 @@ namespace CG4.Impl.Dapper.Poco.ExprOptions
             return $"UPDATE {GetTableSqlName(PocoHub.GetMap<T>())} SET {string.Join(',', props)} WHERE {GetSqlId()} = {BuildParametr(ID)}";
         }
 
+        public string Count<T>(Expression<Action<IClassSqlOptions<T>>> predicate = null)
+            where T : class
+        {
+            var options = GetSqlOptionsResult(predicate);
+
+            var countFunc = new ExprFunctionCount();
+            countFunc.Parametrs.Add(new ExprStar());
+
+            options.Sql.Select = new ExprSelect
+            {
+                countFunc
+            };
+
+            return GenerateSelectQuery(options.Sql);
+        }
+
         private string GenerateSelectQuery(ExprSql sql)
         {
             var sb = new StringBuilder();

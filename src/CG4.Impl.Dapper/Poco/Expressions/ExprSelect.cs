@@ -2,18 +2,18 @@
 
 namespace CG4.Impl.Dapper.Poco.Expressions
 {
-    public class ExprSelect : Expr, IEnumerable<ExprSelectedColumn>
+    public class ExprSelect : Expr, IEnumerable<Expr>
     {
-        private readonly List<ExprSelectedColumn> _selectedColumns = new();
+        private readonly List<Expr> _selectedColumns = new();
 
-        public void Add(ExprSelectedColumn selectedColumn)
+        public void Add(Expr selectedColumn)
         {
             _selectedColumns.Add(selectedColumn);
         }
 
         public override void Accept(IExprVisitor visitor) => visitor.VisitSelect(this);
 
-        public IEnumerator<ExprSelectedColumn> GetEnumerator()
+        public IEnumerator<Expr> GetEnumerator()
         {
             return _selectedColumns.GetEnumerator();
         }
