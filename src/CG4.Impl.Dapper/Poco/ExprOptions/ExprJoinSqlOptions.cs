@@ -143,6 +143,20 @@ namespace CG4.Impl.Dapper.Poco.ExprOptions
 
         public IClassJoinSqlOptions<TEntity, TJoin> Where(ExprBoolean predicate)
         {
+            SqlExprHelper.SetAlias(predicate, Alias);
+            _booleans.Add(predicate);
+            _exprSqlOptions.Sql.Where.And(predicate);
+
+            return this;
+        }
+
+
+        /// <summary>
+        /// Append where conditions without alias updates
+        /// </summary>
+        /// <param name="predicate">Additional conditions</param>
+        public IClassJoinSqlOptions<TEntity, TJoin> AppendWhere(ExprBoolean predicate)
+        {
             _exprSqlOptions.Sql.Where.And(predicate);
             return this;
         }

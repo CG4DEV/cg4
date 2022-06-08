@@ -19,6 +19,7 @@ namespace CG4.Impl.Dapper.Poco.Expressions
             Expr result = expression.NodeType switch
             {
                 ExpressionType.Equal => ParseEqual((BinaryExpression)expression),
+                ExpressionType.NotEqual => ParseNotEqual((BinaryExpression)expression),
                 ExpressionType.Constant => ParseConst((ConstantExpression)expression),
                 ExpressionType.MemberAccess => ParseMember((MemberExpression)expression),
                 ExpressionType.Parameter => ParseParametr((ParameterExpression)expression),
@@ -33,18 +34,20 @@ namespace CG4.Impl.Dapper.Poco.Expressions
 
         public ExprBoolean ParseEqual(BinaryExpression expression)
         {
-            var left = ParseExpr(expression.Left);
-            var right = ParseExpr(expression.Right);
-
-            ExprColumn col = left as ExprColumn ?? right as ExprColumn;
-            ExprConst val = left as ExprConst ?? right as ExprConst;
-
-            if (col is null || val is null)
-            {
-                throw new NotSupportedException();
-            }
+            var (col, val) = ParseEquality(expression);
 
             return new ExprBoolEqPredicate
+            {
+                Column = col,
+                Value = val,
+            };
+        }
+
+        public ExprBoolean ParseNotEqual(BinaryExpression expression)
+        {
+            var (col, val) = ParseEquality(expression);
+
+            return new ExprBoolNotEqPredicate
             {
                 Column = col,
                 Value = val,
@@ -138,6 +141,22 @@ namespace CG4.Impl.Dapper.Poco.Expressions
                 MemberTypes.Property => (((PropertyInfo)member).PropertyType, ((PropertyInfo)member).GetValue(val)),
                 _ => throw new NotSupportedException($"Member '{member}' not supported"),
             };
+
+        private (ExprColumn Column, ExprConst Value) ParseEquality(BinaryExpression expression)
+        {
+            var left = ParseExpr(expression.Left);
+            var right = ParseExpr(expression.Right);
+
+            ExprColumn col = left as ExprColumn ?? right as ExprColumn;
+            ExprConst val = left as ExprConst ?? right as ExprConst;
+
+            if (col is null || val is null)
+            {
+                throw new NotSupportedException();
+            }
+
+            return (col, val);
+        }
 
     }
 }

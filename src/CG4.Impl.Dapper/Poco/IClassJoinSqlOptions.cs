@@ -26,6 +26,12 @@ namespace CG4.Impl.Dapper.Poco
 
         IClassJoinSqlOptions<TEntity, TJoin> Where(ExprBoolean predicate);
 
+        /// <summary>
+        /// Append where conditions without alias updates
+        /// </summary>
+        /// <param name="predicate">Additional conditions</param>
+        IClassJoinSqlOptions<TEntity, TJoin> AppendWhere(ExprBoolean predicate);
+
         IClassSqlOptions<TEntity> ToBackMain();
     }
 }

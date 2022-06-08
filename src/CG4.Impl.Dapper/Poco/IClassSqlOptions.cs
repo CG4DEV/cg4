@@ -12,6 +12,12 @@ namespace CG4.Impl.Dapper.Poco
 
         IClassSqlOptions<TEntity> Where(ExprBoolean predicate);
 
+        /// <summary>
+        /// Append where conditions without alias updates
+        /// </summary>
+        /// <param name="predicate">Additional conditions</param>
+        IClassSqlOptions<TEntity> AppendWhere(ExprBoolean predicate);
+
         IClassSqlOptions<TEntity> OrderBy<TKey>(Expression<Func<TEntity, TKey>> keySelector);
 
         IClassSqlOptions<TEntity> OrderByDesc<TKey>(Expression<Func<TEntity, TKey>> keySelector);
