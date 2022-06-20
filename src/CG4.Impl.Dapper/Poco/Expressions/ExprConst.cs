@@ -1,4 +1,6 @@
-﻿namespace CG4.Impl.Dapper.Poco.Expressions
+﻿using System.Collections;
+
+namespace CG4.Impl.Dapper.Poco.Expressions
 {
     public abstract class ExprConst : Expr
     {
@@ -23,12 +25,34 @@
                 return new ExprNull();
             }
 
+            if (_builders.TryGetValue(valueType, out var builder))
+            {
+                return builder.Invoke(value);
+            }
+
             if (valueType.IsEnum)
             {
                 return _builders[typeof(int)].Invoke(value);
             }
 
-            return _builders[valueType].Invoke(value);
+            if (valueType.IsAssignableTo(typeof(IEnumerable)))
+            {
+                return CreateArray(value as IEnumerable);
+            }
+
+            throw new NotSupportedException($"Type '{valueType.Name}' not supported");
+        }
+
+        public static ExprArray CreateArray(IEnumerable objects)
+        {
+            var arr = new ExprArray();
+
+            foreach (var item in objects)
+            {
+                arr.Add(Create(item.GetType(), item));
+            }
+
+            return arr;
         }
     }
 }

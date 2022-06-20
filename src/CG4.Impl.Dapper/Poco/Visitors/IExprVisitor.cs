@@ -59,5 +59,11 @@ namespace CG4.Impl.Dapper.Poco
         void VisitNull(ExprNull exprNull);
 
         void VisitBool(ExprBool exprBool);
+
+        void VisitLike(ExprLike like);
+
+        void VisitIn(ExprIn exprIn);
+
+        void VisitArray(ExprArray array);
     }
 }

@@ -26,10 +26,36 @@ namespace CG4.Impl.Dapper.Poco.Expressions
                 ExpressionType.AndAlso => ParseAnd((BinaryExpression)expression),
                 ExpressionType.OrElse => ParseOr((BinaryExpression)expression),
                 ExpressionType.Convert => ParseConvert((UnaryExpression)expression),
+                ExpressionType.Call => ParseCall((MethodCallExpression)expression),
                 _ => throw new NotSupportedException($"NodeType '{expression.NodeType}' not suported"),
             };
 
             return result;
+        }
+
+        public Expr ParseCall(MethodCallExpression expression)
+        {
+            if (expression.Type == typeof(bool))
+            {
+                var expr = ExprBoolFunc.Create(expression.Method.DeclaringType, expression.Method);
+                var exprConst = (ExprConst)ParseExpr(expression.Arguments[0]);
+                switch (expr)
+                {
+                    case ExprLike exprLike:
+                        exprLike.Column = (ExprColumn)ParseExpr(expression.Object);
+                        exprLike.Value = ((ExprStr)exprConst).Value;
+                        break;
+                    case ExprIn exprIn:
+                        exprIn.Column = (ExprColumn)ParseExpr(expression.Arguments[1]);
+                        exprIn.Values = (ExprArray)exprConst;
+                        break;
+                    default: throw new NotSupportedException($"Expression '{expr.GetType().Name}' not supported");
+                }
+
+                return expr;
+            }
+
+            throw new NotSupportedException($"Method '{expression.Method.Name}' for type '{expression.Type.Name}' not suported");
         }
 
         public ExprBoolean ParseEqual(BinaryExpression expression)

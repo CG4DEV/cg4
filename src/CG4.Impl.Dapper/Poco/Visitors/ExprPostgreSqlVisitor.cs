@@ -269,6 +269,31 @@ namespace CG4.Impl.Dapper.Poco
             }
         }
 
+        public void VisitLike(ExprLike exprLike)
+        {
+            exprLike.Column.Accept(this);
+            _stringBuilder.Append(" ILIKE '");
+            _stringBuilder.Append(exprLike.StartsPattern);
+            _stringBuilder.Append(exprLike.Value);
+            _stringBuilder.Append(exprLike.EndsPattern);
+            _stringBuilder.Append('\'');
+        }
+
+        public void VisitIn(ExprIn exprIn)
+        {
+            exprIn.Column.Accept(this);
+            _stringBuilder.Append(" ANY (");
+            AcceptList(exprIn.Values);
+            _stringBuilder.Append(')');
+        }
+
+        public void VisitArray(ExprArray array)
+        {
+            _stringBuilder.Append("ARRAY [");
+            AcceptList(array);
+            _stringBuilder.Append(']');
+        }
+
         private void AcceptList(IEnumerable<Expr> expressions, string separator = ", ")
         {
             bool isFirst = true;
@@ -280,8 +305,8 @@ namespace CG4.Impl.Dapper.Poco
                     _stringBuilder.Append(separator);
                 }
 
-                isFirst = false;
                 expr.Accept(this);
+                isFirst = false;
             }
         }
     }
