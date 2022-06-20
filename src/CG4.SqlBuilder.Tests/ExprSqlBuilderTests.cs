@@ -229,7 +229,7 @@ WHERE t.""code"" = 'test'
 
             var sql = builder.GetAll<TestEntity>(x =>
             x.Join<TestSecondEntity, long>(s => s.SecondId, "Second")
-            .Where(expr));
+            .AppendWhere(expr));
 
             Assert.NotNull(sql);
             Assert.Contains(@"WHERE t.""id"" = 12 AND (t.""code"" = '123' OR t.""code"" = '222') AND t.""number"" != 44 AND t.""name"" = 'test'", sql);
@@ -254,7 +254,36 @@ WHERE t.""code"" = 'test'
             x.As("a1")
             .Join<TestSecondEntity, long>(s => s.SecondId, "Second")
             .As("a2")
-            .Where(expr));
+            .AppendWhere(expr));
+
+            Assert.NotNull(sql);
+
+            Assert.Contains(@"FROM ""test_entity"" AS a1", sql);
+            Assert.Contains(@"INNER JOIN ""test_second_entity"" AS a2 ON a2.""id"" = a1.""test_second_entity_id""", sql);
+            Assert.Contains(@"WHERE a1.""id"" = 12 AND (a1.""code"" = '123' OR a1.""code"" = '222') AND a1.""number"" != 44 AND a2.""name"" = 'test'", sql);
+        }
+
+        [Fact]
+        public void GetAll_TreeOfExpressionsByHelper_SwapAliases()
+        {
+            var builder = new ExprSqlBuilder(_sqlSettings);
+
+            var idCheck = SqlExprHelper.GenerateWhere<TestEntity>(a1 => a1.Id == 12L);
+            var codeIs123 = SqlExprHelper.GenerateWhere<TestEntity>(a1 => a1.Code == "123");
+            var codeIs222 = SqlExprHelper.GenerateWhere<TestEntity>(a1 => a1.Code == "222");
+            var numberIsnt44 = SqlExprHelper.GenerateWhere<TestEntity>(a1 => a1.Number != 44);
+            var namecheck = SqlExprHelper.GenerateWhere<TestSecondEntity>(a2 => a2.Name == "test");
+
+            var expr = idCheck
+                & (codeIs123 | codeIs222)
+                & numberIsnt44;
+
+            var sql = builder.GetAll<TestEntity>(x =>
+            x.Where(expr)
+            .As("a1")
+            .Join<TestSecondEntity, long>(s => s.SecondId, "Second")
+            .As("a2")
+            .Where(namecheck));
 
             Assert.NotNull(sql);
 

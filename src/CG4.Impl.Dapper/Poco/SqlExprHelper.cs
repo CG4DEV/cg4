@@ -5,7 +5,7 @@ namespace CG4.Impl.Dapper.Poco
 {
     public static class SqlExprHelper
     {
-        public static Expr GenerateWhere<TEntity>(Expression<Func<TEntity, bool>> expression)
+        public static ExprBoolean GenerateWhere<TEntity>(Expression<Func<TEntity, bool>> expression)
             where TEntity : class
         {
             var alias = expression.Parameters.First().Name;
