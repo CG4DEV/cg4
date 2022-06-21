@@ -85,6 +85,12 @@ namespace CG4.Impl.Dapper.Poco
                 case ExprBoolNotEqPredicate neqPred:
                     neqPred.Column.Alias = alias;
                     return;
+                case ExprLike like:
+                    like.Column.Alias = alias;
+                    return;
+                case ExprIn exprIn:
+                    exprIn.Column.Alias = alias;
+                    return;
                 case ExprBoolEmpty:
                     return;
                 default:
