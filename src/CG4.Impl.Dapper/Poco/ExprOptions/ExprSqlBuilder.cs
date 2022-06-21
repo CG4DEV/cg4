@@ -77,6 +77,9 @@ namespace CG4.Impl.Dapper.Poco.ExprOptions
                 countFunc
             };
 
+            options.Sql.Limit = null;
+            options.Sql.Offset = null;
+
             return GenerateSelectQuery(options.Sql);
         }
 
