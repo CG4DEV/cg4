@@ -292,6 +292,46 @@ WHERE t.""code"" = 'test'
             Assert.Contains(@"WHERE a1.""id"" = 12 AND (a1.""code"" = '123' OR a1.""code"" = '222') AND a1.""number"" != 44 AND a2.""name"" = 'test'", sql);
         }
 
+        [Fact]
+        public void GetAll_EmptyExpressions_CorrectSql()
+        {
+            var builder = new ExprSqlBuilder(_sqlSettings);
+            var empty = ExprBoolean.Empty;
+
+            var sql = builder.GetAll<TestEntity>(x =>
+            x.Where(empty)
+            .As("a1")
+            .Join<TestSecondEntity, long>(s => s.SecondId, "Second")
+            .As("a2"));
+
+            Assert.NotNull(sql);
+
+            Assert.Contains(@"FROM ""test_entity"" AS a1", sql);
+            Assert.Contains(@"INNER JOIN ""test_second_entity"" AS a2 ON a2.""id"" = a1.""test_second_entity_id""", sql);
+            Assert.Contains(@"WHERE TRUE", sql);
+        }
+
+        [Fact]
+        public void GetAll_ExprWithEmptyExpressions_CorrectSql()
+        {
+            var builder = new ExprSqlBuilder(_sqlSettings);
+            var expr = ExprBoolean.Empty;
+
+            expr = expr.And<TestEntity>(x => x.Id == 12L);
+
+            var sql = builder.GetAll<TestEntity>(x =>
+            x.Where(expr)
+            .As("a1")
+            .Join<TestSecondEntity, long>(s => s.SecondId, "Second")
+            .As("a2"));
+
+            Assert.NotNull(sql);
+
+            Assert.Contains(@"FROM ""test_entity"" AS a1", sql);
+            Assert.Contains(@"INNER JOIN ""test_second_entity"" AS a2 ON a2.""id"" = a1.""test_second_entity_id""", sql);
+            Assert.Contains(@"WHERE a1.""id"" = 12", sql);
+        }
+
         [Table("test_entity")]
         public class TestEntity : EntityBase
         {

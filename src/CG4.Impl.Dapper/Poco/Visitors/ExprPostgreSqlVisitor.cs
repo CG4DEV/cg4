@@ -294,6 +294,11 @@ namespace CG4.Impl.Dapper.Poco
             _stringBuilder.Append(']');
         }
 
+        public void VisitBoolEmpty(ExprBoolEmpty empty)
+        {
+            _stringBuilder.Append("TRUE");
+        }
+
         private void AcceptList(IEnumerable<Expr> expressions, string separator = ", ")
         {
             bool isFirst = true;

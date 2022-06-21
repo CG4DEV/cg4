@@ -21,6 +21,30 @@ namespace CG4.Impl.Dapper.Poco
             return (ExprBoolean)builder.ParseExpr(expression.Body);
         }
 
+        public static ExprBoolean And<TEntity>(this ExprBoolean expr, Expression<Func<TEntity, bool>> expression)
+            where TEntity : class
+        {
+            return expr.And(expression, expression.Parameters.First().Name);
+        }
+
+        public static ExprBoolean And<TEntity>(this ExprBoolean expr, Expression<Func<TEntity, bool>> expression, string alias)
+            where TEntity : class
+        {
+            return expr & GenerateWhere(expression, alias);
+        }
+
+        public static ExprBoolean Or<TEntity>(this ExprBoolean expr, Expression<Func<TEntity, bool>> expression)
+            where TEntity : class
+        {
+            return expr.Or(expression, expression.Parameters.First().Name);
+        }
+
+        public static ExprBoolean Or<TEntity>(this ExprBoolean expr, Expression<Func<TEntity, bool>> expression, string alias)
+            where TEntity : class
+        {
+            return expr | GenerateWhere(expression, alias);
+        }
+
         public static ExprColumn GenerateColumn<TEntity, TKey>(Expression<Func<TEntity, TKey>> keySelector)
             where TEntity : class
         {
@@ -60,6 +84,8 @@ namespace CG4.Impl.Dapper.Poco
                     return;
                 case ExprBoolNotEqPredicate neqPred:
                     neqPred.Column.Alias = alias;
+                    return;
+                case ExprBoolEmpty:
                     return;
                 default:
                     throw new ArgumentException($"Type {expr.GetType().Name} not supported");
