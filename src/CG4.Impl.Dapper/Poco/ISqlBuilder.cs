@@ -1,4 +1,5 @@
 ﻿using System.Linq.Expressions;
+using CG4.Impl.Dapper.Poco.Expressions;
 
 namespace CG4.Impl.Dapper.Poco
 {
@@ -21,5 +22,10 @@ namespace CG4.Impl.Dapper.Poco
 
         string Count<T>(Expression<Action<IClassSqlOptions<T>>> predicate = null)
             where T : class;
+
+        ExprSql GenerateSql<T>(Expression<Action<IClassSqlOptions<T>>> predicate = null)
+            where T : class;
+
+        string Serialize(ExprSql sql);
     }
 }

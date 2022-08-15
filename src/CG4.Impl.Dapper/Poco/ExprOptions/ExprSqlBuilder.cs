@@ -82,6 +82,17 @@ namespace CG4.Impl.Dapper.Poco.ExprOptions
 
             return GenerateSelectQuery(options.Sql);
         }
+        public ExprSql GenerateSql<T>(Expression<Action<IClassSqlOptions<T>>> predicate = null)
+            where T : class
+        {
+            var options = GetSqlOptionsResult(predicate);
+            return options.Sql;
+        }
+
+        public string Serialize(ExprSql sql)
+        {
+            return GenerateSelectQuery(sql);
+        }
 
         private string GenerateSelectQuery(ExprSql sql)
         {

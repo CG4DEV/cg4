@@ -160,12 +160,12 @@ namespace CG4.Impl.Dapper
             {
                 using (connection = await _factory.CreateAsync())
                 {
-                    return await connection.QueryFirstOrDefaultAsync<T>(sql, param, transaction: transaction);
+                    return await connection.QuerySingleOrDefaultAsync<T>(sql, param, transaction: transaction);
                 }
             }
             else
             {
-                return await connection.QueryFirstOrDefaultAsync<T>(sql, param, transaction: transaction);
+                return await connection.QuerySingleOrDefaultAsync<T>(sql, param, transaction: transaction);
             }
         }
     }

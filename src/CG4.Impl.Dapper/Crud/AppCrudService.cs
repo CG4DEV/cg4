@@ -5,7 +5,7 @@ using CG4.Impl.Dapper.Poco;
 
 namespace CG4.Impl.Dapper.Crud
 {
-    public class AppCrudService : RepositoryDapper
+    public class AppCrudService : RepositoryDapper, IAppCrudService
     {
         private readonly ISqlBuilder _sqlBuilder;
 
@@ -15,12 +15,40 @@ namespace CG4.Impl.Dapper.Crud
             _sqlBuilder = sqlBuilder;
         }
 
-        public Task<T> GetAsync<T>(T entity, Expression<Action<IClassSqlOptions<T>>> predicate = null, IDbConnection connection = null, IDbTransaction transaction = null)
-            where T : class, IEntity, IEntityBase, new()
+        public Task<T> GetAsync<T>(long id, IDbConnection connection = null, IDbTransaction transaction = null)
+            where T : class, IEntityBase, new()
         {
-            var sql = _sqlBuilder.GetById(predicate);
+            var exprSql = _sqlBuilder.GenerateSql<T>(x => x.Where(w => w.Id == id));
+            var sql = _sqlBuilder.Serialize(exprSql);
 
-            return base.QuerySingleOrDefaultAsync<T>(sql, entity, connection, transaction);
+            return QuerySingleOrDefaultAsync<T>(sql, connection: connection, transaction: transaction);
+        }
+
+        public Task<T> GetAsync<T>(Expression<Action<IClassSqlOptions<T>>> predicate, IDbConnection connection = null, IDbTransaction transaction = null)
+            where T : class, IEntityBase, new()
+        {
+            var sql = _sqlBuilder.GetAll(predicate);
+
+            return QuerySingleOrDefaultAsync<T>(sql, connection: connection, transaction: transaction);
+        }
+
+        public Task<TResult> GetAsync<TEntity, TResult>(long id, IDbConnection connection = null, IDbTransaction transaction = null)
+            where TEntity : class, IEntityBase, new()
+            where TResult : class, new()
+        {
+            var exprSql = _sqlBuilder.GenerateSql<TEntity>(x => x.Where(w => w.Id == id));
+            var sql = _sqlBuilder.Serialize(exprSql);
+
+            return QuerySingleOrDefaultAsync<TResult>(sql, connection: connection, transaction: transaction);
+        }
+
+        public Task<TResult> GetAsync<TEntity, TResult>(Expression<Action<IClassSqlOptions<TEntity>>> predicate, IDbConnection connection = null, IDbTransaction transaction = null)
+            where TEntity : class, IEntityBase, new()
+            where TResult : class, new()
+        {
+            var sql = _sqlBuilder.GetAll(predicate);
+
+            return QuerySingleOrDefaultAsync<TResult>(sql, connection: connection, transaction: transaction);
         }
 
         public Task<IEnumerable<T>> GetAllAsync<T>(Expression<Action<IClassSqlOptions<T>>> predicate = null, IDbConnection connection = null, IDbTransaction transaction = null)
@@ -28,8 +56,16 @@ namespace CG4.Impl.Dapper.Crud
         {
             var sql = _sqlBuilder.GetAll(predicate);
 
-            // TODO : сделать проброс через параметры
-            return base.QueryAsync<T>(sql, null, connection, transaction);
+            return QueryAsync<T>(sql, connection: connection, transaction: transaction);
+        }
+
+        public Task<IEnumerable<TResult>> GetAllAsync<TEntity, TResult>(Expression<Action<IClassSqlOptions<TEntity>>> predicate = null, IDbConnection connection = null, IDbTransaction transaction = null)
+            where TEntity : class, IEntityBase, new()
+            where TResult : class, new()
+        {
+            var sql = _sqlBuilder.GetAll(predicate);
+
+            return QueryAsync<TResult>(sql, connection: connection, transaction: transaction);
         }
 
         public async Task<T> CreateAsync<T>(T entity, IDbConnection connection = null, IDbTransaction transaction = null)
@@ -39,12 +75,9 @@ namespace CG4.Impl.Dapper.Crud
             entity.UpdateDate = DateTimeOffset.UtcNow;
 
             var sql = _sqlBuilder.Insert<T>();
+            var identityValue = await QuerySingleOrDefaultAsync<long>(sql, entity, connection, transaction);
 
-            var identityValue = await this.QuerySingleOrDefaultAsync<long>(sql, entity, connection, transaction);
-
-            // set identity
-            var map = PocoHub.GetMap<T>().GetIdentity();
-            map.PropertyInfo.SetValue(entity, identityValue);
+            entity.Id = identityValue;
 
             return entity;
         }
@@ -52,32 +85,26 @@ namespace CG4.Impl.Dapper.Crud
         public async Task<T> UpdateAsync<T>(T entity, IDbConnection connection = null, IDbTransaction transaction = null)
             where T : class, IEntityBase, new()
         {
-            var sql = _sqlBuilder.GetById<T>();
-
-            entity = await this.QuerySingleOrDefaultAsync<T>(sql, entity, connection, transaction);
-
-            if (entity == null)
-            {
-                return null;
-            }
-
             entity.UpdateDate = DateTimeOffset.UtcNow;
 
             var sql2 = _sqlBuilder.UpdateById<T>();
 
-            _ = await base.ExecuteAsync(sql2, entity, connection, transaction);
+            var entityUpdated = await ExecuteAsync(sql2, entity, connection, transaction);
+
+            if (entityUpdated == 0)
+            {
+                return null;
+            }
 
             return entity;
         }
 
-        public async Task<T> DeleteAsync<T>(T entity, IDbConnection connection = null, IDbTransaction transaction = null)
+        public Task DeleteAsync<T>(long id, IDbConnection connection = null, IDbTransaction transaction = null)
             where T : class, IEntityBase, new()
         {
             var sql = _sqlBuilder.DeleteById<T>();
 
-            _ = await base.ExecuteAsync(sql, entity, connection, transaction);
-
-            return entity;
+            return ExecuteAsync(sql, new { Id = id }, connection, transaction);
         }
     }
 }
