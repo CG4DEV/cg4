@@ -10,7 +10,7 @@ namespace CG4.Impl.Dapper.Poco
 
         public bool IsIgnored { get; internal set; }
 
-        public bool IsReadOnly { get; internal set; }
+        public bool AllowEdit { get; internal set; }
 
         public bool IsIdentity { get; internal set; }
 

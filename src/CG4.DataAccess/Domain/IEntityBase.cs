@@ -28,6 +28,7 @@ namespace CG4.DataAccess.Domain
         ///     Дата создания сущности.
         /// </summary>
         [Column("create_date")]
+        [Editable(false)]
         public DateTimeOffset CreateDate { get; set; }
 
         /// <summary>
