@@ -59,6 +59,7 @@ namespace CG4.Impl.Dapper.Poco.ExprOptions
             where T : class
         {
             var props = GetProperties<T>()
+                .Where(x => x.AllowEdit)
                 .Select(x => $"{CoverName(x.ColumnName)} = {BuildParametr(x.Name)}");
 
             return $"UPDATE {GetTableSqlName(PocoHub.GetMap<T>())} SET {string.Join(',', props)} WHERE {GetSqlId()} = {BuildParametr(ID)}";
@@ -82,6 +83,7 @@ namespace CG4.Impl.Dapper.Poco.ExprOptions
 
             return GenerateSelectQuery(options.Sql);
         }
+
         public ExprSql GenerateSql<T>(Expression<Action<IClassSqlOptions<T>>> predicate = null)
             where T : class
         {

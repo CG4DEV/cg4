@@ -18,11 +18,12 @@ namespace CG4.Impl.Dapper.Poco
 
         internal static ClassMap Map(Type type)
         {
-            ClassMap map = new();
-
-            // Map Class
-            map.EntityType = type;
-            map.ClassName = type.Name;
+            ClassMap map = new()
+            {
+                // Map Class
+                EntityType = type,
+                ClassName = type.Name
+            };
 
             foreach (var attr in type.GetCustomAttributes())
             {
@@ -41,10 +42,12 @@ namespace CG4.Impl.Dapper.Poco
 
             for (int i = 0; i < properties.Length; i++)
             {
-                PropertyMap pm = new();
-
-                pm.Name = properties[i].Name;
-                pm.PropertyInfo = properties[i];
+                PropertyMap pm = new()
+                {
+                    Name = properties[i].Name,
+                    PropertyInfo = properties[i],
+                    AllowEdit = true,
+                };
 
                 foreach (var item in properties[i].GetCustomAttributes())
                 {
@@ -60,6 +63,10 @@ namespace CG4.Impl.Dapper.Poco
 
                         case DatabaseGeneratedAttribute attr:
                             pm.IsIdentity = attr.DatabaseGeneratedOption == DatabaseGeneratedOption.Identity;
+                            break;
+
+                        case EditableAttribute attr:
+                            pm.AllowEdit = attr.AllowEdit;
                             break;
                     }
                 }

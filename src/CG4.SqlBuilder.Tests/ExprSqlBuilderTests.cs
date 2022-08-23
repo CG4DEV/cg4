@@ -42,7 +42,7 @@ namespace CG4.SqlBuilder.Tests
             var sql = builder.UpdateById<TestEntity>();
 
             Assert.NotNull(sql);
-            Assert.Equal("UPDATE \"test_entity\" SET \"code\" = @Code,\"number\" = @Number,\"test_second_entity_id\" = @SecondId,\"create_date\" = @CreateDate,\"update_date\" = @UpdateDate WHERE \"id\" = @Id", sql);
+            Assert.Equal("UPDATE \"test_entity\" SET \"code\" = @Code,\"number\" = @Number,\"test_second_entity_id\" = @SecondId,\"update_date\" = @UpdateDate WHERE \"id\" = @Id", sql);
         }
 
         [Fact]
