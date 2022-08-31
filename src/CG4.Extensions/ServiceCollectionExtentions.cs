@@ -9,7 +9,7 @@ namespace CG4.Extensions
             where TService1 : class
             where TService2 : class
         {
-            services.AddSingleton<TImpl>(
+            services.AddSingletonInternal<TImpl>(
                 typeof(TService1),
                 typeof(TService2));
             return services;
@@ -21,7 +21,7 @@ namespace CG4.Extensions
             where TService2 : class
             where TService3 : class
         {
-            services.AddSingleton<TImpl>(
+            services.AddSingletonInternal<TImpl>(
                 typeof(TService1),
                 typeof(TService2),
                 typeof(TService3));
@@ -35,7 +35,7 @@ namespace CG4.Extensions
             where TService3 : class
             where TService4 : class
         {
-            services.AddSingleton<TImpl>(
+            services.AddSingletonInternal<TImpl>(
                 typeof(TService1),
                 typeof(TService2),
                 typeof(TService3),
@@ -51,7 +51,7 @@ namespace CG4.Extensions
             where TService4 : class
             where TService5 : class
         {
-            services.AddSingleton<TImpl>(
+            services.AddSingletonInternal<TImpl>(
                 typeof(TService1),
                 typeof(TService2),
                 typeof(TService3),
@@ -69,7 +69,7 @@ namespace CG4.Extensions
             where TService5 : class
             where TService6 : class
         {
-            services.AddSingleton<TImpl>(
+            services.AddSingletonInternal<TImpl>(
                 typeof(TService1),
                 typeof(TService2),
                 typeof(TService3),
@@ -89,7 +89,7 @@ namespace CG4.Extensions
             where TService6 : class
             where TService7 : class
         {
-            services.AddSingleton<TImpl>(
+            services.AddSingletonInternal<TImpl>(
                 typeof(TService1),
                 typeof(TService2),
                 typeof(TService3),
@@ -111,7 +111,7 @@ namespace CG4.Extensions
             where TService7 : class
             where TService8 : class
         {
-            services.AddSingleton<TImpl>(
+            services.AddSingletonInternal<TImpl>(
                 typeof(TService1),
                 typeof(TService2),
                 typeof(TService3),
@@ -135,7 +135,7 @@ namespace CG4.Extensions
             where TService8 : class
             where TService9 : class
         {
-            services.AddSingleton<TImpl>(
+            services.AddSingletonInternal<TImpl>(
                 typeof(TService1),
                 typeof(TService2),
                 typeof(TService3),
@@ -161,7 +161,7 @@ namespace CG4.Extensions
             where TService9 : class
             where TService10 : class
         {
-            services.AddSingleton<TImpl>(
+            services.AddSingletonInternal<TImpl>(
                 typeof(TService1),
                 typeof(TService2),
                 typeof(TService3),
@@ -189,7 +189,7 @@ namespace CG4.Extensions
             where TService10 : class
             where TService11 : class
         {
-            services.AddSingleton<TImpl>(
+            services.AddSingletonInternal<TImpl>(
                 typeof(TService1),
                 typeof(TService2),
                 typeof(TService3),
@@ -219,7 +219,7 @@ namespace CG4.Extensions
             where TService11 : class
             where TService12 : class
         {
-            services.AddSingleton<TImpl>(
+            services.AddSingletonInternal<TImpl>(
                 typeof(TService1),
                 typeof(TService2),
                 typeof(TService3),
@@ -235,7 +235,7 @@ namespace CG4.Extensions
             return services;
         }
 
-        private static IServiceCollection AddSingleton<TImpl>(this IServiceCollection services, params Type[] tServices)
+        private static IServiceCollection AddSingletonInternal<TImpl>(this IServiceCollection services, params Type[] tServices)
             where TImpl : class
         {
             services.CheckNull(nameof(services));
