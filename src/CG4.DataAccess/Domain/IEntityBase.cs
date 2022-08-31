@@ -5,7 +5,6 @@ namespace CG4.DataAccess.Domain
 {
     public interface IEntityBase : IEntity
     {
-
         DateTimeOffset CreateDate { get; set; }
 
         DateTimeOffset UpdateDate { get; set; }
