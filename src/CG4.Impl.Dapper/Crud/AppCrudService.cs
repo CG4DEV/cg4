@@ -2,6 +2,7 @@
 using System.Linq.Expressions;
 using CG4.DataAccess.Domain;
 using CG4.Impl.Dapper.Poco;
+using CG4.Impl.Dapper.Poco.Expressions;
 
 namespace CG4.Impl.Dapper.Crud
 {
@@ -105,6 +106,48 @@ namespace CG4.Impl.Dapper.Crud
             var sql = _sqlBuilder.DeleteById<T>();
 
             return ExecuteAsync(sql, new { Id = id }, connection, transaction);
+        }
+
+        public Task<PageResult<TEntity>> GetPageAsync<TEntity>(int page, int take, Expression<Action<IClassSqlOptions<TEntity>>> predicate = null, IDbConnection connection = null, IDbTransaction transaction = null)
+            where TEntity : class, IEntityBase, new()
+        {
+            return GetPageAsync<TEntity, TEntity>(page, take, predicate, connection, transaction);
+        }
+
+        public async Task<PageResult<TResult>> GetPageAsync<TEntity, TResult>(int page, int take, Expression<Action<IClassSqlOptions<TEntity>>> predicate = null, IDbConnection connection = null, IDbTransaction transaction = null)
+            where TEntity : class, IEntityBase, new()
+            where TResult : class, new()
+        {
+            var limit = take > 0 ? take : 25;
+            page = page > 0 ? page : 0;
+            var offset = page * limit;
+
+            var exprSql = _sqlBuilder.GenerateSql(predicate);
+
+            exprSql.Limit = limit;
+            exprSql.Offset = offset;
+
+            var sql = _sqlBuilder.Serialize(exprSql);
+
+            exprSql.Select = new();
+
+            var exprFunc = new ExprFunctionCount();
+
+            exprFunc.Parametrs.Add(new ExprStar());
+            exprSql.Select.Add(exprFunc);
+
+            var sqlCount = _sqlBuilder.Serialize(exprSql);
+
+            var list = await QueryAsync<TResult>(sql, null, connection, transaction);
+            var count = await QuerySingleOrDefaultAsync<int>(sqlCount, null, connection, transaction);
+
+            return new PageResult<TResult>
+            {
+                Data = list,
+                Page = page,
+                FilteredCount = count,
+                Count = count,
+            };
         }
     }
 }

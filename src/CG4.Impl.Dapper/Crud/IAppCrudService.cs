@@ -42,5 +42,12 @@ namespace CG4.Impl.Dapper.Crud
 
         Task DeleteAsync<T>(long id, IDbConnection connection = null, IDbTransaction transaction = null)
             where T : class, IEntityBase, new();
+
+        Task<PageResult<TEntity>> GetPageAsync<TEntity>(int page, int take, Expression<Action<IClassSqlOptions<TEntity>>> predicate = null, IDbConnection connection = null, IDbTransaction transaction = null)
+            where TEntity : class, IEntityBase, new();
+
+        Task<PageResult<TResult>> GetPageAsync<TEntity, TResult>(int page, int take, Expression<Action<IClassSqlOptions<TEntity>>> predicate = null, IDbConnection connection = null, IDbTransaction transaction = null)
+            where TEntity : class, IEntityBase, new()
+            where TResult : class, new();
     }
 }

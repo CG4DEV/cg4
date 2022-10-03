@@ -10,7 +10,7 @@ namespace CG4.Extensions.Tests
         {
             var collection = new ServiceCollection();
             collection.AddSingleton<ISettings, Settings>();
-            Assert.Equal(2, collection.Count);
+            Assert.Single(collection);
         }
 
         [Fact]
