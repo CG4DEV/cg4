@@ -130,6 +130,8 @@ namespace CG4.Impl.Dapper.Crud
             var sql = _sqlBuilder.Serialize(exprSql);
 
             exprSql.Select = new();
+            exprSql.Limit = null;
+            exprSql.Offset = null;
 
             var exprFunc = new ExprFunctionCount();
 
