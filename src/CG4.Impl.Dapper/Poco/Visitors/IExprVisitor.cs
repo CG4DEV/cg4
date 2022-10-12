@@ -17,6 +17,8 @@ namespace CG4.Impl.Dapper.Poco
         void VisitStr(ExprStr str);
 
         void VisitLong(ExprLong @long);
+        
+        void VisitNot(ExprNot not);
 
         void VisitInt(ExprInt @int);
 

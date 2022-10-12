@@ -91,6 +91,9 @@ namespace CG4.Impl.Dapper.Poco
                 case ExprIn exprIn:
                     exprIn.Column.Alias = alias;
                     return;
+                case ExprNot exprNot:
+                    SetAlias(exprNot.Body, alias);
+                    return;
                 case ExprBoolEmpty:
                     return;
                 default:

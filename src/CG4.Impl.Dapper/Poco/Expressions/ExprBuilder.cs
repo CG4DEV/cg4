@@ -18,6 +18,7 @@ namespace CG4.Impl.Dapper.Poco.Expressions
         {
             Expr result = expression.NodeType switch
             {
+                ExpressionType.Not => ParseUnary((UnaryExpression)expression),
                 ExpressionType.Equal => ParseEqual((BinaryExpression)expression),
                 ExpressionType.NotEqual => ParseNotEqual((BinaryExpression)expression),
                 ExpressionType.Constant => ParseConst((ConstantExpression)expression),
@@ -123,6 +124,14 @@ namespace CG4.Impl.Dapper.Poco.Expressions
             {
                 Left = (ExprBoolean)ParseExpr(expression.Left),
                 Right = (ExprBoolean)ParseExpr(expression.Right),
+            };
+        }
+        
+        public Expr ParseUnary(UnaryExpression expression)
+        {
+            return new ExprNot
+            {
+                Body = (ExprBoolean)ParseExpr(expression.Operand),
             };
         }
 
