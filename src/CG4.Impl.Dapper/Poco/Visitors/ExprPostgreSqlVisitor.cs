@@ -101,6 +101,13 @@ namespace CG4.Impl.Dapper.Poco
         {
             _stringBuilder.Append(@long.Value);
         }
+        
+        public void VisitNot(ExprNot not)
+        {
+            _stringBuilder.Append("NOT ");
+            
+            not.Body.Accept(this);
+        }
 
         public void VisitInt(ExprInt @int)
         {
@@ -274,7 +281,7 @@ namespace CG4.Impl.Dapper.Poco
             exprLike.Column.Accept(this);
             _stringBuilder.Append(" ILIKE '");
             _stringBuilder.Append(exprLike.StartsPattern);
-            _stringBuilder.Append(exprLike.Value);
+            _stringBuilder.Append(exprLike.Value.Replace("'","''"));
             _stringBuilder.Append(exprLike.EndsPattern);
             _stringBuilder.Append('\'');
         }
@@ -282,8 +289,8 @@ namespace CG4.Impl.Dapper.Poco
         public void VisitIn(ExprIn exprIn)
         {
             exprIn.Column.Accept(this);
-            _stringBuilder.Append(" ANY (");
-            AcceptList(exprIn.Values);
+            _stringBuilder.Append(" = ANY (");
+            VisitArray(exprIn.Values);
             _stringBuilder.Append(')');
         }
 
