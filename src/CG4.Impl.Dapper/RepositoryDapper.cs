@@ -88,6 +88,21 @@ namespace CG4.Impl.Dapper
         }
 
 
+        public IEnumerable<T> QueryList<T>(string sql, object param = null, IDbConnection connection = null, IDbTransaction transaction = null)
+        {
+            if (connection == null)
+            {
+                using (connection = _factory.Create())
+                {
+                    return connection.Query<T>(sql, param, commandTimeout: _commandTimeout);
+                }
+            }
+            else
+            {
+                return connection.Query<T>(sql, param, transaction, commandTimeout: _commandTimeout);
+            }
+        }
+
         /// <inheritdoc/>
         public int Execute(string sql, object param = null, IDbConnection connection = null, IDbTransaction transaction = null)
         {
@@ -101,6 +116,22 @@ namespace CG4.Impl.Dapper
             else
             {
                 return connection.Execute(sql, param, transaction: transaction);
+            }
+        }
+
+        public async Task<IEnumerable<T>> QueryListAsync<T>(string sql, object param = null, IDbConnection connection = null,
+            IDbTransaction transaction = null)
+        {
+            if (connection == null)
+            {
+                using (connection = await _factory.CreateAsync())
+                {
+                    return await connection.QueryAsync<T>(sql, param, commandTimeout: _commandTimeout);
+                }
+            }
+            else
+            {
+                return await connection.QueryAsync<T>(sql, param, transaction, commandTimeout: _commandTimeout);
             }
         }
 
@@ -134,6 +165,22 @@ namespace CG4.Impl.Dapper
             else
             {
                 return connection.Query<T>(sql, param, transaction: transaction);
+            }
+        }
+
+        public T QuerySingleOrDefault<T>(string sql, object param = null, IDbConnection connection = null,
+            IDbTransaction transaction = null)
+        {
+            if (connection == null)
+            {
+                using (connection = _factory.Create())
+                {
+                    return connection.QuerySingleOrDefault<T>(sql, param, transaction: transaction);
+                }
+            }
+            else
+            {
+                return connection.QuerySingleOrDefault<T>(sql, param, transaction: transaction);
             }
         }
 
