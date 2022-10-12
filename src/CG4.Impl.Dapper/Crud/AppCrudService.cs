@@ -6,7 +6,7 @@ using CG4.Impl.Dapper.Poco.Expressions;
 
 namespace CG4.Impl.Dapper.Crud
 {
-    public class AppCrudService : RepositoryDapper, IAppCrudService
+    public class AppCrudService : RepositoryDapper, ICrudService, IAppCrudService
     {
         private readonly ISqlBuilder _sqlBuilder;
 
