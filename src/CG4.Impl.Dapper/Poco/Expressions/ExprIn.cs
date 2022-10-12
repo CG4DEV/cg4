@@ -4,7 +4,7 @@
     {
         public ExprColumn Column { get; set; }
 
-        public IEnumerable<Expr> Values { get; set; }
+        public ExprArray Values { get; set; }
 
         public override void Accept(IExprVisitor visitor) => visitor.VisitIn(this);
     }
