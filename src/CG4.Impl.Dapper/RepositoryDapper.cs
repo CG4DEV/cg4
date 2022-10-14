@@ -52,7 +52,6 @@ namespace CG4.Impl.Dapper
             }
         }
 
-
         /// <inheritdoc/>
         public IEnumerable<T> GetAll<T>(string sql, object param = null, IDbConnection connection = null, IDbTransaction transaction = null)
             where T : class
@@ -86,7 +85,6 @@ namespace CG4.Impl.Dapper
                 return await connection.QueryAsync<T>(sql, param, transaction, commandTimeout: _commandTimeout);
             }
         }
-
 
         public IEnumerable<T> QueryList<T>(string sql, object param = null, IDbConnection connection = null, IDbTransaction transaction = null)
         {
