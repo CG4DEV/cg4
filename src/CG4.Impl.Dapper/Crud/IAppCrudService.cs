@@ -7,10 +7,6 @@ namespace CG4.Impl.Dapper.Crud
 {
     public interface IAppCrudService
     {
-        Task<T> GetAsync<T>(string sql, object param = null, IDbConnection connection = null, IDbTransaction transaction = null);
-
-        Task<IEnumerable<T>> GetAllAsync<T>(string sql, object param = null, IDbConnection connection = null, IDbTransaction transaction = null);
-
         Task<T> GetAsync<T>(long id, IDbConnection connection = null, IDbTransaction transaction = null)
             where T : class, IEntityBase, new();
 
