@@ -282,7 +282,7 @@ namespace CG4.Impl.Dapper.Poco
             exprLike.Column.Accept(this);
             _stringBuilder.Append(" ILIKE '");
             _stringBuilder.Append(exprLike.StartsPattern);
-            _stringBuilder.Append(exprLike.Value.Replace("'", "''"));
+            _stringBuilder.Append(exprLike.Value.Replace("'","''"));
             _stringBuilder.Append(exprLike.EndsPattern);
             _stringBuilder.Append('\'');
         }
