@@ -18,6 +18,10 @@ namespace CG4.Impl.Dapper.Poco.Expressions
         {
             Expr result = expression.NodeType switch
             {
+                ExpressionType.GreaterThanOrEqual => ParseGreaterThanOrEqual((BinaryExpression)expression),
+                ExpressionType.LessThanOrEqual => ParseLessThanOrEqual((BinaryExpression)expression),
+                ExpressionType.GreaterThan => ParseGreaterThan((BinaryExpression)expression),
+                ExpressionType.LessThan => ParseLessThan((BinaryExpression)expression),
                 ExpressionType.Not => ParseUnary((UnaryExpression)expression),
                 ExpressionType.Equal => ParseEqual((BinaryExpression)expression),
                 ExpressionType.NotEqual => ParseNotEqual((BinaryExpression)expression),
@@ -126,7 +130,7 @@ namespace CG4.Impl.Dapper.Poco.Expressions
                 Right = (ExprBoolean)ParseExpr(expression.Right),
             };
         }
-        
+
         public Expr ParseUnary(UnaryExpression expression)
         {
             return new ExprNot
@@ -145,6 +149,50 @@ namespace CG4.Impl.Dapper.Poco.Expressions
         public Expr ParseConvert(UnaryExpression expression)
         {
             return ParseExpr(expression.Operand);
+        }
+
+        public Expr ParseGreaterThanOrEqual(BinaryExpression expression)
+        {
+            var (col, val) = ParseEquality(expression);
+
+            return new ExprGreaterThanOrEq
+            {
+                Column = col,
+                Value = val,
+            };
+        }
+
+        public Expr ParseLessThanOrEqual(BinaryExpression expression)
+        {
+            var (col, val) = ParseEquality(expression);
+
+            return new ExprLessThanOrEq
+            {
+                Column = col,
+                Value = val,
+            };
+        }
+
+        public Expr ParseGreaterThan(BinaryExpression expression)
+        {
+            var (col, val) = ParseEquality(expression);
+
+            return new ExprGreaterThan
+            {
+                Column = col,
+                Value = val,
+            };
+        }
+
+        public Expr ParseLessThan(BinaryExpression expression)
+        {
+            var (col, val) = ParseEquality(expression);
+
+            return new ExprLessThan
+            {
+                Column = col,
+                Value = val,
+            };
         }
 
         private ExprConst ParseMemberConstant(Stack<MemberInfo> members, MemberExpression expression)

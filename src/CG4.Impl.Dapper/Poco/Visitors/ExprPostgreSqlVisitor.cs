@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
 using CG4.Impl.Dapper.Poco.Expressions;
 
 namespace CG4.Impl.Dapper.Poco
@@ -101,11 +102,11 @@ namespace CG4.Impl.Dapper.Poco
         {
             _stringBuilder.Append(@long.Value);
         }
-        
+
         public void VisitNot(ExprNot not)
         {
             _stringBuilder.Append("NOT ");
-            
+
             not.Body.Accept(this);
         }
 
@@ -281,7 +282,7 @@ namespace CG4.Impl.Dapper.Poco
             exprLike.Column.Accept(this);
             _stringBuilder.Append(" ILIKE '");
             _stringBuilder.Append(exprLike.StartsPattern);
-            _stringBuilder.Append(exprLike.Value.Replace("'","''"));
+            _stringBuilder.Append(exprLike.Value.Replace("'", "''"));
             _stringBuilder.Append(exprLike.EndsPattern);
             _stringBuilder.Append('\'');
         }
@@ -304,6 +305,34 @@ namespace CG4.Impl.Dapper.Poco
         public void VisitBoolEmpty(ExprBoolEmpty empty)
         {
             _stringBuilder.Append("TRUE");
+        }
+
+        public void VisitGreaterThanPredicate(ExprGreaterThan greaterPredicate)
+        {
+            greaterPredicate.Column.Accept(this);
+            _stringBuilder.Append(" > ");
+            greaterPredicate.Value.Accept(this);
+        }
+
+        public void VisitLessThanPredicate(ExprLessThan lessPredicate)
+        {
+            lessPredicate.Column.Accept(this);
+            _stringBuilder.Append(" < ");
+            lessPredicate.Value.Accept(this);
+        }
+
+        public void VisitGreaterThanOrEqPredicate(ExprGreaterThanOrEq greaterEqPredicate)
+        {
+            greaterEqPredicate.Column.Accept(this);
+            _stringBuilder.Append(" >= ");
+            greaterEqPredicate.Value.Accept(this);
+        }
+
+        public void VisitLessThanOrEqPredicate(ExprLessThanOrEq lesssEqPredicate)
+        {
+            lesssEqPredicate.Column.Accept(this);
+            _stringBuilder.Append(" <= ");
+            lesssEqPredicate.Value.Accept(this);
         }
 
         private void AcceptList(IEnumerable<Expr> expressions, string separator = ", ")

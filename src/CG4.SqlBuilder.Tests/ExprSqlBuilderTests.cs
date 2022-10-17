@@ -264,6 +264,70 @@ WHERE t.""code"" = 'test'
         }
 
         [Fact]
+        public void GetAll_TreeOfExpressions_GreaterThanOrEq()
+        {
+            var builder = new ExprSqlBuilder(_sqlSettings);
+
+            var numberColumn = new ExprColumn("a1", "number");
+
+            var expr = numberColumn >= 1;
+
+            var sql = builder.GetAll<TestEntity>(x => x.AppendWhere(expr));
+
+            Assert.NotNull(sql);
+
+            Assert.Contains(@"WHERE a1.""number"" >= 1", sql);
+        }
+
+        [Fact]
+        public void GetAll_TreeOfExpressions_GreaterThan()
+        {
+            var builder = new ExprSqlBuilder(_sqlSettings);
+
+            var numberColumn = new ExprColumn("a1", "number");
+
+            var expr = numberColumn > 1;
+
+            var sql = builder.GetAll<TestEntity>(x => x.AppendWhere(expr));
+
+            Assert.NotNull(sql);
+
+            Assert.Contains(@"WHERE a1.""number"" > 1", sql);
+        }
+
+        [Fact]
+        public void GetAll_TreeOfExpressions_LessThanOrEq()
+        {
+            var builder = new ExprSqlBuilder(_sqlSettings);
+
+            var numberColumn = new ExprColumn("a1", "number");
+
+            var expr = numberColumn <= 1;
+
+            var sql = builder.GetAll<TestEntity>(x => x.AppendWhere(expr));
+
+            Assert.NotNull(sql);
+
+            Assert.Contains(@"WHERE a1.""number"" <= 1", sql);
+        }
+
+        [Fact]
+        public void GetAll_TreeOfExpressions_LessThan()
+        {
+            var builder = new ExprSqlBuilder(_sqlSettings);
+
+            var numberColumn = new ExprColumn("a1", "number");
+
+            var expr = numberColumn < 1;
+
+            var sql = builder.GetAll<TestEntity>(x => x.AppendWhere(expr));
+
+            Assert.NotNull(sql);
+
+            Assert.Contains(@"WHERE a1.""number"" < 1", sql);
+        }
+
+        [Fact]
         public void GetAll_TreeOfExpressionsByHelper_SwapAliases()
         {
             var builder = new ExprSqlBuilder(_sqlSettings);

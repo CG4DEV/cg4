@@ -145,6 +145,30 @@
             Column = column,
             Value = param,
         };
+
+        public static ExprBoolean operator >(ExprColumn column, long? value) => new ExprGreaterThan
+        {
+            Column = column,
+            Value = value.HasValue ? new ExprLong { Value = value.Value } : new ExprNull(),
+        };
+
+        public static ExprBoolean operator <(ExprColumn column, long? value) => new ExprLessThan
+        {
+            Column = column,
+            Value = value.HasValue ? new ExprLong { Value = value.Value } : new ExprNull(),
+        };
+
+        public static ExprBoolean operator >=(ExprColumn column, long? value) => new ExprGreaterThanOrEq
+        {
+            Column = column,
+            Value = value.HasValue ? new ExprLong { Value = value.Value } : new ExprNull(),
+        };
+
+        public static ExprBoolean operator <=(ExprColumn column, long? value) => new ExprLessThanOrEq
+        {
+            Column = column,
+            Value = value.HasValue ? new ExprLong { Value = value.Value } : new ExprNull(),
+        };
         #endregion
     }
 }
