@@ -79,12 +79,6 @@ namespace CG4.Impl.Dapper.Poco
                     SetAlias(exprOr.Left, alias);
                     SetAlias(exprOr.Right, alias);
                     return;
-                case ExprBoolEqPredicate eqPred:
-                    eqPred.Column.Alias = alias;
-                    return;
-                case ExprBoolNotEqPredicate neqPred:
-                    neqPred.Column.Alias = alias;
-                    return;
                 case ExprLike like:
                     like.Column.Alias = alias;
                     return;
@@ -93,6 +87,9 @@ namespace CG4.Impl.Dapper.Poco
                     return;
                 case ExprNot exprNot:
                     SetAlias(exprNot.Body, alias);
+                    return;
+                case ExprBinary exprBinary:
+                    exprBinary.Column.Alias = alias;
                     return;
                 case ExprBoolEmpty:
                     return;
