@@ -232,7 +232,7 @@ WHERE t.""code"" = 'test'
             .AppendWhere(expr));
 
             Assert.NotNull(sql);
-            Assert.Contains(@"WHERE t.""id"" = 12 AND (t.""code"" = '123' OR t.""code"" = '222') AND t.""number"" != 44 AND t.""name"" = 'test'", sql);
+            Assert.Contains(@"WHERE t.""id"" = 12 AND ((t.""code"" = '123') OR (t.""code"" = '222')) AND t.""number"" != 44 AND t.""name"" = 'test'", sql);
         }
 
         [Fact]
@@ -260,7 +260,7 @@ WHERE t.""code"" = 'test'
 
             Assert.Contains(@"FROM ""test_entity"" AS a1", sql);
             Assert.Contains(@"INNER JOIN ""test_second_entity"" AS a2 ON a2.""id"" = a1.""test_second_entity_id""", sql);
-            Assert.Contains(@"WHERE a1.""id"" = 12 AND (a1.""code"" = '123' OR a1.""code"" = '222') AND a1.""number"" != 44 AND a2.""name"" = 'test'", sql);
+            Assert.Contains(@"WHERE a1.""id"" = 12 AND ((a1.""code"" = '123') OR (a1.""code"" = '222')) AND a1.""number"" != 44 AND a2.""name"" = 'test'", sql);
         }
 
         [Fact]
@@ -328,6 +328,70 @@ WHERE t.""code"" = 'test'
         }
 
         [Fact]
+        public void GetAll_TreeOfExpressions_NotWithNull()
+        {
+            var builder = new ExprSqlBuilder(_sqlSettings);
+
+            var codeExpr = SqlExprHelper.GenerateWhere<TestEntity>(a1 => a1.Code != null);
+
+            var expr = codeExpr;
+
+            var sql = builder.GetAll<TestEntity>(x => x.AppendWhere(expr));
+
+            Assert.NotNull(sql);
+
+            Assert.Contains(@"WHERE a1.""code"" IS NOT NULL", sql);
+        }
+
+        [Fact]
+        public void GetAll_TreeOfExpressions_NotWithoutNull()
+        {
+            var builder = new ExprSqlBuilder(_sqlSettings);
+
+            var codeExpr = SqlExprHelper.GenerateWhere<TestEntity>(a1 => a1.Code != "test");
+
+            var expr = codeExpr;
+
+            var sql = builder.GetAll<TestEntity>(x => x.AppendWhere(expr));
+
+            Assert.NotNull(sql);
+
+            Assert.Contains(@"WHERE a1.""code"" != 'test'", sql);
+        }
+
+        [Fact]
+        public void GetAll_TreeOfExpressions_EqualWithNull()
+        {
+            var builder = new ExprSqlBuilder(_sqlSettings);
+
+            var codeExpr = SqlExprHelper.GenerateWhere<TestEntity>(a1 => a1.Code == null);
+
+            var expr = codeExpr;
+
+            var sql = builder.GetAll<TestEntity>(x => x.AppendWhere(expr));
+
+            Assert.NotNull(sql);
+
+            Assert.Contains(@"WHERE a1.""code"" IS NULL", sql);
+        }
+
+        [Fact]
+        public void GetAll_TreeOfExpressions_EqualWithoutNull()
+        {
+            var builder = new ExprSqlBuilder(_sqlSettings);
+
+            var codeExpr = SqlExprHelper.GenerateWhere<TestEntity>(a1 => a1.Code == "test");
+
+            var expr = codeExpr;
+
+            var sql = builder.GetAll<TestEntity>(x => x.AppendWhere(expr));
+
+            Assert.NotNull(sql);
+
+            Assert.Contains(@"WHERE a1.""code"" = 'test'", sql);
+        }
+
+        [Fact]
         public void GetAll_TreeOfExpressionsByHelper_SwapAliases()
         {
             var builder = new ExprSqlBuilder(_sqlSettings);
@@ -353,7 +417,7 @@ WHERE t.""code"" = 'test'
 
             Assert.Contains(@"FROM ""test_entity"" AS a1", sql);
             Assert.Contains(@"INNER JOIN ""test_second_entity"" AS a2 ON a2.""id"" = a1.""test_second_entity_id""", sql);
-            Assert.Contains(@"WHERE a1.""id"" = 12 AND (a1.""code"" = '123' OR a1.""code"" = '222') AND a1.""number"" != 44 AND a2.""name"" = 'test'", sql);
+            Assert.Contains(@"WHERE a1.""id"" = 12 AND ((a1.""code"" = '123') OR (a1.""code"" = '222')) AND a1.""number"" != 44 AND a2.""name"" = 'test'", sql);
         }
 
         [Fact]

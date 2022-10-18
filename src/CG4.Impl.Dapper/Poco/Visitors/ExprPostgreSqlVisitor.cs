@@ -28,9 +28,13 @@ namespace CG4.Impl.Dapper.Poco
         public void VisitOr(ExprBoolOr or)
         {
             _stringBuilder.Append('(');
+            _stringBuilder.Append('(');
             or.Left.Accept(this);
+            _stringBuilder.Append(')');
             _stringBuilder.Append(" OR ");
+            _stringBuilder.Append('(');
             or.Right.Accept(this);
+            _stringBuilder.Append(')');
             _stringBuilder.Append(')');
         }
 
@@ -75,14 +79,30 @@ namespace CG4.Impl.Dapper.Poco
         public void VisitEqPredicate(ExprBoolEqPredicate eqPredicate)
         {
             eqPredicate.Column.Accept(this);
-            _stringBuilder.Append(" = ");
+            if (eqPredicate.Value is ExprNull)
+            {
+                _stringBuilder.Append(" IS ");
+            }
+            else
+            {
+                _stringBuilder.Append(" = ");
+            }
+
             eqPredicate.Value.Accept(this);
         }
 
         public void VisitNotEqPredicate(ExprBoolNotEqPredicate notEqPredicate)
         {
             notEqPredicate.Column.Accept(this);
-            _stringBuilder.Append(" != ");
+            if (notEqPredicate.Value is ExprNull)
+            {
+                _stringBuilder.Append(" IS NOT ");
+            }
+            else
+            {
+                _stringBuilder.Append(" != ");
+            }
+
             notEqPredicate.Value.Accept(this);
         }
 
@@ -282,7 +302,7 @@ namespace CG4.Impl.Dapper.Poco
             exprLike.Column.Accept(this);
             _stringBuilder.Append(" ILIKE '");
             _stringBuilder.Append(exprLike.StartsPattern);
-            _stringBuilder.Append(exprLike.Value.Replace("'","''"));
+            _stringBuilder.Append(exprLike.Value.Replace("'", "''"));
             _stringBuilder.Append(exprLike.EndsPattern);
             _stringBuilder.Append('\'');
         }
