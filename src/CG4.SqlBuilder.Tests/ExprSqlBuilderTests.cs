@@ -35,6 +35,17 @@ namespace CG4.SqlBuilder.Tests
         }
 
         [Fact]
+        public void Insert_NotMappedAttribute_ReturnSqlWithoutAttribute()
+        {
+            var builder = new ExprSqlBuilder(_sqlSettings);
+
+            var sql = builder.Insert<TestSecondEntity>();
+            
+            Assert.NotNull(sql);
+            Assert.Equal("INSERT INTO \"test_second_entity\" (\"name\", \"create_date\", \"update_date\") VALUES (@Name, @CreateDate, @UpdateDate) RETURNING id", sql);
+        }
+
+        [Fact]
         public void UpdateById_CorrectArguments_ReturnSql()
         {
             var builder = new ExprSqlBuilder(_sqlSettings);
@@ -43,6 +54,17 @@ namespace CG4.SqlBuilder.Tests
 
             Assert.NotNull(sql);
             Assert.Equal("UPDATE \"test_entity\" SET \"code\" = @Code,\"number\" = @Number,\"test_second_entity_id\" = @SecondId,\"update_date\" = @UpdateDate WHERE \"id\" = @Id", sql);
+        }
+
+        [Fact]
+        public void UpdateById_NotMappedAttribute_ReturnSqlWithoutAttribute()
+        {
+            var builder = new ExprSqlBuilder(_sqlSettings);
+
+            var sql = builder.UpdateById<TestSecondEntity>();
+            
+            Assert.NotNull(sql);
+            Assert.Equal("UPDATE \"test_second_entity\" SET \"name\" = @Name,\"update_date\" = @UpdateDate WHERE \"id\" = @Id", sql);
         }
 
         [Fact]
@@ -478,6 +500,9 @@ WHERE t.""code"" = 'test'
         {
             [Column("name")]
             public string Name { get; set; }
+            
+            [NotMapped]
+            public int Age { get; set; }
         }
 
         [Table("nullable_types")]
