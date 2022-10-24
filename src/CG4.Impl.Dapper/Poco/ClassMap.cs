@@ -68,6 +68,10 @@ namespace CG4.Impl.Dapper.Poco
                         case EditableAttribute attr:
                             pm.AllowEdit = attr.AllowEdit;
                             break;
+                        
+                        case NotMappedAttribute:
+                            pm.IsIgnored = true;
+                            break;
                     }
                 }
 
