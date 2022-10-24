@@ -84,6 +84,21 @@ WHERE t.""number"" = 10 AND t.""id"" = @Id
         }
 
         [Fact]
+        public void GetById_NotMappedAttribute_ReturnSql()
+        {
+            var builder = new ExprSqlBuilder(_sqlSettings);
+
+            var sql = builder.GetById<TestSecondEntity>();
+            
+            Assert.NotNull(sql);
+            Assert.Equal(@"SELECT t.""name"" AS ""Name"", t.""id"" AS ""Id"", t.""create_date"" AS ""CreateDate"", t.""update_date"" AS ""UpdateDate""
+FROM ""test_second_entity"" AS t
+WHERE t.""id"" = @Id
+",
+                sql);
+        }
+
+        [Fact]
         public void GetAll_CorrectArguments_ReturnSql()
         {
             var builder = new ExprSqlBuilder(_sqlSettings);
@@ -94,6 +109,20 @@ WHERE t.""number"" = 10 AND t.""id"" = @Id
             Assert.Equal(
                 @"SELECT t.""code"" AS ""Code"", t.""number"" AS ""Number"", t.""test_second_entity_id"" AS ""SecondId"", t.""id"" AS ""Id"", t.""create_date"" AS ""CreateDate"", t.""update_date"" AS ""UpdateDate""
 FROM ""test_entity"" AS t
+",
+                sql);
+        }
+
+        [Fact]
+        public void GetAll_NotMapped_ReturnSql()
+        {
+            var builder = new ExprSqlBuilder(_sqlSettings);
+
+            var sql = builder.GetAll<TestSecondEntity>();
+            
+            Assert.NotNull(sql);
+            Assert.Equal(@"SELECT t.""name"" AS ""Name"", t.""id"" AS ""Id"", t.""create_date"" AS ""CreateDate"", t.""update_date"" AS ""UpdateDate""
+FROM ""test_second_entity"" AS t
 ",
                 sql);
         }

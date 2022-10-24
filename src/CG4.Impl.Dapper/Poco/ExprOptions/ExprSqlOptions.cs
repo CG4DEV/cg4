@@ -29,7 +29,7 @@ namespace CG4.Impl.Dapper.Poco.ExprOptions
                 OrderBy = new ExprOrderBy(),
             };
 
-            foreach (var p in map.Properties)
+            foreach (var p in map.Properties.Where(x => !x.IsIgnored))
             {
                 var col = new ExprSelectedColumn() { Alias = Alias, Name = p.ColumnName, ResultName = p.Name };
                 _columns.Add(col);
