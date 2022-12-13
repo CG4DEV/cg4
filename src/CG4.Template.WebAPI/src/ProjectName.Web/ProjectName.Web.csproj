@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+	<Content Include="..\..\shared\configs\connectionStrings.Development.json" Link="Configs\connectionStrings.Development.json">
+	  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	</Content>
+	<Content Include="..\..\shared\configs\connectionStrings.Test.json" Link="Configs\connectionStrings.Test.json">
+	  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	</Content>
+	<Content Include="..\..\shared\configs\serilog.Development.json" Link="Configs\serilog.Development.json">
+	  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	</Content>
+	<Content Include="..\..\shared\configs\serilog.Test.json" Link="Configs\serilog.Test.json">
+	  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	</Content>
+  </ItemGroup>
+	
+  <ItemGroup>
+    <PackageReference Include="Serilog.AspNetCore" Version="6.1.0" />
+  </ItemGroup>
+	
+  <ItemGroup>
+    <ProjectReference Include="..\ProjectName.WebApp\ProjectName.WebApp.csproj" />
+  </ItemGroup>
+
+</Project>
