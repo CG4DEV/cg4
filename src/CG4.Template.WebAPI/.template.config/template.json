@@ -1,10 +1,10 @@
 {
     "$schema": "http://json.schemastore.org/template",
-    "classifications": [ "ITLTeam", "Web API" ],
-    "name": "ITLTeam API",
-    "identity": "ITLTeam.API",
-    "groupIdentity": "ITLTeam",
-    "shortName": "itlapi",
+    "classifications": [ "CG4", "Web API" ],
+    "name": "CG4 API",
+    "identity": "CG4.API",
+    "groupIdentity": "CG4",
+    "shortName": "cg4api",
     "tags": {
         "language": "C#",
         "type": "solution"
