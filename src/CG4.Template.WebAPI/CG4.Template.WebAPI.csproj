@@ -15,6 +15,7 @@
         <Content Include="tests\**\*" Exclude="**\bin\**\*;**\obj\**\*" />
         <Content Include="shared\**" />
         <Content Include=".template.config\**" />
+        <Content Include="*.sln" />
         <Compile Remove="**\*" />
     </ItemGroup>
 
