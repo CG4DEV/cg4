@@ -22,8 +22,8 @@
     <PropertyGroup>
         <PackageType>Template</PackageType>
         <Version>0.0.1</Version>
-        <PackageId>CG4.Template.WebAPI</PackageId>
-        <Title>CG4.Template.WebAPI</Title>
+        <PackageId>CG4.Templ.WebApi</PackageId>
+        <Title>CG4.Templ.WebApi</Title>
         <Authors>CG4</Authors>
         <Copyright>$copyright$</Copyright>
         <Description>Template for Web API</Description>
