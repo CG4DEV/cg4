@@ -58,7 +58,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{01A4B3
 		.github\workflows\dotnet.yml = .github\workflows\dotnet.yml
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CG4.Template.WebAPI", "src\CG4.Template.WebAPI\CG4.Template.WebAPI.csproj", "{6DBABF4F-99BD-40BD-AC4A-DADD0B21D092}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CG4.Templ.WebApi", "src\CG4.Templ.WebApi\CG4.Templ.WebApi.csproj", "{6DBABF4F-99BD-40BD-AC4A-DADD0B21D092}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
