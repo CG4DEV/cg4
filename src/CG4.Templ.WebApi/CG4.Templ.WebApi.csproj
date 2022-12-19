@@ -8,6 +8,7 @@
         <NoDefaultExcludes>true</NoDefaultExcludes>
         <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
         <PackageOutputPath>.</PackageOutputPath>
+        <IsPackable>true</IsPackable>
     </PropertyGroup>
 
     <ItemGroup>
@@ -25,7 +26,6 @@
         <PackageId>CG4.Templ.WebApi</PackageId>
         <Title>CG4.Templ.WebApi</Title>
         <Authors>CG4</Authors>
-        <Copyright>$copyright$</Copyright>
         <Description>Template for Web API</Description>
         <PackageTags>c#;dotnet-core;webapi;template</PackageTags>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
