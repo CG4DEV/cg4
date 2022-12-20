@@ -6,7 +6,7 @@
         <ContentTargetFolders>content</ContentTargetFolders>
         <EnableDefaultItems>false</EnableDefaultItems>
         <NoDefaultExcludes>true</NoDefaultExcludes>
-        <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+        <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
         <PackageOutputPath>.</PackageOutputPath>
         <IsPackable>true</IsPackable>
     </PropertyGroup>
@@ -14,7 +14,7 @@
     <ItemGroup>
         <Content Include="src\**\*" Exclude="**\bin\**\*;**\obj\**\*" />
         <Content Include="tests\**\*" Exclude="**\bin\**\*;**\obj\**\*" />
-        <Content Include="shared\**" />
+        <Content Include="shared\**\*" />
         <Content Include=".template.config\**" />
         <Content Include="*.sln" />
         <Compile Remove="**\*" />
@@ -27,7 +27,7 @@
         <Title>CG4.Templ.WebApi</Title>
         <Authors>CG4</Authors>
         <Description>Template for Web API</Description>
-        <PackageTags>c#;dotnet-core;webapi;template</PackageTags>
+        <PackageTags>C#;dotnet-core;webapi;template</PackageTags>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
     </PropertyGroup>
 </Project>

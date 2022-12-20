@@ -27,7 +27,7 @@ namespace ProjectName.Migrations
                 .AddJsonFile($"Configs/connectionStrings.{env}.json")
                 .AddEnvironmentVariables()
                 .Build();
-            var test = config.GetConnectionString(DATABASE_NAME);
+
             return new ServiceCollection()
                 .AddSingleton<IConfiguration>(config)
                 .AddFluentMigratorCore()
