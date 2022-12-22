@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+    
+    <ItemGroup>
+        <PackageReference Include="CG4.Extensions" Version="0.2.88-beta" />
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+    </ItemGroup>
+    
+    <ItemGroup>
+      <ProjectReference Include="..\ProjectName.Story\ProjectName.Story.csproj" />
+    </ItemGroup>
+
+</Project>

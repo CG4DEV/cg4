@@ -6,4 +6,12 @@
         <IsPackable>false</IsPackable>
     </PropertyGroup>
 
+    <ItemGroup>
+        <PackageReference Include="CG4.Executor" Version="0.2.77-beta" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\ProjectName.Common\ProjectName.Common.csproj" />
+    </ItemGroup>
+
 </Project>
