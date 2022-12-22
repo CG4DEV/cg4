@@ -4,7 +4,7 @@
     "author": "CG4",
     "name": "CG4 Web API",
     "identity": "CG4.WebAPI",
-    "groupIdentity": "CG4",
+    "groupIdentity": "CG4.WebApi",
     "shortName": "cg4api",
     "tags": {
         "language": "C#",

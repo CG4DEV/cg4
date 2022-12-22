@@ -1,10 +1,10 @@
 ﻿{
   "$schema": "https://json.schemastore.org/template",
-  "classifications": [ "CG4", "Consumer", "App"],
+  "classifications": [ "CG4", "App"],
   "author": "CG4",
   "name": "CG4 Consumer App",
   "identity": "CG4.ConsumerApp",
-  "groupIdentity": "CG4",
+  "groupIdentity": "CG4.ConsumerApp",
   "shortName": "cg4capp",
   "tags": {
     "language": "C#",
