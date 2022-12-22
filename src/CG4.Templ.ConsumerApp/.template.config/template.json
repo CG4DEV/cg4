@@ -1,0 +1,47 @@
+﻿{
+  "$schema": "https://json.schemastore.org/template",
+  "classifications": [ "CG4", "App"],
+  "author": "CG4",
+  "name": "CG4 Consumer App",
+  "identity": "CG4.ConsumerApp",
+  "groupIdentity": "CG4.ConsumerApp",
+  "shortName": "cg4capp",
+  "tags": {
+    "language": "C#",
+    "type": "solution"
+  },
+  "sourceName": "ProjectName",
+  "preferNameDirectory": false,
+  "symbols": {
+    "correctName": {
+      "type": "derived",
+      "valueSource": "name",
+      "valueTransform": "IncorrectName",
+      "replaces": "ProjectName",
+      "fileRename": "ProjectName"
+    }
+  },
+  "forms": {
+    "IncorrectName": {
+      "identifier": "replace",
+      "pattern": "[\\W]",
+      "replacement": ""
+    }  
+  },
+  "sources": [
+    {
+      "source": "./",
+      "target": "./",
+      "exclude": [
+        "**/.gitattributes",
+        "**/.gitignore",
+        "**/.vs/**",
+        "**/.git/**",
+        "**/.idea/**",
+        "**/[Bb]in/**",
+        "**/[Oo]bj/**",
+        "**/.template.config/**"
+      ]
+    }
+  ]
+}

@@ -1,10 +1,10 @@
 {
-    "$schema": "http://json.schemastore.org/template",
+    "$schema": "https://json.schemastore.org/template",
     "classifications": [ "CG4", "Web API" ],
     "author": "CG4",
     "name": "CG4 Web API",
     "identity": "CG4.WebAPI",
-    "groupIdentity": "CG4",
+    "groupIdentity": "CG4.WebApi",
     "shortName": "cg4api",
     "tags": {
         "language": "C#",
@@ -13,8 +13,7 @@
     "sourceName": "ProjectName",
     "preferNameDirectory": false,
     "symbols": {
-        "correctName":
-        {
+        "correctName": {
             "type": "derived",
             "valueSource": "name",
             "valueTransform": "IncorrectName",

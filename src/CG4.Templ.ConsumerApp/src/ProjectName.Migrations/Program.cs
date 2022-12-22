@@ -5,12 +5,12 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace ProjectName.Migrations
 {
-    public static class Program
+    class Program
     {
         private const string ENVIRONMENT_VARIABLE_NAME = "ASPNETCORE_ENVIRONMENT";
         private const string DATABASE_NAME = "ProjectName";
-
-        public static void Main()
+        
+        static void Main(string[] args)
         {
             var serviceProvider = CreateServices();
 
@@ -33,7 +33,8 @@ namespace ProjectName.Migrations
                 .AddFluentMigratorCore()
                 .ConfigureRunner(rb => rb
                     .AddPostgres10_0()
-                    .WithGlobalConnectionString(x => x.GetRequiredService<IConfiguration>().GetConnectionString(DATABASE_NAME))
+                    .WithGlobalConnectionString(x =>
+                        x.GetRequiredService<IConfiguration>().GetConnectionString(DATABASE_NAME))
                     .WithGlobalCommandTimeout(TimeSpan.FromMinutes(5))
                     .ScanIn(typeof(Program).Assembly).For.Migrations())
                 .AddLogging(lb => lb.AddFluentMigratorConsole())

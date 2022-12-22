@@ -4,13 +4,13 @@
         <IncludeContentInPack>true</IncludeContentInPack>
         <IncludeBuildOutput>false</IncludeBuildOutput>
         <ContentTargetFolders>content</ContentTargetFolders>
-        <EnableDefaultItems>false</EnableDefaultItems>
+        <EnableDefaultsItems>false</EnableDefaultsItems>
         <NoDefaultExcludes>true</NoDefaultExcludes>
         <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
         <PackageOutputPath>.</PackageOutputPath>
         <IsPackable>true</IsPackable>
     </PropertyGroup>
-
+    
     <ItemGroup>
         <Content Include="src\**\*" Exclude="**\bin\**\*;**\obj\**\*" />
         <Content Include="tests\**\*" Exclude="**\bin\**\*;**\obj\**\*" />
@@ -19,15 +19,15 @@
         <Content Include="*.sln" />
         <Compile Remove="**\*" />
     </ItemGroup>
-
+    
     <PropertyGroup>
         <PackageType>Template</PackageType>
         <Version>0.0.1</Version>
-        <PackageId>CG4.Templ.WebApi</PackageId>
-        <Title>CG4.Templ.WebApi</Title>
+        <PackageId>CG4.Templ.ConsumerApp</PackageId>
+        <Title>CG4.Templ.ConsumerApp</Title>
         <Authors>CG4</Authors>
-        <Description>Template for Web API</Description>
-        <PackageTags>C#;dotnet-core;webapi;template</PackageTags>
+        <Description>Template for Consumer App</Description>
+        <PackageTags>C#;dotnet-core;consumer-app;template</PackageTags>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
     </PropertyGroup>
 </Project>

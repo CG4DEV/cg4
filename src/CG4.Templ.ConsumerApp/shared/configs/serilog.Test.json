@@ -1,0 +1,22 @@
+{
+  "Serilog": {
+    "MinimumLevel": {
+      "Default": "Information",
+      "Override": {
+        "Microsoft": "Warning",
+        "Microsoft.Hosting.Lifetime": "Warning",
+        "System": "Error",
+        "Tolar.Logging.BusinessLog": "Information"
+      }
+    },
+    "Using": [ "Serilog.Sinks.Console" ],
+    "WriteTo": [
+      {
+        "Name": "Console",
+        "Args": {
+          "formatter": "Serilog.Formatting.Json.JsonFormatter, Serilog"
+        }
+      }
+    ]
+  }
+}
