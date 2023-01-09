@@ -1,0 +1,9 @@
+{
+  "$schema": "https://json.schemastore.org/dotnetcli.host",
+  "symbolInfo": {
+    "databaseName": {
+      "longName": "database-name",
+      "shortName": "dn"
+    }
+  }
+}

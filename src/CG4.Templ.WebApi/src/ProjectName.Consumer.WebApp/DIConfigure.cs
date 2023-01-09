@@ -5,21 +5,22 @@ using CG4.Impl.Dapper;
 using CG4.Impl.Dapper.Crud;
 using CG4.Impl.Dapper.Poco;
 using CG4.Impl.Dapper.Poco.ExprOptions;
+using CG4.Impl.Kafka.Consumer;
 using Microsoft.Extensions.DependencyInjection;
-using ProjectName.Common;
-using ProjectName.Common.Impl;
-using ProjectName.Core.DataAccess;
-using ProjectName.Story;
+using ProjectName.Consumer.Common;
+using ProjectName.Consumer.Common.Impl;
+using ProjectName.Consumer.Story;
 
-namespace ProjectName.WebApp
+namespace ProjectName.Consumer.WebApp
 {
-    public static class DIConfigure
+    public class DIConfigure
     {
         public static IServiceCollection Configure(IServiceCollection services)
         {
             services.AddExecutors(options =>
             {
                 var executionTypes = new[] { typeof(IStory<>), typeof(IStory<,>) };
+
                 options.ExecutorInterfaceType = typeof(IStoryExecutor);
                 options.ExecutorImplementationType = typeof(StoryExecutor);
                 options.ExecutorLifetime = ServiceLifetime.Singleton;
@@ -27,11 +28,10 @@ namespace ProjectName.WebApp
                 options.ExecutionTypesLifetime = ServiceLifetime.Transient;
             }, typeof(IStoryLibrary).Assembly);
 
-            services.AddSingleton<IAppSettings, IConnectionSettings, AppSettings>();
+            services.AddSingleton<IAppSettings, IConnectionSettings, IKafkaConsumerSettings, AppSettings>();
 
-            services.AddScoped<ICrudService, AppCrudService>();
-            services.AddScoped<IAppCrudService, AppCrudService>();
-            services.AddScoped<IDataService, DataService>();
+            services.AddTransient<ICrudService, AppCrudService>();
+            services.AddTransient<IAppCrudService, AppCrudService>();
 
             services.AddSingleton<IConnectionFactory, ProjectNameConnectionFactory>();
             services.AddSingleton<ISqlBuilder, ExprSqlBuilder>();

@@ -1,5 +1,5 @@
 {
   "ConnectionStrings": {
-    "ProjectName": "User ID=postgres;Password=postgres;Host=localhost;Port=5432;Database=postgres;"
+    "ProjectName": "User ID=postgres;Password=postgres;Host=localhost;Port=5432;Database=project_name;"
   }
 }

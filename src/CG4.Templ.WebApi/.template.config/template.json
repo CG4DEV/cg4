@@ -19,6 +19,14 @@
             "valueTransform": "IncorrectName",
             "replaces": "ProjectName",
             "fileRename": "ProjectName"
+        },
+        "databaseName": {
+            "type": "parameter",
+            "datatype": "string",
+            "replaces": "project_name",
+            "defaultValue": "project_name",
+            "description": "The name of the Database.",
+            "isRequired": true
         }
     },
     "forms": {

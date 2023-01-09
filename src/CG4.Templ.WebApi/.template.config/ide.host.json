@@ -3,5 +3,12 @@
     "order": 0,
     "icon": "__TemplateIcon.ico",
     "symbolInfo": [
+        {
+            "id": "databaseName",
+            "name": {
+                "text": "Database name"
+            },
+            "isVisible": true
+        }
     ]
 }
