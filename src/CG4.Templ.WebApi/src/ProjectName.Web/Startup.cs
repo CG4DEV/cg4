@@ -1,10 +1,12 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using ProjectName.Core.Web;
 using ProjectName.WebApp;
 
 namespace ProjectName.Web
@@ -23,7 +25,9 @@ namespace ProjectName.Web
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddHealthChecks();
+            services.AddHealthChecks()
+                .AddCheck<ReadyHealthCheck>("Ready check");
+            
             services
                 .AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options =>
@@ -34,10 +38,14 @@ namespace ProjectName.Web
                         return Task.CompletedTask;
                     };
                 });
+            
+            services.AddControllers(o =>
+            {
+                o.Filters.Add(SupportRestfulApi.Instance);
+            });
 
             services.AddMvc();
             services.AddRouting(options => options.LowercaseUrls = true);
-            services.AddControllers();
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
 
@@ -61,7 +69,16 @@ namespace ProjectName.Web
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapHealthChecks("_hc");
+                endpoints.MapHealthChecks("health", new HealthCheckOptions
+                {
+                    Predicate = _ => false
+                });
+                
+                endpoints.MapHealthChecks("ready", new HealthCheckOptions
+                {
+                    Predicate = hc => hc.Name == "Ready check"
+                });
+                
                 endpoints.MapControllers();
             });
         }

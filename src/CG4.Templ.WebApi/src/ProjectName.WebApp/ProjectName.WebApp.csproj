@@ -2,7 +2,6 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
-    <Nullable>enable</Nullable>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 
@@ -17,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ProjectName.Core.Web\ProjectName.Core.Web.csproj" />
     <ProjectReference Include="..\ProjectName.Story\ProjectName.Story.csproj" />
   </ItemGroup>
 

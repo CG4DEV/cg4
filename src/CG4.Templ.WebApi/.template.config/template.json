@@ -1,6 +1,6 @@
 {
     "$schema": "https://json.schemastore.org/template",
-    "classifications": [ "CG4", "Web API" ],
+    "classifications": [ "CG4", "Web API", "Consumer App" ],
     "author": "CG4",
     "name": "CG4 Web API",
     "identity": "CG4.WebAPI",
@@ -19,6 +19,13 @@
             "valueTransform": "IncorrectName",
             "replaces": "ProjectName",
             "fileRename": "ProjectName"
+        },
+        "databaseName": {
+            "type": "parameter",
+            "datatype": "string",
+            "replaces": "project_name",
+            "defaultValue": "project_name",
+            "description": "The name of the Database, that will replace the default DB name in the connectionStrings.json."
         }
     },
     "forms": {
