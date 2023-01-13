@@ -9,4 +9,8 @@
     <ProjectReference Include="..\ProjectName.Domain\ProjectName.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="MySql.Data" Version="8.0.31" />
+  </ItemGroup>
+
 </Project>

@@ -1,9 +1,41 @@
 {
   "$schema": "https://json.schemastore.org/dotnetcli.host",
   "symbolInfo": {
-    "databaseName": {
+    "Database": {
       "longName": "database-name",
       "shortName": "dn"
+    },
+    "User ID": {
+      "longName": "user-id",
+      "shortName": "u"
+    },
+    "Password": {
+      "longName": "password",
+      "shortName": "p"
+    },
+    "Host": {
+      "longName": "host",
+      "shortName": "H"
+    },
+    "Port": {
+      "longName": "port",
+      "shortName": "P"
+    },
+    "bootstrap.servers": {
+      "longName": "bootstrap-servers",
+      "shortName": "bs"
+    },
+    "group.id": {
+      "longName": "group-id",
+      "shortName": "gi"
+    },
+    "Sphinx Server": {
+      "longName": "sphinx-server",
+      "shortName": "ss"
+    },
+    "Sphinx Port": {
+      "longName": "sphinx-port",
+      "shortName": "sp"
     }
   }
 }
