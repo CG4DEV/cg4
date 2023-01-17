@@ -1,9 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using CG4.DataAccess.Domain;
 using CG4.Executor.Story;
 using CG4.Impl.Dapper.Crud;
-using CG4.Impl.Dapper.Poco;
-using CG4.Impl.Dapper.Poco.Expressions;
+using ProjectName.Common;
 using ProjectName.Domain.Entities;
 
 namespace ProjectName.Story.Users
@@ -11,32 +12,75 @@ namespace ProjectName.Story.Users
     public class GetUsersPageStory : IStory<GetUsersPageStoryContext, PageResult<User>>
     {
         private readonly ICrudService _crudService;
+        private readonly ISearchService _searchService;
 
-        public GetUsersPageStory(ICrudService crudService)
+        private const string USER_QUERY = @"SELECT 
+                                                u.id,
+                                                u.login,
+                                                u.password,
+                                                u.create_date AS CreateDate,
+                                                u.update_date AS UpdateDate
+                                            FROM 
+                                                users AS u 
+                                            WHERE 
+                                                u.id = ANY(@Ids)";
+        
+        private const string USER_COUNT_QUERY = @"SELECT 
+                                                      Count(u.*) 
+                                                  FROM 
+                                                      users AS u 
+                                                  WHERE 
+                                                      u.id = ANY(@Ids)";
+
+        private const string USER_SEARCH_QUERY = @"SELECT 
+                                                       u.id 
+                                                   FROM 
+                                                       users AS u";
+
+        public GetUsersPageStory(ICrudService crudService, ISearchService searchService)
         {
             _crudService = crudService;
+            _searchService = searchService;
         }
         
-        public Task<PageResult<User>> ExecuteAsync(GetUsersPageStoryContext context)
+        public async Task<PageResult<User>> ExecuteAsync(GetUsersPageStoryContext context)
         {
-            var expr = ExprBoolean.Empty;
+            var searchQuery = new StringBuilder(USER_SEARCH_QUERY);
+            var limit = context.Limit ?? 25;
+            var page = context.Page ?? 0;
 
             if (!string.IsNullOrEmpty(context.FastSearch))
             {
                 if (long.TryParse(context.FastSearch, out var searchToLong))
                 {
-                    expr |= SqlExprHelper.GenerateWhere<User>(x => x.Id == searchToLong);
+                    searchQuery.Append(" WHERE u.id = @FastSearch");
                 }
                 else
                 {
-                    expr |= SqlExprHelper.GenerateWhere<User>(x => x.Login.Contains(context.FastSearch));
+                    searchQuery.Append(" WHERE u.login LIKE @FastSearch");
                 }
             }
 
-            return _crudService.GetPageAsync<User>(
-                context.Page.GetValueOrDefault(),
-                context.Limit.GetValueOrDefault(),
-                x => x.Where(expr));
+            searchQuery.Append(" OFFSET @Offset");
+            searchQuery.Append(" LIMIT @Limit");
+
+            var usersIds = await _searchService.SearchAsync(searchQuery.ToString(), new
+            {
+                FastSearch = context.FastSearch,
+                Limit = limit,
+                Offset = page * limit
+            });
+
+            var users = await _crudService.QueryAsync<User>(USER_QUERY, new { Ids = usersIds });
+            var usersCount = await _crudService.QuerySingleOrDefaultAsync<int>(USER_COUNT_QUERY, new { Ids = usersIds });
+
+            return new PageResult<User>
+            {
+                Data = users,
+                Page = page,
+                Count = usersCount,
+                FilteredCount = usersCount
+            };
         }
     }
 }

@@ -53,6 +53,13 @@
             "isVisible": true
         },
         {
+            "id": "Topic name",
+            "name": {
+                "text": "Topic name"
+            },
+            "isVisible": true
+        },
+        {
             "id": "Sphinx Server",
             "name": {
                 "text": "Sphinx Server"

@@ -28,6 +28,8 @@ namespace ProjectName.WebApp
             services.AddScoped<ICrudService, AppCrudService>();
             services.AddScoped<IAppCrudService, AppCrudService>();
 
+            services.AddTransient<ISearchService, DbSearchService>();
+
             services.AddSingleton<IConnectionFactory, ProjectNameConnectionFactory>();
             services.AddSingleton<ISqlBuilder, ExprSqlBuilder>();
             services.AddSingleton<ISqlSettings, PostreSqlOptions>();

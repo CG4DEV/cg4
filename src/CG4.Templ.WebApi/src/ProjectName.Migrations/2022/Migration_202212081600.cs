@@ -11,8 +11,8 @@ namespace ProjectName.Migrations._2022
                 .WithColumn("id").AsInt64().PrimaryKey().Identity()
                 .WithColumn("login").AsString().NotNullable()
                 .WithColumn("password").AsString().NotNullable()
-                .WithColumn("create_date").AsDateTime().NotNullable().WithDefault(SystemMethods.CurrentUTCDateTime)
-                .WithColumn("update_date").AsDateTime().NotNullable().WithDefault(SystemMethods.CurrentUTCDateTime);
+                .WithColumn("create_date").AsDateTime().NotNullable().WithDefault(SystemMethods.CurrentDateTimeOffset)
+                .WithColumn("update_date").AsDateTime().NotNullable().WithDefault(SystemMethods.CurrentDateTimeOffset);
         }
 
         public override void Down()

@@ -25,6 +25,10 @@
       "longName": "bootstrap-servers",
       "shortName": "bs"
     },
+    "Topic name": {
+      "longName": "topic-name",
+      "shortName": "tn"
+    },
     "group.id": {
       "longName": "group-id",
       "shortName": "gi"
