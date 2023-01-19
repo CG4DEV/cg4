@@ -71,15 +71,17 @@ namespace ProjectName.Story.Users
                 Offset = page * limit
             });
 
-            var users = await _crudService.QueryAsync<User>(USER_QUERY, new { Ids = usersIds });
-            var usersCount = await _crudService.QuerySingleOrDefaultAsync<int>(USER_COUNT_QUERY, new { Ids = usersIds });
+            var users = _crudService.QueryAsync<User>(USER_QUERY, new { Ids = usersIds });
+            var usersCount = _crudService.QuerySingleOrDefaultAsync<int>(USER_COUNT_QUERY, new { Ids = usersIds });
+
+            await Task.WhenAll(users, usersCount);
 
             return new PageResult<User>
             {
-                Data = users,
+                Data = users.Result,
                 Page = page,
-                Count = usersCount,
-                FilteredCount = usersCount
+                Count = usersCount.Result,
+                FilteredCount = usersCount.Result
             };
         }
     }
