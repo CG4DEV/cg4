@@ -8,7 +8,6 @@ using CG4.Impl.Dapper.Poco.ExprOptions;
 using Microsoft.Extensions.DependencyInjection;
 using ProjectName.Common;
 using ProjectName.Common.Impl;
-using ProjectName.Core.DataAccess;
 using ProjectName.Story;
 
 namespace ProjectName.WebApp
@@ -19,19 +18,17 @@ namespace ProjectName.WebApp
         {
             services.AddExecutors(options =>
             {
-                var executionTypes = new[] { typeof(IStory<>), typeof(IStory<,>) };
+                options.ExecutionTypes = new[] { typeof(IStory<>), typeof(IStory<,>) };
                 options.ExecutorInterfaceType = typeof(IStoryExecutor);
                 options.ExecutorImplementationType = typeof(StoryExecutor);
-                options.ExecutorLifetime = ServiceLifetime.Singleton;
-                options.ExecutionTypes = executionTypes;
-                options.ExecutionTypesLifetime = ServiceLifetime.Transient;
-            }, typeof(IStoryLibrary).Assembly);
+            }, typeof(IStoryLibrary));
 
             services.AddSingleton<IAppSettings, IConnectionSettings, AppSettings>();
 
             services.AddScoped<ICrudService, AppCrudService>();
             services.AddScoped<IAppCrudService, AppCrudService>();
-            services.AddScoped<IDataService, DataService>();
+
+            services.AddTransient<ISearchService, DbSearchService>();
 
             services.AddSingleton<IConnectionFactory, ProjectNameConnectionFactory>();
             services.AddSingleton<ISqlBuilder, ExprSqlBuilder>();

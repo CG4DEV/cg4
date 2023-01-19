@@ -1,10 +1,7 @@
 ﻿using System.Threading.Tasks;
 using CG4.DataAccess.Domain;
 using CG4.Impl.Dapper.Crud;
-using CG4.Impl.Dapper.Poco;
-using CG4.Impl.Dapper.Poco.Expressions;
 using Microsoft.AspNetCore.Mvc;
-using ProjectName.Core.DataAccess;
 
 namespace ProjectName.Core.Web.Controllers
 {
@@ -12,27 +9,16 @@ namespace ProjectName.Core.Web.Controllers
         where TEntity : EntityBase, new()
     {
         protected readonly ICrudService _crudService;
-        protected readonly IDataService _dataService;
 
-        public EntityControllerBase(ICrudService crudService, IDataService dataService)
+        public EntityControllerBase(ICrudService crudService)
         {
             _crudService = crudService;
-            _dataService = dataService;
         }
 
         [HttpGet]
-        public virtual async Task<IActionResult> GetList([FromQuery] int? limit, [FromQuery] string? search)
+        public virtual async Task<IActionResult> GetList([FromQuery] int? limit)
         {
-            var expr = ExprBoolean.Empty;
-
-            if (!string.IsNullOrEmpty(search) && int.TryParse(search, out var id))
-            {
-                expr |= SqlExprHelper.GenerateWhere<TEntity>(u => u.Id == id);
-            }
-
-            var result = await _crudService.GetAllAsync<TEntity>(x => x
-                .Where(expr).Limit(limit ?? 25));
-
+            var result = await _crudService.GetAllAsync<TEntity>(x => x.Limit(limit ?? 25));
             return Ok(result);
         }
 
@@ -46,14 +32,14 @@ namespace ProjectName.Core.Web.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> Create(TEntity entity)
         {
-            var result = await _dataService.CreateAsync(entity);
+            var result = await _crudService.CreateAsync(entity);
             return Ok(result);
         }
 
         [HttpPut]
         public virtual async Task<IActionResult> Update(TEntity entity)
         {
-            var result = await _dataService.UpdateAsync(entity);
+            var result = await _crudService.UpdateAsync(entity);
             return Ok(result);
         }
 

@@ -1,9 +1,8 @@
-﻿using CG4.Impl.Dapper;
-using CG4.Impl.Dapper.PostgreSql;
+﻿using CG4.Impl.Dapper.PostgreSql;
 
 namespace ProjectName.Common.Impl
 {
-    public class ProjectNameConnectionFactory : ConnectionFactoryPostgreSQL, IConnectionFactory
+    public class ProjectNameConnectionFactory : ConnectionFactoryPostgreSQL
     {
         public ProjectNameConnectionFactory(IConnectionSettings connectionSettings) 
             : base(connectionSettings.ConnectionString)

@@ -18,7 +18,7 @@ namespace ProjectName.Consumer.WebApp
             ConnectionString = config.GetConnectionString("ProjectName");
             MaxTimeoutMsec = config.GetValue<int>("Kafka:MaxTimeoutMsec");
             MaxThreadsCount = config.GetValue<int>("Kafka:MaxThreadsCount");
-            
+
             Config = config.GetSection("Kafka:Config").GetChildren().ToDictionary(x => x.Key, v => v.Value);
             
             ApplyKafkaAliases(config, Config);
