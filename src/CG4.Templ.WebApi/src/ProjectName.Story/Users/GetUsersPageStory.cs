@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using System.Text;
+﻿using System.Text;
 using System.Threading.Tasks;
 using CG4.DataAccess.Domain;
 using CG4.Executor.Story;
@@ -71,17 +70,17 @@ namespace ProjectName.Story.Users
                 Offset = page * limit
             });
 
-            var users = _crudService.QueryAsync<User>(USER_QUERY, new { Ids = usersIds });
-            var usersCount = _crudService.QuerySingleOrDefaultAsync<int>(USER_COUNT_QUERY, new { Ids = usersIds });
+            var usersTask = _crudService.QueryAsync<User>(USER_QUERY, new { Ids = usersIds });
+            var usersCountTask = _crudService.QuerySingleOrDefaultAsync<int>(USER_COUNT_QUERY, new { Ids = usersIds });
 
-            await Task.WhenAll(users, usersCount);
+            await Task.WhenAll(usersTask, usersCountTask);
 
             return new PageResult<User>
             {
-                Data = users.Result,
+                Data = usersTask.Result,
                 Page = page,
-                Count = usersCount.Result,
-                FilteredCount = usersCount.Result
+                Count = usersCountTask.Result,
+                FilteredCount = usersCountTask.Result
             };
         }
     }

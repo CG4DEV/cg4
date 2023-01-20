@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace ProjectName.Core.Web.Controllers
 {
     [ApiExplorerSettings(IgnoreApi = true)]
-    public class HomeController : ControllerBase
+    public class HomeController : Controller
     {
         private static readonly DateTimeOffset _starts = DateTimeOffset.UtcNow; 
         

@@ -60,8 +60,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{01A4B3
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CG4.Templ.WebApi", "src\CG4.Templ.WebApi\CG4.Templ.WebApi.csproj", "{6DBABF4F-99BD-40BD-AC4A-DADD0B21D092}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CG4.Templ.ConsumerApp", "src\CG4.Templ.ConsumerApp\CG4.Templ.ConsumerApp.csproj", "{D1E24ECD-7C00-4B3E-BEDF-E796C17D8734}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -152,10 +150,6 @@ Global
 		{6DBABF4F-99BD-40BD-AC4A-DADD0B21D092}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6DBABF4F-99BD-40BD-AC4A-DADD0B21D092}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6DBABF4F-99BD-40BD-AC4A-DADD0B21D092}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D1E24ECD-7C00-4B3E-BEDF-E796C17D8734}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D1E24ECD-7C00-4B3E-BEDF-E796C17D8734}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D1E24ECD-7C00-4B3E-BEDF-E796C17D8734}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D1E24ECD-7C00-4B3E-BEDF-E796C17D8734}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -173,7 +167,6 @@ Global
 		{407D81B9-EA94-45AE-AB92-4F9B4353918F} = {8662AF30-E855-4891-8E88-4F99B18B9B06}
 		{1198AC27-C077-410E-B53D-2C8DA85A9CE2} = {8662AF30-E855-4891-8E88-4F99B18B9B06}
 		{6DBABF4F-99BD-40BD-AC4A-DADD0B21D092} = {80616734-86A0-4618-B3DA-0103257F6CF2}
-		{D1E24ECD-7C00-4B3E-BEDF-E796C17D8734} = {80616734-86A0-4618-B3DA-0103257F6CF2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {56DD2A7B-26EE-4795-8477-EAE931A73E14}
