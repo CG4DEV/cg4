@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using CG4.DataAccess.Domain;
 using ProjectName.Domain.Entities;
@@ -10,39 +9,39 @@ namespace ProjectName.Integration.Tests.Story
     {
         protected readonly DatabaseFixture _fixure;
 
-        protected readonly IList<User> _users;
+        protected readonly IList<Account> _accounts;
 
         protected BaseTestStory()
         {
             _fixure = new DatabaseFixture();
 
-            _users = new List<User>();
+            _accounts = new List<Account>();
         }
 
         public async Task InitializeAsync()
         {
-            await InsertUserAsync();
+            await InsertAccountAsync();
         }
 
         public Task DisposeAsync()
         {
             var listToRemove = new List<EntityBase>();
 
-            listToRemove.AddRange(_users);
+            listToRemove.AddRange(_accounts);
 
             return _fixure.CleanUpAsync(listToRemove);
         }
 
-        protected async Task<User> InsertUserAsync(User user)
+        protected async Task<Account> InsertAccountAsync(Account account)
         {
-            await _fixure.CrudService.CreateAsync(user);
-            _users.Add(user);
-            return user;
+            await _fixure.CrudService.CreateAsync(account);
+            _accounts.Add(account);
+            return account;
         }
 
-        protected Task<User> InsertUserAsync()
+        protected Task<Account> InsertAccountAsync()
         {
-            return InsertUserAsync(new User
+            return InsertAccountAsync(new Account
             {
                 Login = "Test login",
                 Password = "Test password",

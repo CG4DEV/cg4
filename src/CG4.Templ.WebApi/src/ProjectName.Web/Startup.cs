@@ -64,6 +64,7 @@ namespace ProjectName.Web
             app.UseSwaggerUI();
 
             app.UseHttpsRedirection();
+            app.UseStaticFiles();
             app.UseMiddleware<ExceptionMiddleware>();
             app.UseAuthorization();
 
@@ -80,6 +81,7 @@ namespace ProjectName.Web
                 });
                 
                 endpoints.MapControllers();
+                endpoints.MapRazorPages();
             });
         }
     }

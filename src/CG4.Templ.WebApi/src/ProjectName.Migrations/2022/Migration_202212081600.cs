@@ -7,17 +7,17 @@ namespace ProjectName.Migrations._2022
     {
         public override void Up()
         {
-            Create.Table("users")
+            Create.Table("accounts")
                 .WithColumn("id").AsInt64().PrimaryKey().Identity()
                 .WithColumn("login").AsString().NotNullable()
                 .WithColumn("password").AsString().NotNullable()
-                .WithColumn("create_date").AsDateTime().NotNullable().WithDefault(SystemMethods.CurrentDateTimeOffset)
-                .WithColumn("update_date").AsDateTime().NotNullable().WithDefault(SystemMethods.CurrentDateTimeOffset);
+                .WithColumn("create_date").AsDateTime().NotNullable().WithDefault(SystemMethods.CurrentDateTime)
+                .WithColumn("update_date").AsDateTime().NotNullable().WithDefault(SystemMethods.CurrentDateTime);
         }
 
         public override void Down()
         {
-            Delete.Table("users");
+            Delete.Table("accounts");
         }
     }
 }

@@ -2,9 +2,9 @@
 using CG4.Executor;
 using ProjectName.Domain.Entities;
 
-namespace ProjectName.Story.Users
+namespace ProjectName.Story.Accounts
 {
-    public class GetUsersPageStoryContext : IResult<PageResult<User>>
+    public class GetAccountsPageStoryContext : IResult<PageResult<Account>>
     {
         /// <summary>
         /// Количество выводимых строк. По умолчанию - 25.
