@@ -11,12 +11,12 @@ namespace CG4.DataAccess.Domain
     }
 
     /// <summary>
-    ///     Базовая сущность.
+    /// Базовая сущность.
     /// </summary>
     public abstract class EntityBase : IEntityBase
     {
         /// <summary>
-        ///     Идентификатор сущности.
+        /// Идентификатор сущности.
         /// </summary>
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -24,14 +24,14 @@ namespace CG4.DataAccess.Domain
         public long Id { get; set; }
 
         /// <summary>
-        ///     Дата создания сущности.
+        /// Дата создания сущности.
         /// </summary>
         [Column("create_date")]
         [Editable(false)]
         public DateTimeOffset CreateDate { get; set; }
 
         /// <summary>
-        ///     Дата обновления сущности.
+        /// Дата обновления сущности.
         /// </summary>
         [Column("update_date")]
         public DateTimeOffset UpdateDate { get; set; }

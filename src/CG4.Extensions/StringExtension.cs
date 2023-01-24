@@ -3,15 +3,15 @@
 namespace CG4.Extensions
 {
     /// <summary>
-    /// Расширения для манипуляции строками
+    /// Расширения для манипуляции строками.
     /// </summary>
     public static class StringExtension
     {
         /// <summary>
-        /// Возвращает входную строку, если она не пустая, иначе null
+        /// Возвращает входную строку, если она не пустая, иначе <see langword="null"/>.
         /// </summary>
-        /// <param name="str">Входная строка</param>
-        /// <returns>строка</returns>
+        /// <param name="str">Входная строка.</param>
+        /// <returns>Строка, если не пустая или <see langword="null"/>, иначе <see langword="null"/>.</returns>
         public static string ToStr(this string str)
         {
             if (string.IsNullOrEmpty(str))
@@ -23,11 +23,11 @@ namespace CG4.Extensions
         }
 
         /// <summary>
-        /// Если передана не пустая строка, то парсит строку в целое число, иначе возвращает число по-умолчанию
+        /// Если передана не пустая строка, то парсит строку в целое число, иначе возвращает число по умолчанию.
         /// </summary>
-        /// <param name="str">Входная строка</param>
-        /// <param name="defValue">Число по-умолчанию</param>
-        /// <returns>Целое число</returns>
+        /// <param name="str">Входная строка.</param>
+        /// <param name="defValue">Число по умолчанию.</param>
+        /// <returns>Целое число.</returns>
         public static int? ToInt(this string str, int? defValue = null)
         {
             if (string.IsNullOrEmpty(str))
@@ -44,6 +44,13 @@ namespace CG4.Extensions
             return defValue;
         }
 
+        /// <summary>
+        /// Если передана не пустая строка, то парсит строку в целое число типа <see langword="ushort"/>,
+        /// иначе возвращает число по умолчанию.
+        /// </summary>
+        /// <param name="str">Входная строка.</param>
+        /// <param name="defValue">Число по умолчанию.</param>
+        /// <returns>Целое число типа <see langword="ushort"/>.</returns>
         public static ushort? ToShort(this string str, ushort? defValue = null)
         {
             if (string.IsNullOrEmpty(str))
@@ -61,11 +68,11 @@ namespace CG4.Extensions
         }
 
         /// <summary>
-        /// Если передана не пустая строка, то парсит строку в число с плавающей точкой, иначе возвращает число по-умолчанию
+        /// Если передана не пустая строка, то парсит строку в число с плавающей точкой, иначе возвращает число по умолчанию.
         /// </summary>
-        /// <param name="str">Входная строка</param>
-        /// <param name="defValue">Число по-умолчанию</param>
-        /// <returns>Число с плавающей точкой</returns>
+        /// <param name="str">Входная строка.</param>
+        /// <param name="defValue">Число по умолчанию.</param>
+        /// <returns>Число с плавающей точкой.</returns>
         public static float? ToFloat(this string str, float? defValue = null)
         {
             if (string.IsNullOrEmpty(str))
@@ -83,10 +90,10 @@ namespace CG4.Extensions
         }
 
         /// <summary>
-        /// Если передана не пустая строка, то парсит строку в дату и время
+        /// Если передана не пустая строка, то парсит строку в дату и время.
         /// </summary>
-        /// <param name="str">Входная строка</param>
-        /// <returns>Дата и время</returns>
+        /// <param name="str">Входная строка.</param>
+        /// <returns>Дата и время.</returns>
         public static DateTime? ToDateTime(this string str)
         {
             if (string.IsNullOrEmpty(str))
@@ -98,11 +105,11 @@ namespace CG4.Extensions
         }
 
         /// <summary>
-        /// Если передана не пустая строка, то парсит строку в дату и время по шаблону
+        /// Если передана не пустая строка, то парсит строку в дату и время по шаблону.
         /// </summary>
-        /// <param name="str">Входная строка</param>
-        /// <param name="pattern">Шаблон даты</param>
-        /// <returns>Дата и время</returns>
+        /// <param name="str">Входная строка.</param>
+        /// <param name="pattern">Шаблон даты.</param>
+        /// <returns>Дата и время.</returns>
         public static DateTime? ToExactDateTime(this string str, string pattern)
         {
             if (string.IsNullOrEmpty(str))
@@ -114,11 +121,11 @@ namespace CG4.Extensions
         }
 
         /// <summary>
-        /// Делает первую букву переданной строки заглавной
+        /// Делает первую букву переданной строки заглавной.
         /// </summary>
-        /// <param name="str">Входная строка</param>
-        /// <exception cref="ArgumentException">Пустая строка</exception>
-        /// <returns>Строка</returns>
+        /// <param name="str">Входная строка.</param>
+        /// <exception cref="ArgumentException">Пустая строка.</exception>
+        /// <returns>Строка с первой заглавной буквой.</returns>
         public static string FirstLetterToUpper(this string str)
         {
             if (string.IsNullOrEmpty(str))

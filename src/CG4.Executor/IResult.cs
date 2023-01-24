@@ -1,15 +1,15 @@
 ﻿namespace CG4.Executor
 {
     /// <summary>
-    /// Интерфейс описывающий возращаемое значение из стори.
+    /// Интерфейс, описывающий возращаемое значение из стори.
     /// </summary>
-    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="T">Контекст стори.</typeparam>
     public interface IResult<T> : IResult
     {
     }
 
     /// <summary>
-    /// Интерфейс описывающий конекст стори без возвращаемого значения.
+    /// Интерфейс, описывающий контекст стори без возвращаемого значения.
     /// </summary>
     public interface IResult
     {

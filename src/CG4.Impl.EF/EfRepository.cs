@@ -7,24 +7,31 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CG4.Impl.EF
 {
-
-    public class EfRepository : IRepository, ISqlRepository, ICrudRepository
+    /// <summary>
+    /// Репозиторий для работы с EntityFramework.
+    /// </summary>
+    public class EfRepository : IRepository, ICrudRepository
     {
         private readonly IDbContextFactory _dbContextFactory;
 
+        /// <summary>
+        /// Создание экземпляра класса <see cref="EfRepository"/>.
+        /// </summary>
+        /// <param name="dbContextFactory">Фабрика, позволяющая создать контекст БД.</param>
         public EfRepository(IDbContextFactory dbContextFactory)
         {
-            this._dbContextFactory = dbContextFactory;
+            _dbContextFactory = dbContextFactory;
         }
 
-        public T Get<T>(string sql, object param = null, IDbConnection connection = null, IDbTransaction transaction = null) where T : class
+        public T Query<T>(string sql, object param = null, IDbConnection connection = null, IDbTransaction transaction = null)
+            where T : class
         {
             using var context = _dbContextFactory.CreateContext(connection as DbConnection);
             context.Database.UseTransaction(transaction as DbTransaction);
             return context.Set<T>().FromSqlRaw(sql, SqlHelper.GetSqlParameter(param)).First();
         }
 
-        public IEnumerable<T> GetAll<T>(string sql, object param = null, IDbConnection connection = null, IDbTransaction transaction = null)
+        public IEnumerable<T> QueryList<T>(string sql, object param = null, IDbConnection connection = null, IDbTransaction transaction = null)
             where T : class
         {
             using var context = _dbContextFactory.CreateContext(connection as DbConnection);
@@ -32,7 +39,15 @@ namespace CG4.Impl.EF
             return context.Set<T>().FromSqlRaw(sql, SqlHelper.GetSqlParameter(param));
         }
 
-        public T Get<T>(Expression<Func<T, bool>> predicate, IDbConnection connection = null, IDbTransaction transaction = null) where T : class
+        public int Execute(string sql, object param = null, IDbConnection connection = null, IDbTransaction transaction = null)
+        {
+            using var context = _dbContextFactory.CreateContext(connection as DbConnection);
+            context.Database.UseTransaction(transaction as DbTransaction);
+            return context.Database.ExecuteSqlRaw(sql, SqlHelper.GetSqlParameter(param));
+        }
+
+        public T Get<T>(Expression<Func<T, bool>> predicate, IDbConnection connection = null, IDbTransaction transaction = null) 
+            where T : class
         {
             using var context = _dbContextFactory.CreateContext(connection as DbConnection);
             context.Database.UseTransaction(transaction as DbTransaction);
@@ -124,7 +139,8 @@ namespace CG4.Impl.EF
             return result;
         }
 
-        public dynamic Insert<T>(T entity, IDbConnection connection = null, IDbTransaction transaction = null) where T : class
+        public dynamic Insert<T>(T entity, IDbConnection connection = null, IDbTransaction transaction = null) 
+            where T : class
         {
             using var context = _dbContextFactory.CreateContext(connection as DbConnection);
             context.Database.UseTransaction(transaction as DbTransaction);
@@ -133,7 +149,8 @@ namespace CG4.Impl.EF
             return entity;
         }
 
-        public bool Update<T>(T entity, IDbConnection connection = null, IDbTransaction transaction = null) where T : class
+        public bool Update<T>(T entity, IDbConnection connection = null, IDbTransaction transaction = null) 
+            where T : class
         {
             using var context = _dbContextFactory.CreateContext(connection as DbConnection);
             context.Database.UseTransaction(transaction as DbTransaction);
@@ -142,27 +159,14 @@ namespace CG4.Impl.EF
             return true;
         }
 
-        public bool Delete<T>(T entity, IDbConnection connection = null, IDbTransaction transaction = null) where T : class
+        public bool Delete<T>(T entity, IDbConnection connection = null, IDbTransaction transaction = null) 
+            where T : class
         {
             using var context = _dbContextFactory.CreateContext(connection as DbConnection);
             context.Database.UseTransaction(transaction as DbTransaction);
             context.Remove(entity);
             context.SaveChanges();
             return true;
-        }
-
-        public IEnumerable<T> Query<T>(string sql, object param = null, IDbConnection connection = null, IDbTransaction transaction = null) where T : class
-        {
-            using var context = _dbContextFactory.CreateContext(connection as DbConnection);
-            context.Database.UseTransaction(transaction as DbTransaction);
-            return context.Set<T>().FromSqlRaw(sql, SqlHelper.GetSqlParameter(param));
-        }
-
-        public int Execute(string sql, object param = null, IDbConnection connection = null, IDbTransaction transaction = null)
-        {
-            using var context = _dbContextFactory.CreateContext(connection as DbConnection);
-            context.Database.UseTransaction(transaction as DbTransaction);
-            return context.Database.ExecuteSqlRaw(sql, SqlHelper.GetSqlParameter(param));
         }
     }
 }
