@@ -6,7 +6,7 @@ namespace ProjectName.Core.Web.Controllers
     [ApiController]
     [KebabCaseNaming]
     [ApiExplorerSettings()]
-    public class ProjectNameControllerBase : ControllerBase
+    public class ProjectNameControllerBase : Controller
     {
         
     }

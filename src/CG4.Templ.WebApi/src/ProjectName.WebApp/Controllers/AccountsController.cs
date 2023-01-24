@@ -5,24 +5,24 @@ using CG4.Impl.Dapper.Crud;
 using Microsoft.AspNetCore.Mvc;
 using ProjectName.Core.Web.Controllers;
 using ProjectName.Domain.Entities;
-using ProjectName.Story.Users;
+using ProjectName.Story.Accounts;
 
 namespace ProjectName.WebApp.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class UsersController : EntityControllerBase<User>
+    public class AccountsController : EntityControllerBase<Account>
     {
         private readonly IStoryExecutor _storyExecutor;
         
-        public UsersController(ICrudService crudService, IStoryExecutor storyExecutor) 
+        public AccountsController(ICrudService crudService, IStoryExecutor storyExecutor) 
             : base(crudService)
         {
             _storyExecutor = storyExecutor;
         }
         
         [HttpGet("page")]
-        public Task<PageResult<User>> GetPage([FromQuery] GetUsersPageStoryContext context)
+        public Task<PageResult<Account>> GetPage([FromQuery] GetAccountsPageStoryContext context)
         {
             return _storyExecutor.Execute(context);
         }

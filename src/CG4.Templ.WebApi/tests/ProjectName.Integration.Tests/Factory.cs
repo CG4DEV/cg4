@@ -33,8 +33,9 @@ namespace ProjectName.Integration.Tests
             services.AddSingleton<IAppSettings, IConnectionSettings, AppSettings>();
 
             services
-                .AddTransient<ICrudService, AppCrudService>()
-                .AddTransient<IAppCrudService, AppCrudService>();
+                .AddScoped<ICrudService, AppCrudService>()
+                .AddScoped<IAppCrudService, AppCrudService>()
+                .AddScoped<ISearchService, DbSearchService>();
 
             services
                 .AddSingleton<IConnectionFactory, ProjectNameConnectionFactory>()
