@@ -1,4 +1,6 @@
-﻿using FluentMigrator;
+﻿using System;
+using System.Collections.Generic;
+using FluentMigrator;
 
 namespace ProjectName.Migrations._2022
 {
@@ -13,6 +15,29 @@ namespace ProjectName.Migrations._2022
                 .WithColumn("password").AsString().NotNullable()
                 .WithColumn("create_date").AsDateTime().NotNullable().WithDefault(SystemMethods.CurrentDateTime)
                 .WithColumn("update_date").AsDateTime().NotNullable().WithDefault(SystemMethods.CurrentDateTime);
+
+            Insert.IntoTable("accounts")
+                .Row(new Dictionary<string, object>
+                {
+                    ["login"] = "Test login",
+                    ["password"] = "Test password",
+                    ["create_date"] = DateTimeOffset.UtcNow,
+                    ["update_date"] = DateTimeOffset.UtcNow
+                })
+                .Row(new Dictionary<string, object>
+                {
+                    ["login"] = "Some login",
+                    ["password"] = "Some password",
+                    ["create_date"] = DateTimeOffset.UtcNow,
+                    ["update_date"] = DateTimeOffset.UtcNow
+                })
+                .Row(new Dictionary<string, object>
+                {
+                    ["login"] = "Login",
+                    ["password"] = "Password",
+                    ["create_date"] = DateTimeOffset.UtcNow,
+                    ["update_date"] = DateTimeOffset.UtcNow
+                });
         }
 
         public override void Down()

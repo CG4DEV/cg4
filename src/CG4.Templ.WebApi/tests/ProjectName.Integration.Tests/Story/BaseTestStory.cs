@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using CG4.DataAccess.Domain;
 using ProjectName.Domain.Entities;
@@ -43,8 +44,8 @@ namespace ProjectName.Integration.Tests.Story
         {
             return InsertAccountAsync(new Account
             {
-                Login = "Test login",
-                Password = "Test password",
+                Login = Guid.NewGuid().ToString("N"),
+                Password = Guid.NewGuid().ToString("N"),
             });
         }
     }
