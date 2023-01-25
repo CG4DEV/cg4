@@ -4,6 +4,9 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace CG4.Executor
 {
+    /// <summary>
+    /// Базовый класс выполнения стори.
+    /// </summary>
     public abstract class BaseExecutor
     {
         protected readonly IServiceProvider _provider;
@@ -12,19 +15,29 @@ namespace CG4.Executor
         {
             _provider = provider;
         }
-
-        /// <inheritdoc/>
+        
+        /// <summary>
+        /// Выполнение с возвращаемым значением.
+        /// </summary>
+        /// <param name="context">Контекст стори.</param>
+        /// <typeparam name="TStoryResult">Тип возвращаемого значения.</typeparam>
+        /// <returns>Возвращаемое значение стори.</returns>
+        /// <exception cref="InvalidOperationException">Не найден исполнитель стори по переданному контексту.</exception>
         public Task<TStoryResult> Execute<TStoryResult>(IResult<TStoryResult> context)
         {
             if (!CacheExecutor.TryGetValue(context.GetType(), out var type))
             {
-                throw InvalidOperationException(context.GetType().Name);;
+                throw InvalidOperationException(context.GetType().Name);
             }
 
             return (Task<TStoryResult>)Invoke(type.Method, type.ExecutionType, context);
         }
-
-        /// <inheritdoc/>
+        
+        /// <summary>
+        /// Выполнение.
+        /// </summary>
+        /// <param name="context">Контекст стори.</param>
+        /// <exception cref="InvalidOperationException">Не найден исполнитель стори по переданному контексту.</exception>
         public Task Execute(IResult context)
         {
             if (!CacheExecutor.TryGetValue(context.GetType(), out var type))

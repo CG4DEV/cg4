@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using CG4.DataAccess.Domain;
-using CG4.Impl.Dapper.Poco;
-using CG4.Impl.Dapper.Poco.Expressions;
+using CG4.DataAccess.Poco;
+using CG4.DataAccess.Poco.Expressions;
 using Xunit;
 
 namespace CG4.SqlBuilder.Tests

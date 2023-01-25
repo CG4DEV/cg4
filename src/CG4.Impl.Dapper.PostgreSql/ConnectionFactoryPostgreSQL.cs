@@ -1,12 +1,20 @@
 ﻿using System.Data;
+using CG4.DataAccess;
 using Npgsql;
 
 namespace CG4.Impl.Dapper.PostgreSql
 {
+    /// <summary>
+    /// Реализация <see cref="IConnectionFactory"/> для работы с PostgreSQL.
+    /// </summary>
     public class ConnectionFactoryPostgreSQL : IConnectionFactory
     {
         private readonly string _connectionString;
 
+        /// <summary>
+        /// Создание экземпляра класса <see cref="ConnectionFactoryPostgreSQL"/>.
+        /// </summary>
+        /// <param name="connectionString">Строка подключения к БД PostgreSQL.</param>
         public ConnectionFactoryPostgreSQL(string connectionString)
         {
             _connectionString = connectionString;

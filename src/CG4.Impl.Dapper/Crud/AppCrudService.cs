@@ -1,15 +1,25 @@
 ﻿using System.Data;
 using System.Linq.Expressions;
+using CG4.DataAccess;
 using CG4.DataAccess.Domain;
-using CG4.Impl.Dapper.Poco;
-using CG4.Impl.Dapper.Poco.Expressions;
+using CG4.DataAccess.Poco;
+using CG4.DataAccess.Poco.Expressions;
 
 namespace CG4.Impl.Dapper.Crud
 {
+    /// <summary>
+    /// Наследник <see cref="RepositoryDapper"/> и реализация <see cref="ICrudService"/>, <see cref="IAppCrudService"/>
+    /// для работы с источником данных.
+    /// </summary>
     public class AppCrudService : RepositoryDapper, ICrudService, IAppCrudService
     {
         private readonly ISqlBuilder _sqlBuilder;
 
+        /// <summary>
+        /// Создание экземпляра класса <see cref="AppCrudService"/>.
+        /// </summary>
+        /// <param name="factory">Фабрика, создающая подключение к источнику данных.</param>
+        /// <param name="sqlBuilder">Генератор SQL-кода.</param>
         public AppCrudService(IConnectionFactory factory, ISqlBuilder sqlBuilder)
             : base(factory)
         {
@@ -22,7 +32,7 @@ namespace CG4.Impl.Dapper.Crud
             var exprSql = _sqlBuilder.GenerateSql<T>(x => x.Where(w => w.Id == id));
             var sql = _sqlBuilder.Serialize(exprSql);
 
-            return QuerySingleOrDefaultAsync<T>(sql, connection: connection, transaction: transaction);
+            return QueryAsync<T>(sql, connection: connection, transaction: transaction);
         }
 
         public Task<T> GetAsync<T>(Expression<Action<IClassSqlOptions<T>>> predicate, IDbConnection connection = null, IDbTransaction transaction = null)
@@ -30,7 +40,7 @@ namespace CG4.Impl.Dapper.Crud
         {
             var sql = _sqlBuilder.GetAll(predicate);
 
-            return QuerySingleOrDefaultAsync<T>(sql, connection: connection, transaction: transaction);
+            return QueryAsync<T>(sql, connection: connection, transaction: transaction);
         }
 
         public Task<TResult> GetAsync<TEntity, TResult>(long id, IDbConnection connection = null, IDbTransaction transaction = null)
@@ -40,7 +50,7 @@ namespace CG4.Impl.Dapper.Crud
             var exprSql = _sqlBuilder.GenerateSql<TEntity>(x => x.Where(w => w.Id == id));
             var sql = _sqlBuilder.Serialize(exprSql);
 
-            return QuerySingleOrDefaultAsync<TResult>(sql, connection: connection, transaction: transaction);
+            return QueryAsync<TResult>(sql, connection: connection, transaction: transaction);
         }
 
         public Task<TResult> GetAsync<TEntity, TResult>(Expression<Action<IClassSqlOptions<TEntity>>> predicate, IDbConnection connection = null, IDbTransaction transaction = null)
@@ -49,7 +59,7 @@ namespace CG4.Impl.Dapper.Crud
         {
             var sql = _sqlBuilder.GetAll(predicate);
 
-            return QuerySingleOrDefaultAsync<TResult>(sql, connection: connection, transaction: transaction);
+            return QueryAsync<TResult>(sql, connection: connection, transaction: transaction);
         }
 
         public Task<IEnumerable<T>> GetAllAsync<T>(Expression<Action<IClassSqlOptions<T>>> predicate = null, IDbConnection connection = null, IDbTransaction transaction = null)
@@ -57,7 +67,7 @@ namespace CG4.Impl.Dapper.Crud
         {
             var sql = _sqlBuilder.GetAll(predicate);
 
-            return QueryAsync<T>(sql, connection: connection, transaction: transaction);
+            return QueryListAsync<T>(sql, connection: connection, transaction: transaction);
         }
 
         public Task<IEnumerable<TResult>> GetAllAsync<TEntity, TResult>(Expression<Action<IClassSqlOptions<TEntity>>> predicate = null, IDbConnection connection = null, IDbTransaction transaction = null)
@@ -66,7 +76,7 @@ namespace CG4.Impl.Dapper.Crud
         {
             var sql = _sqlBuilder.GetAll(predicate);
 
-            return QueryAsync<TResult>(sql, connection: connection, transaction: transaction);
+            return QueryListAsync<TResult>(sql, connection: connection, transaction: transaction);
         }
 
         public async Task<T> CreateAsync<T>(T entity, IDbConnection connection = null, IDbTransaction transaction = null)
@@ -76,7 +86,7 @@ namespace CG4.Impl.Dapper.Crud
             entity.UpdateDate = DateTimeOffset.UtcNow;
 
             var sql = _sqlBuilder.Insert<T>();
-            var identityValue = await QuerySingleOrDefaultAsync<long>(sql, entity, connection, transaction);
+            var identityValue = await QueryAsync<long>(sql, entity, connection, transaction);
 
             entity.Id = identityValue;
 
@@ -140,8 +150,8 @@ namespace CG4.Impl.Dapper.Crud
 
             var sqlCount = _sqlBuilder.Serialize(exprSql);
 
-            var list = await QueryAsync<TResult>(sql, null, connection, transaction);
-            var count = await QuerySingleOrDefaultAsync<int>(sqlCount, null, connection, transaction);
+            var list = await QueryListAsync<TResult>(sql, null, connection, transaction);
+            var count = await QueryAsync<int>(sqlCount, null, connection, transaction);
 
             return new PageResult<TResult>
             {

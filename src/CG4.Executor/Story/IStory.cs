@@ -1,7 +1,7 @@
 ﻿namespace CG4.Executor.Story
 {
     /// <summary>
-    /// Интерфейс стори.
+    /// Интерфейс стори с возвращаемым значением.
     /// </summary>
     /// <typeparam name="TStoryContext">Тип контекста.</typeparam>
     /// <typeparam name="TStoryResult">Тип возвращаемого значения.</typeparam>

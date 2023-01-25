@@ -1,4 +1,4 @@
-﻿using CG4.Impl.Dapper.Poco.Expressions;
+﻿using CG4.DataAccess.Poco.Expressions;
 
 namespace CG4.Impl.Dapper.Poco.ExprOptions
 {
