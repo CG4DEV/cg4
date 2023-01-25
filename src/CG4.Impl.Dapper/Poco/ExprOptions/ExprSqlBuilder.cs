@@ -1,9 +1,10 @@
 ﻿using System.Linq.Expressions;
 using System.Text;
+using CG4.DataAccess.Poco;
 using CG4.DataAccess.Poco.Expressions;
-using CG4.DataAccess.Poco.Visitors;
+using CG4.Impl.Dapper.Poco.Visitors;
 
-namespace CG4.DataAccess.Poco.ExprOptions
+namespace CG4.Impl.Dapper.Poco.ExprOptions
 {
     public class ExprSqlBuilder : ISqlBuilder
     {

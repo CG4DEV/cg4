@@ -1,7 +1,8 @@
 ﻿using System.Linq.Expressions;
+using CG4.DataAccess.Poco;
 using CG4.DataAccess.Poco.Expressions;
 
-namespace CG4.DataAccess.Poco.ExprOptions
+namespace CG4.Impl.Dapper.Poco.ExprOptions
 {
     public class ExprSqlOptions<TEntity> : IClassSqlOptions<TEntity>
         where TEntity : class

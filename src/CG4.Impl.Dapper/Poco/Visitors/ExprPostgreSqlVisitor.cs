@@ -1,7 +1,8 @@
 ﻿using System.Text;
 using CG4.DataAccess.Poco.Expressions;
+using CG4.DataAccess.Poco.Visitors;
 
-namespace CG4.DataAccess.Poco.Visitors
+namespace CG4.Impl.Dapper.Poco.Visitors
 {
     public class ExprPostgreSqlVisitor : IExprVisitor
     {

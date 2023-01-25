@@ -1,6 +1,6 @@
 ﻿using CG4.DataAccess.Poco.Expressions;
 
-namespace CG4.DataAccess.Poco.ExprOptions
+namespace CG4.Impl.Dapper.Poco.ExprOptions
 {
     public class ExprSqlOptionsResult
     {
