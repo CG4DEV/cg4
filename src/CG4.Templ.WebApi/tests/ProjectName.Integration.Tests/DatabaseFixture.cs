@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using CG4.DataAccess;
 using CG4.DataAccess.Domain;
 using CG4.Impl.Dapper;
 using CG4.Impl.Dapper.Crud;

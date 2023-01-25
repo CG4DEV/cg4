@@ -1,13 +1,15 @@
 ﻿using System;
+using CG4.DataAccess;
+using CG4.DataAccess.Poco;
 using CG4.Extensions;
-using CG4.Impl.Dapper;
 using CG4.Impl.Dapper.Crud;
-using CG4.Impl.Dapper.Poco;
 using CG4.Impl.Dapper.Poco.ExprOptions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using ProjectName.Common;
 using ProjectName.Common.Impl;
+using ProjectName.Core.Common;
+using ProjectName.Core.Common.Impl;
 using ProjectName.WebApp;
 
 namespace ProjectName.Integration.Tests

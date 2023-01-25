@@ -29,5 +29,9 @@
   <ItemGroup>
     <ProjectReference Include="..\ProjectName.WebApp\ProjectName.WebApp.csproj" />
   </ItemGroup>
+	
+  <ItemGroup>
+    <Folder Include="wwwroot" />
+  </ItemGroup>
 
 </Project>

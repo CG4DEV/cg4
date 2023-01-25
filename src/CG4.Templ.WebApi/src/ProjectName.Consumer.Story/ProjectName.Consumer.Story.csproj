@@ -6,11 +6,12 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\ProjectName.Consumer.Common\ProjectName.Consumer.Common.csproj" />
+      <PackageReference Include="CG4.Executor" Version="1.1.101-beta" />
+      <PackageReference Include="CG4.Impl.Kafka" Version="1.1.101-beta" />
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="CG4.Executor" Version="0.2.90-beta" />
+      <ProjectReference Include="..\ProjectName.Core.Common\ProjectName.Core.Common.csproj" />
     </ItemGroup>
 
 </Project>

@@ -9,69 +9,6 @@
                 "text": "Database name"
             },
             "isVisible": true
-        },
-        {
-            "id": "User ID",
-            "name": {
-                "text": "User ID"
-            },
-            "isVisible": true
-        },
-        {
-            "id": "Password",
-            "name": {
-                "text": "Password"
-            },
-            "isVisible": true
-        },
-        {
-            "id": "Host",
-            "name": {
-                "text": "Host"
-            },
-            "isVisible": true
-        },
-        {
-            "id": "Port",
-            "name": {
-                "text": "Port"
-            },
-            "isVisible": true
-        },
-        {
-            "id": "bootstrap.servers",
-            "name": {
-                "text": "bootstrap.servers"
-            },
-            "isVisible": true
-        },
-        {
-            "id": "group.id",
-            "name": {
-                "text": "group.id"
-            },
-            "isVisible": true
-        },
-        {
-            "id": "Topic name",
-            "name": {
-                "text": "Topic name"
-            },
-            "isVisible": true
-        },
-        {
-            "id": "Sphinx Server",
-            "name": {
-                "text": "Sphinx Server"
-            },
-            "isVisible": true
-        },
-        {
-            "id": "Sphinx Port",
-            "name": {
-                "text": "Sphinx Port"
-            },
-            "isVisible": true
         }
     ]
 }

@@ -1,0 +1,13 @@
+﻿using CG4.Impl.Dapper.PostgreSql;
+
+namespace ProjectName.Core.Common.Impl
+{
+    public class ProjectNameConnectionFactory : ConnectionFactoryPostgreSQL
+    {
+        public ProjectNameConnectionFactory(IConnectionSettings connectionSettings)
+            : base(connectionSettings.ConnectionString)
+        {
+            
+        }
+    }
+}

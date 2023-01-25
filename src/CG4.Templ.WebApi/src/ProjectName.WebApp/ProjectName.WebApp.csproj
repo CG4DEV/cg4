@@ -10,13 +10,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="CG4.Extensions" Version="0.2.77-beta" />
+    <PackageReference Include="CG4.Extensions" Version="1.1.101-beta" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.1" />
 	<PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ProjectName.Core.Web\ProjectName.Core.Web.csproj" />
+    <ProjectReference Include="..\ProjectName\ProjectName.csproj" />
     <ProjectReference Include="..\ProjectName.Story\ProjectName.Story.csproj" />
   </ItemGroup>
 

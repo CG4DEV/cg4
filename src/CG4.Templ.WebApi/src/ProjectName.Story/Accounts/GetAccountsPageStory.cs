@@ -1,10 +1,10 @@
 ﻿using System.Text;
 using System.Threading.Tasks;
+using CG4.DataAccess;
 using CG4.DataAccess.Domain;
 using CG4.Executor.Story;
-using CG4.Impl.Dapper.Crud;
 using ProjectName.Common;
-using ProjectName.Domain.Entities;
+using ProjectName.Core.Domain.Entities;
 
 namespace ProjectName.Story.Accounts
 {
@@ -69,8 +69,8 @@ namespace ProjectName.Story.Accounts
                 Offset = page * limit
             });
 
-            var accountsTask = _crudService.QueryAsync<Account>(ACCOUNT_QUERY, new { Ids = accountsIds });
-            var accountsCountTask = _crudService.QuerySingleOrDefaultAsync<int>(ACCOUNT_COUNT_QUERY, new { Ids = accountsIds });
+            var accountsTask = _crudService.QueryListAsync<Account>(ACCOUNT_QUERY, new { Ids = accountsIds });
+            var accountsCountTask = _crudService.QueryAsync<int>(ACCOUNT_COUNT_QUERY, new { Ids = accountsIds });
 
             await Task.WhenAll(accountsTask, accountsCountTask);
 
