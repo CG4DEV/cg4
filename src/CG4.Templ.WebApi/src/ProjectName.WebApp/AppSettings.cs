@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
 using ProjectName.Common;
-using ProjectName.Core.Common;
 
 namespace ProjectName.WebApp
 {

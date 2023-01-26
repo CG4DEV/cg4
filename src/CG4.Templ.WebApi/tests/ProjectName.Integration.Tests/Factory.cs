@@ -8,8 +8,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using ProjectName.Common;
 using ProjectName.Common.Impl;
-using ProjectName.Core.Common;
-using ProjectName.Core.Common.Impl;
 using ProjectName.WebApp;
 
 namespace ProjectName.Integration.Tests

@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using CG4.DataAccess.Domain;
 
-namespace ProjectName.Core.Domain.Entities
+namespace ProjectName.Domain.Entities
 {
     [Table("accounts")]
     public class Account : EntityBase

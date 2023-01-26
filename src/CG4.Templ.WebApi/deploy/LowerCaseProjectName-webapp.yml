@@ -1,0 +1,62 @@
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: LowerCaseProjectName-webapp
+  namespace: LowerCaseProjectName-environment
+  annotations: {}
+  labels:
+    app: LowerCaseProjectName-webapp
+    team: itechlabs
+    product: LowerCaseProjectName
+    env: environment
+spec:
+  replicas: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+  selector:
+    matchLabels:
+      app: LowerCaseProjectName-webapp
+      team: itechlabs
+      product: LowerCaseProjectName
+      env: environment
+  template:
+    metadata:
+      name: LowerCaseProjectName-webapp
+      annotations: {}
+      labels:
+        app: LowerCaseProjectName-webapp
+        team: itechlabs
+        product: LowerCaseProjectName
+        env: environment
+    spec:
+      enableServiceLinks: true
+      containers:
+      - name: LowerCaseProjectName-webapp
+        image: empty_path
+        imagePullPolicy: IfNotPresent
+        resources:
+          limits:
+            memory: 2Gi
+          requests:
+            cpu: 200m
+            memory: 200Mi
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /health
+            port: 80
+          initialDelaySeconds: 60
+          timeoutSeconds: 30
+        readinessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /ready
+            port: 80
+          initialDelaySeconds: 60
+          timeoutSeconds: 30
+        envFrom:
+        - configMapRef:
+            name: LowerCaseProjectName-webapp

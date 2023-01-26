@@ -1,4 +1,4 @@
-﻿namespace ProjectName.Core.Common
+﻿namespace ProjectName.Common
 {
     public interface IConnectionSettings
     {

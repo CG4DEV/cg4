@@ -1,6 +1,6 @@
 ﻿using CG4.Impl.Dapper.PostgreSql;
 
-namespace ProjectName.Core.Common.Impl
+namespace ProjectName.Common.Impl
 {
     public class ProjectNameConnectionFactory : ConnectionFactoryPostgreSQL
     {

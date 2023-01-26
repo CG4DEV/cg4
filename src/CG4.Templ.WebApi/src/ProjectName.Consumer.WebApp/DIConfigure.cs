@@ -7,9 +7,9 @@ using CG4.Impl.Dapper.Crud;
 using CG4.Impl.Dapper.Poco.ExprOptions;
 using CG4.Impl.Kafka.Consumer;
 using Microsoft.Extensions.DependencyInjection;
-using ProjectName.Consumer.Story;
-using ProjectName.Core.Common;
-using ProjectName.Core.Common.Impl;
+using ProjectName.Common;
+using ProjectName.Common.Impl;
+using ProjectName.Story;
 
 namespace ProjectName.Consumer.WebApp
 {

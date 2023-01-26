@@ -1,6 +1,6 @@
 ﻿using CG4.DataAccess.Domain;
 using CG4.Executor;
-using ProjectName.Core.Domain.Entities;
+using ProjectName.Domain.Entities;
 
 namespace ProjectName.Story.Accounts
 {

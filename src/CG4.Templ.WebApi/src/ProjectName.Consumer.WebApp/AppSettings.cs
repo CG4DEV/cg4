@@ -2,7 +2,7 @@
 using System.Linq;
 using CG4.Impl.Kafka.Consumer;
 using Microsoft.Extensions.Configuration;
-using ProjectName.Core.Common;
+using ProjectName.Common;
 
 namespace ProjectName.Consumer.WebApp
 {
