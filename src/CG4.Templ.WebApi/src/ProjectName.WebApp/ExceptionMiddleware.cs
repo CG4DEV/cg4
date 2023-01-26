@@ -5,7 +5,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
-using ProjectName.Domain;
+using ProjectName.Core.Domain;
 
 namespace ProjectName.WebApp
 {

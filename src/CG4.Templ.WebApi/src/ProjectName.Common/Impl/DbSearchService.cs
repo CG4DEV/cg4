@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using CG4.Impl.Dapper;
+using CG4.DataAccess;
 using Dapper;
 
 namespace ProjectName.Common.Impl

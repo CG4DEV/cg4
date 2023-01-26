@@ -26,69 +26,6 @@
             "replaces": "database_name_parameter",
             "defaultValue": "postgres",
             "description": "The database name for PostgreSQL connection string/"
-        },
-        "User ID": {
-            "type": "parameter",
-            "datatype": "string",
-            "replaces": "user_id_parameter",
-            "defaultValue": "postgres",
-            "description": "The user id for PostgreSQL connection string."
-        },
-        "Password": {
-            "type": "parameter",
-            "datatype": "string",
-            "replaces": "password_parameter",
-            "defaultValue": "postgres",
-            "description": "The password for PostgreSQL connection string/"
-        },
-        "Host": {
-            "type": "parameter",
-            "datatype": "string",
-            "replaces": "host_parameter",
-            "defaultValue": "localhost",
-            "description": "The host parameter for PostgreSQL connection string."
-        },
-        "Port": {
-            "type": "parameter",
-            "datatype": "string",
-            "replaces": "port_parameter",
-            "defaultValue": "5432",
-            "description": "The port parameter for PostgreSQL connection string."
-        },
-        "bootstrap.servers": {
-            "type": "parameter",
-            "datatype": "string",
-            "replaces": "bootstrap_servers_parameter",
-            "defaultValue": "192.168.10.1:8888",
-            "description": "The IP of bootstrap servers for Kafka config."
-        },
-        "group.id": {
-            "type": "parameter",
-            "datatype": "string",
-            "replaces": "group_id_parameter",
-            "defaultValue": "Project_GroupId-test",
-            "description": "The group id parameter of Kafka config."
-        },
-        "Topic name": {
-            "type": "parameter",
-            "datatype": "string",
-            "replaces": "topic_name_parameter",
-            "defaultValue": "TestNameTopic",
-            "description": "The name of Kafka topic."
-        },
-        "Sphinx Server": {
-            "type": "parameter",
-            "datatype": "string",
-            "replaces": "sphinx_server_parameter",
-            "defaultValue": "192.168.10.1",
-            "description": "The IP of Sphinx Server"
-        },
-        "Sphinx Port": {
-            "type": "parameter",
-            "datatype": "string",
-            "replaces": "sphinx_port_parameter",
-            "defaultValue": "9306",
-            "description": "The port of Sphinx Server"
         }
     },
     "forms": {

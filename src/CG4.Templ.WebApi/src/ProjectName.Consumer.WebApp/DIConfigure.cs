@@ -1,15 +1,15 @@
-﻿using CG4.Executor.Extensions;
+﻿using CG4.DataAccess;
+using CG4.DataAccess.Poco;
+using CG4.Executor.Extensions;
 using CG4.Executor.Story;
 using CG4.Extensions;
-using CG4.Impl.Dapper;
 using CG4.Impl.Dapper.Crud;
-using CG4.Impl.Dapper.Poco;
 using CG4.Impl.Dapper.Poco.ExprOptions;
 using CG4.Impl.Kafka.Consumer;
 using Microsoft.Extensions.DependencyInjection;
-using ProjectName.Consumer.Common;
-using ProjectName.Consumer.Common.Impl;
 using ProjectName.Consumer.Story;
+using ProjectName.Core.Common;
+using ProjectName.Core.Common.Impl;
 
 namespace ProjectName.Consumer.WebApp
 {

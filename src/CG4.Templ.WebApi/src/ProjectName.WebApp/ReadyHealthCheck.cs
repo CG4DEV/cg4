@@ -1,6 +1,6 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using CG4.Impl.Dapper.Crud;
+using CG4.DataAccess;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 
 namespace ProjectName.WebApp
@@ -18,7 +18,7 @@ namespace ProjectName.WebApp
             HealthCheckContext context, 
             CancellationToken cancellationToken = default)
         {
-            var result = await _crudService.QuerySingleOrDefaultAsync<int>("SELECT 1");
+            var result = await _crudService.QueryAsync<int>("SELECT 1");
 
             return result == 1 
                 ? HealthCheckResult.Healthy() 

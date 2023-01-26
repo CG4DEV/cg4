@@ -6,11 +6,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ProjectName.Domain\ProjectName.Domain.csproj" />
+    <PackageReference Include="MySql.Data" Version="8.0.31" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="MySql.Data" Version="8.0.31" />
+    <ProjectReference Include="..\ProjectName.Core.Common\ProjectName.Core.Common.csproj" />
+    <ProjectReference Include="..\ProjectName.Core.Domain\ProjectName.Core.Domain.csproj" />
   </ItemGroup>
 
 </Project>
