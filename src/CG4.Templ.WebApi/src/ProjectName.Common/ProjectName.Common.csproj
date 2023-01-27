@@ -11,7 +11,9 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="CG4.Impl.Kafka" Version="1.1.103-beta" />
+      <PackageReference Include="CG4.Impl.Kafka" Version="1.1.108-beta" />
+      <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="7.0.0" />
+      <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks" Version="7.0.2" />
       <PackageReference Include="MySql.Data" Version="8.0.31" />
     </ItemGroup>
 

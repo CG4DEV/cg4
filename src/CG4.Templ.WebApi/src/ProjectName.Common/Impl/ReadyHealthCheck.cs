@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using CG4.DataAccess;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 
-namespace ProjectName.WebApp
+namespace ProjectName.Common.Impl
 {
     public class ReadyHealthCheck : IHealthCheck
     {

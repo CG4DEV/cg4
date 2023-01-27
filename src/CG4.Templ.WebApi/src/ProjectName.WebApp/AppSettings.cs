@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using CG4.DataAccess;
+using Microsoft.Extensions.Configuration;
 using ProjectName.Common;
 
 namespace ProjectName.WebApp

@@ -8,8 +8,6 @@ using ProjectName.Story.Accounts;
 
 namespace ProjectName.WebApp.Controllers
 {
-    [ApiController]
-    [Route("[controller]")]
     public class AccountsController : EntityControllerBase<Account>
     {
         private readonly IStoryExecutor _storyExecutor;

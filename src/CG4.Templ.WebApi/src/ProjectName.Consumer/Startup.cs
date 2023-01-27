@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using ProjectName.Consumer.WebApp;
 
 namespace ProjectName.Consumer
 {
@@ -24,9 +23,6 @@ namespace ProjectName.Consumer
             services.AddRouting(options => options.LowercaseUrls = true);
             services.AddControllers();
             services.AddEndpointsApiExplorer();
-            services.AddSwaggerGen();
-
-            DIConfigure.Configure(services);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -37,16 +33,11 @@ namespace ProjectName.Consumer
             }
 
             app.UseRouting();
-            app.UseSwagger();
-            app.UseSwaggerUI();
-
             app.UseHttpsRedirection();
-            app.UseMiddleware<ExceptionMiddleware>();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapHealthChecks("health");
-                endpoints.MapControllers();
             });
         }
     }

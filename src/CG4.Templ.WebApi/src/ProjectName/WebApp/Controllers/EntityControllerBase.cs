@@ -9,6 +9,7 @@ namespace ProjectName.WebApp.Controllers
     [ApiController]
     [KebabCaseNaming]
     [ApiExplorerSettings()]
+    [Route("[controller]")]
     public class EntityControllerBase<TEntity> : Controller
         where TEntity : EntityBase, new()
     {

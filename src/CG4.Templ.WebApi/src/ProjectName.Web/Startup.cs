@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
@@ -7,6 +6,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using ProjectName.Common.Impl;
 using ProjectName.WebApp;
 
 namespace ProjectName.Web
@@ -53,7 +53,7 @@ namespace ProjectName.Web
                 c.OrderActionsBy(description => $"{description.ActionDescriptor.RouteValues["controller"]}_{description.HttpMethod}");
             });
 
-            DIConfigure.Configure(services);
+            AppDIConfigure.Configure(services);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -69,7 +69,7 @@ namespace ProjectName.Web
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-            app.UseMiddleware<ExceptionMiddleware>();
+            app.UseMiddleware<AppExceptionMiddleware>();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
