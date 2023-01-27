@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
@@ -46,7 +47,11 @@ namespace ProjectName.Web
             services.AddMvc();
             services.AddRouting(options => options.LowercaseUrls = true);
             services.AddEndpointsApiExplorer();
-            services.AddSwaggerGen();
+
+            services.AddSwaggerGen(c =>
+            {
+                c.OrderActionsBy(description => $"{description.ActionDescriptor.RouteValues["controller"]}_{description.HttpMethod}");
+            });
 
             DIConfigure.Configure(services);
         }

@@ -1,17 +1,18 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <IsPackable>false</IsPackable>
-  </PropertyGroup>
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <IsPackable>false</IsPackable>
+        <RootNamespace>ProjectName.Common</RootNamespace>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="MySql.Data" Version="8.0.31" />
-  </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\ProjectName.Domain\ProjectName.Domain.csproj" />
+    </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\ProjectName.Core.Common\ProjectName.Core.Common.csproj" />
-    <ProjectReference Include="..\ProjectName.Core.Domain\ProjectName.Core.Domain.csproj" />
-  </ItemGroup>
+    <ItemGroup>
+      <PackageReference Include="CG4.Impl.Kafka" Version="1.1.103-beta" />
+      <PackageReference Include="MySql.Data" Version="8.0.31" />
+    </ItemGroup>
 
 </Project>

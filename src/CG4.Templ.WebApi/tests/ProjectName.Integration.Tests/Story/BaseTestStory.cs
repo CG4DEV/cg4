@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using CG4.DataAccess.Domain;
-using ProjectName.Core.Domain.Entities;
+using ProjectName.Domain.Entities;
 
 namespace ProjectName.Integration.Tests.Story
 {

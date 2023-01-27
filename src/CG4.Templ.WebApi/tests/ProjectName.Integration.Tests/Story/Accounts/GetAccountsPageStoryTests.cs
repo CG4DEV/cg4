@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using ProjectName.Core.Domain.Entities;
+using ProjectName.Domain.Entities;
 using ProjectName.Story.Accounts;
 
 namespace ProjectName.Integration.Tests.Story.Accounts

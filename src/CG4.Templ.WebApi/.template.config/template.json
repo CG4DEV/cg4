@@ -20,6 +20,13 @@
             "replaces": "ProjectName",
             "fileRename": "ProjectName"
         },
+        "lowerCaseName": {
+            "type": "derived",
+            "valueSource": "name",
+            "valueTransform": "LowerCaseName",
+            "replaces": "LowerCaseProjectName",
+            "fileRename": "LowerCaseProjectName"
+        },
         "Database": {
             "type": "parameter",
             "datatype": "string",
@@ -33,6 +40,9 @@
             "identifier": "replace",
             "pattern": "[\\W]",
             "replacement": ""
+        },
+        "LowerCaseName": {
+            "identifier": "lowerCase"
         }
     },
     "sources": [
@@ -41,7 +51,6 @@
             "target": "./",
             "exclude": [
                 "**/.gitattributes",
-                "**/.gitignore",
                 "**/.vs/**",
                 "**/.git/**",
                 "**/.idea/**",

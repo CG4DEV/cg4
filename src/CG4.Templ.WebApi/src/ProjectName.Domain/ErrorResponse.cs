@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace ProjectName.Core.Domain
+namespace ProjectName.Domain
 {
     public class ErrorResponse
     {

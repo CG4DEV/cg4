@@ -3,7 +3,7 @@ using CG4.DataAccess;
 using CG4.DataAccess.Domain;
 using CG4.Executor.Story;
 using Microsoft.AspNetCore.Mvc;
-using ProjectName.Core.Domain.Entities;
+using ProjectName.Domain.Entities;
 using ProjectName.Story.Accounts;
 
 namespace ProjectName.WebApp.Controllers

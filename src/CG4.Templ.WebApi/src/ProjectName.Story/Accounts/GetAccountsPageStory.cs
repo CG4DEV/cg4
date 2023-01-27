@@ -4,7 +4,7 @@ using CG4.DataAccess;
 using CG4.DataAccess.Domain;
 using CG4.Executor.Story;
 using ProjectName.Common;
-using ProjectName.Core.Domain.Entities;
+using ProjectName.Domain.Entities;
 
 namespace ProjectName.Story.Accounts
 {

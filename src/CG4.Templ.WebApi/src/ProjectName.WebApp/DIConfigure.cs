@@ -8,8 +8,6 @@ using CG4.Impl.Dapper.Poco.ExprOptions;
 using Microsoft.Extensions.DependencyInjection;
 using ProjectName.Common;
 using ProjectName.Common.Impl;
-using ProjectName.Core.Common;
-using ProjectName.Core.Common.Impl;
 using ProjectName.Story;
 
 namespace ProjectName.WebApp
