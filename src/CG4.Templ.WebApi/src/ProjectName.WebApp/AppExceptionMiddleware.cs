@@ -9,12 +9,12 @@ using ProjectName.Domain;
 
 namespace ProjectName.WebApp
 {
-    public class ExceptionMiddleware
+    public class AppExceptionMiddleware
     {
         private readonly RequestDelegate _next;
-        private readonly ILogger<ExceptionMiddleware> _logger;
+        private readonly ILogger<AppExceptionMiddleware> _logger;
 
-        public ExceptionMiddleware(RequestDelegate next, ILogger<ExceptionMiddleware> logger)
+        public AppExceptionMiddleware(RequestDelegate next, ILogger<AppExceptionMiddleware> logger)
         {
             _next = next;
             _logger = logger;

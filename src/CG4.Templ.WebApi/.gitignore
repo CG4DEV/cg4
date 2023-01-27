@@ -10,42 +10,6 @@
 *.userosscache
 *.sln.docstates
 
-# Auto generated docs
-
-## Main
-Cado.Core.xml
-Cado.Core.Web.xml
-
-## External API
-
-Calendar.xml
-
-## Modules
-
-### Cado
-Cado.Domain.xml
-Cado.Story.xml
-Cado.WebApp.xml
-
-### File
-Cado.File.Contracts.xml
-Cado.File.Core.xml
-Cado.File.WebApp.xml
-
-### Notify
-Cado.Notify.Client.xml
-Cado.Notify.Domain.xml
-Cado.Notify.WebApp.xml
-
-### Reports
-Cado.Reports.WebApp.xml
-
-### SSO
-Cado.Sso.Client.xml
-Cado.Sso.Domain.xml
-Cado.Sso.Story.xml
-Cado.Sso.WebApp.xml
-
 # Auto generated test coverage results
 /coverage/
 /reports/

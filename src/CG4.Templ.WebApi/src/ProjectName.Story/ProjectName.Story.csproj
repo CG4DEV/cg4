@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="CG4.Executor" Version="1.1.101-beta" />
+    <PackageReference Include="CG4.Executor" Version="1.1.108-beta" />
   </ItemGroup>
 
   <ItemGroup>
