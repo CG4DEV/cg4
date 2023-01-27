@@ -15,9 +15,9 @@ namespace CG4.Impl.Dapper.PostgreSql
         /// Создание экземпляра класса <see cref="ConnectionFactoryPostgreSQL"/>.
         /// </summary>
         /// <param name="connectionString">Строка подключения к БД PostgreSQL.</param>
-        public ConnectionFactoryPostgreSQL(string connectionString)
+        public ConnectionFactoryPostgreSQL(IConnectionSettings connectionSettings)
         {
-            _connectionString = connectionString;
+            _connectionString = connectionSettings.ConnectionString;
         }
 
         public IDbConnection Create()
