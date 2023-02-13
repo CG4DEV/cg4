@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>CG4.Impl.Dapper</name>
+    </assembly>
+    <members>
+        <member name="T:CG4.Impl.Dapper.Crud.AppCrudService">
+            <summary>
+            Наследник <see cref="T:CG4.Impl.Dapper.RepositoryDapper"/> и реализация <see cref="T:CG4.DataAccess.ICrudService"/>, <see cref="T:CG4.DataAccess.IAppCrudService"/>
+            для работы с источником данных.
+            </summary>
+        </member>
+        <member name="M:CG4.Impl.Dapper.Crud.AppCrudService.#ctor(CG4.DataAccess.IConnectionFactory,CG4.DataAccess.Poco.ISqlBuilder)">
+            <summary>
+            Создание экземпляра класса <see cref="T:CG4.Impl.Dapper.Crud.AppCrudService"/>.
+            </summary>
+            <param name="factory">Фабрика, создающая подключение к источнику данных.</param>
+            <param name="sqlBuilder">Генератор SQL-кода.</param>
+        </member>
+        <member name="M:CG4.Impl.Dapper.Poco.ExprOptions.ExprJoinSqlOptions`2.AppendWhere(CG4.DataAccess.Poco.Expressions.ExprBoolean)">
+            <summary>
+            Append where conditions without alias updates
+            </summary>
+            <param name="predicate">Additional conditions</param>
+        </member>
+        <member name="M:CG4.Impl.Dapper.Poco.ExprOptions.ExprSqlOptions`1.AppendWhere(CG4.DataAccess.Poco.Expressions.ExprBoolean)">
+            <summary>
+            Append where conditions without alias updates
+            </summary>
+            <param name="predicate">Additional conditions</param>
+        </member>
+        <member name="T:CG4.Impl.Dapper.RepositoryDapper">
+            <summary>
+            Репозиторий с реализацией <see cref="T:CG4.DataAccess.ISqlRepository"/> и <see cref="T:CG4.DataAccess.ISqlRepositoryAsync"/> для работы с Dapper.
+            </summary>
+        </member>
+        <member name="M:CG4.Impl.Dapper.RepositoryDapper.#ctor(CG4.DataAccess.IConnectionFactory)">
+            <summary>
+            Создание экземпляра класса <see cref="T:CG4.Impl.Dapper.RepositoryDapper"/>.
+            </summary>
+            <param name="factory">Фабрика, создающая подключение к источнику данных.</param>
+        </member>
+        <member name="M:CG4.Impl.Dapper.RepositoryDapper.Execute(System.String,System.Object,System.Data.IDbConnection,System.Data.IDbTransaction)">
+            <inheritdoc/>
+        </member>
+        <member name="M:CG4.Impl.Dapper.RepositoryDapper.ExecuteAsync(System.String,System.Object,System.Data.IDbConnection,System.Data.IDbTransaction)">
+            <inheritdoc/>
+        </member>
+    </members>
+</doc>

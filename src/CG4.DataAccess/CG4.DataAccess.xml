@@ -1,0 +1,804 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>CG4.DataAccess</name>
+    </assembly>
+    <members>
+        <member name="T:CG4.DataAccess.Domain.Enums.ControlKind">
+            <summary>
+            Вид контроля.
+            </summary>
+        </member>
+        <member name="F:CG4.DataAccess.Domain.Enums.ControlKind.Unknown">
+            <summary>
+            Неизвестный вид контроля.
+            </summary>
+        </member>
+        <member name="F:CG4.DataAccess.Domain.Enums.ControlKind.Month">
+            <summary>
+            Постоянный с ежемесячной информацией.
+            </summary>
+        </member>
+        <member name="F:CG4.DataAccess.Domain.Enums.ControlKind.Quarter">
+            <summary>
+            Постоянный с ежеквартальной информацией.
+            </summary>
+        </member>
+        <member name="F:CG4.DataAccess.Domain.Enums.ControlKind.HalfYear">
+            <summary>
+            Постоянный с информацией по полугодиям.
+            </summary>
+        </member>
+        <member name="F:CG4.DataAccess.Domain.Enums.ControlKind.Year">
+            <summary>
+            Постоянный с информацией по годам.
+            </summary>
+        </member>
+        <member name="F:CG4.DataAccess.Domain.Enums.ControlKind.One">
+            <summary>
+            Однократный
+            </summary>
+        </member>
+        <member name="T:CG4.DataAccess.Domain.Enums.ControlStatus">
+            <summary>
+            Статусы контроля.
+            </summary>
+        </member>
+        <member name="F:CG4.DataAccess.Domain.Enums.ControlStatus.Unknown">
+            <summary>
+            Неизвестный статус контроля.
+            </summary>
+        </member>
+        <member name="F:CG4.DataAccess.Domain.Enums.ControlStatus.InControl">
+            <summary>
+            На контроле.
+            </summary>
+        </member>
+        <member name="F:CG4.DataAccess.Domain.Enums.ControlStatus.NotRequired">
+            <summary>
+            Не требует контроля.
+            </summary>
+        </member>
+        <member name="F:CG4.DataAccess.Domain.Enums.ControlStatus.OutControl">
+            <summary>
+            Снят с контроля.
+            </summary>
+        </member>
+        <member name="T:CG4.DataAccess.Domain.EntityBase">
+            <summary>
+            Базовая сущность.
+            </summary>
+        </member>
+        <member name="P:CG4.DataAccess.Domain.EntityBase.Id">
+            <summary>
+            Идентификатор сущности.
+            </summary>
+        </member>
+        <member name="P:CG4.DataAccess.Domain.EntityBase.CreateDate">
+            <summary>
+            Дата создания сущности.
+            </summary>
+        </member>
+        <member name="P:CG4.DataAccess.Domain.EntityBase.UpdateDate">
+            <summary>
+            Дата обновления сущности.
+            </summary>
+        </member>
+        <member name="T:CG4.DataAccess.Domain.PageResult`1">
+            <summary>
+            Page result.
+            </summary>
+            <typeparam name="TData">Data type</typeparam>
+        </member>
+        <member name="P:CG4.DataAccess.Domain.PageResult`1.Data">
+            <summary>
+            Data result.
+            </summary>
+        </member>
+        <member name="P:CG4.DataAccess.Domain.PageResult`1.Page">
+            <summary>
+            Current page.
+            </summary>
+        </member>
+        <member name="P:CG4.DataAccess.Domain.PageResult`1.Count">
+            <summary>
+            Общее количество
+            </summary>
+        </member>
+        <member name="P:CG4.DataAccess.Domain.PageResult`1.FilteredCount">
+            <summary>
+            All filtered rows.
+            </summary>
+        </member>
+        <member name="P:CG4.DataAccess.Domain.PageContext.Offset">
+            <summary>
+            Текущая страница.
+            </summary>
+        </member>
+        <member name="P:CG4.DataAccess.Domain.PageContext.Limit">
+            <summary>
+            Количество выводимых строк.
+            </summary>
+        </member>
+        <member name="P:CG4.DataAccess.Domain.PageContext.Search">
+            <summary>
+            Быстрый поиск
+            </summary>
+        </member>
+        <member name="T:CG4.DataAccess.IAppCrudService">
+            <summary>
+            CRUD-сервис для работы с источником данных.
+            </summary>
+        </member>
+        <member name="M:CG4.DataAccess.IAppCrudService.GetAsync``1(System.Int64,System.Data.IDbConnection,System.Data.IDbTransaction)">
+            <summary>
+            Асинхронно получает запись по уникальному идентификатору сущности.
+            </summary>
+            <param name="id">Уникальный идентификатор сущности.</param>
+            <param name="connection">Открытое соединение с источником данных.</param>
+            <param name="transaction">Транзакция, которая должна быть выполнена в источнике данных.</param>
+            <typeparam name="T">Тип извлекаемой сущности. Должен реализовывать <see cref="T:CG4.DataAccess.Domain.IEntityBase"/>.</typeparam>
+            <returns>Сущность заданного типа T.</returns>
+        </member>
+        <member name="M:CG4.DataAccess.IAppCrudService.GetAsync``1(System.Linq.Expressions.Expression{System.Action{CG4.DataAccess.Poco.IClassSqlOptions{``0}}},System.Data.IDbConnection,System.Data.IDbTransaction)">
+            <summary>
+            Асинхронно получает запись по выражению.
+            </summary>
+            <param name="predicate">Выражение типа <see cref="T:CG4.DataAccess.Poco.IClassSqlOptions`1"/>.</param>
+            <param name="connection">Открытое соединение с источником данных.</param>
+            <param name="transaction">Транзакция, которая должна быть выполнена в источнике данных.</param>
+            <typeparam name="T">Тип извлекаемой сущности. Должен реализовывать <see cref="T:CG4.DataAccess.Domain.IEntityBase"/>.</typeparam>
+            <returns>Сущность заданного типа T.</returns>
+        </member>
+        <member name="M:CG4.DataAccess.IAppCrudService.GetAsync``2(System.Int64,System.Data.IDbConnection,System.Data.IDbTransaction)">
+            <summary>
+            Асинхронно получает запись по уникальному идентификатору сущности с преобразованием к другой сущности.
+            </summary>
+            <param name="id">Уникальный идентификатор сущности.</param>
+            <param name="connection">Открытое соединение с источником данных.</param>
+            <param name="transaction">Транзакция, которая должна быть выполнена в источнике данных.</param>
+            <typeparam name="TEntity">Тип извлекаемой сущности. Должен реализовывать <see cref="T:CG4.DataAccess.Domain.IEntityBase"/>.</typeparam>
+            <typeparam name="TResult">Тип сущности, в которую необходимо преобразовать. Должен являться классом.</typeparam>
+            <returns>Сущность заданного типа TResult.</returns>
+        </member>
+        <member name="M:CG4.DataAccess.IAppCrudService.GetAsync``2(System.Linq.Expressions.Expression{System.Action{CG4.DataAccess.Poco.IClassSqlOptions{``0}}},System.Data.IDbConnection,System.Data.IDbTransaction)">
+            <summary>
+            Асинхронно получает запись по выражению с преобразованием к другой сущности.
+            </summary>
+            <param name="predicate">Выражение типа <see cref="T:CG4.DataAccess.Poco.IClassSqlOptions`1"/>.</param>
+            <param name="connection">Открытое соединение с источником данных.</param>
+            <param name="transaction">Транзакция, которая должна быть выполнена в источнике данных.</param>
+            <typeparam name="TEntity">Тип извлекаемой сущности. Должен реализовывать <see cref="T:CG4.DataAccess.Domain.IEntityBase"/>.</typeparam>
+            <typeparam name="TResult">Тип сущности, в которую необходимо преобразовать. Должен являться классом.</typeparam>
+            <returns>Сущность заданного типа TResult.</returns>
+        </member>
+        <member name="M:CG4.DataAccess.IAppCrudService.GetAllAsync``1(System.Linq.Expressions.Expression{System.Action{CG4.DataAccess.Poco.IClassSqlOptions{``0}}},System.Data.IDbConnection,System.Data.IDbTransaction)">
+            <summary>
+            Асинхронно получает список записей по выражению.
+            </summary>
+            <param name="predicate">Выражение типа <see cref="T:CG4.DataAccess.Poco.IClassSqlOptions`1"/>.</param>
+            <param name="connection">Открытое соединение с источником данных.</param>
+            <param name="transaction">Транзакция, которая должна быть выполнена в источнике данных.</param>
+            <typeparam name="T">Тип извлекаемой сущности. Должен реализовывать <see cref="T:CG4.DataAccess.Domain.IEntityBase"/>.</typeparam>
+            <returns>Список сущностей заданного типа T.</returns>
+        </member>
+        <member name="M:CG4.DataAccess.IAppCrudService.GetAllAsync``2(System.Linq.Expressions.Expression{System.Action{CG4.DataAccess.Poco.IClassSqlOptions{``0}}},System.Data.IDbConnection,System.Data.IDbTransaction)">
+            <summary>
+            Асинхронно получает список записей по выражению с преобразованием к другой сущности.
+            </summary>
+            <param name="predicate">Выражение типа <see cref="T:CG4.DataAccess.Poco.IClassSqlOptions`1"/>.</param>
+            <param name="connection">Открытое соединение с источником данных.</param>
+            <param name="transaction">Транзакция, которая должна быть выполнена в источнике данных.</param>
+            <typeparam name="TEntity">Тип извлекаемой сущности. Должен реализовывать <see cref="T:CG4.DataAccess.Domain.IEntityBase"/>.</typeparam>
+            <typeparam name="TResult">Тип сущности, в которую необходимо преобразовать. Должен являться классом.</typeparam>
+            <returns>Список сущностей заданного типа TResult.</returns>
+        </member>
+        <member name="M:CG4.DataAccess.IAppCrudService.CreateAsync``1(``0,System.Data.IDbConnection,System.Data.IDbTransaction)">
+            <summary>
+            Асинхронно создает запись по переданному объекту.
+            </summary>
+            <param name="entity">Сущность, которую необходимо добавить.</param>
+            <param name="connection">Открытое соединение с источником данных.</param>
+            <param name="transaction">Транзакция, которая должна быть выполнена в источнике данных.</param>
+            <typeparam name="T">Тип добавляемой сущности. Должен реализовывать <see cref="T:CG4.DataAccess.Domain.IEntityBase"/>.</typeparam>
+            <returns>Созданная сущность заданного типа T.</returns>
+        </member>
+        <member name="M:CG4.DataAccess.IAppCrudService.UpdateAsync``1(``0,System.Data.IDbConnection,System.Data.IDbTransaction)">
+            <summary>
+            Асинхронно обновляет запись по переданному объекту.
+            </summary>
+            <param name="entity">Сущность, которую необходимо обновить.</param>
+            <param name="connection">Открытое соединение с источником данных.</param>
+            <param name="transaction">Транзакция, которая должна быть выполнена в источнике данных.</param>
+            <typeparam name="T">Тип обновляемой сущности. Должен реализовывать <see cref="T:CG4.DataAccess.Domain.IEntityBase"/>.</typeparam>
+            <returns>Обновленная сущность заданного типа T.</returns>
+        </member>
+        <member name="M:CG4.DataAccess.IAppCrudService.DeleteAsync``1(System.Int64,System.Data.IDbConnection,System.Data.IDbTransaction)">
+            <summary>
+            Асинхронно удаляет запись по переданному объекту.
+            </summary>
+            <param name="id">Уникальный идентификатор сущности.</param>
+            <param name="connection">Открытое соединение с источником данных.</param>
+            <param name="transaction">Транзакция, которая должна быть выполнена в источнике данных.</param>
+            <typeparam name="T">Тип обновляемой сущности. Должен реализовывать <see cref="T:CG4.DataAccess.Domain.IEntityBase"/>.</typeparam>
+        </member>
+        <member name="M:CG4.DataAccess.IAppCrudService.GetPageAsync``1(System.Int32,System.Int32,System.Linq.Expressions.Expression{System.Action{CG4.DataAccess.Poco.IClassSqlOptions{``0}}},System.Data.IDbConnection,System.Data.IDbTransaction)">
+            <summary>
+            Асинхронно получает постраничный вывод записей по выражению.
+            </summary>
+            <param name="page">Номер страницы.</param>
+            <param name="take">Количество сущностей для изъятия.</param>
+            <param name="predicate">Выражение типа <see cref="T:CG4.DataAccess.Poco.IClassSqlOptions`1"/>.</param>
+            <param name="connection">Открытое соединение с источником данных.</param>
+            <param name="transaction">Транзакция, которая должна быть выполнена в источнике данных.</param>
+            <typeparam name="TEntity">Тип извлекаемой сущности. Должен реализовывать <see cref="T:CG4.DataAccess.Domain.IEntityBase"/>.</typeparam>
+            <returns>Страница сущностей заданного типа TEntity.</returns>
+        </member>
+        <member name="M:CG4.DataAccess.IAppCrudService.GetPageAsync``2(System.Int32,System.Int32,System.Linq.Expressions.Expression{System.Action{CG4.DataAccess.Poco.IClassSqlOptions{``0}}},System.Data.IDbConnection,System.Data.IDbTransaction)">
+            <summary>
+            Асинхронно получает постраничный вывод записей с преобразованием к другой сущности по выражению.
+            </summary>
+            <param name="page">Номер страницы.</param>
+            <param name="take">Количество сущностей для изъятия.</param>
+            <param name="predicate">Выражение типа <see cref="T:CG4.DataAccess.Poco.IClassSqlOptions`1"/>.</param>
+            <param name="connection">Открытое соединение с источником данных.</param>
+            <param name="transaction">Транзакция, которая должна быть выполнена в источнике данных.</param>
+            <typeparam name="TEntity">Тип извлекаемой сущности. Должен реализовывать <see cref="T:CG4.DataAccess.Domain.IEntityBase"/>.</typeparam>
+            <typeparam name="TResult">Тип сущности, в которую необходимо преобразовать. Должен являться классом.</typeparam>
+            <returns>Страница сущностей заданного типа TResult.</returns>
+        </member>
+        <member name="T:CG4.DataAccess.IBulkCrudRepositoryAsync">
+            <summary>
+            Объемный асинхронный CRUD-репозиторий.
+            </summary>
+        </member>
+        <member name="M:CG4.DataAccess.IBulkCrudRepositoryAsync.DeleteAsync``1(System.Collections.Generic.IEnumerable{``0},System.Data.IDbConnection,System.Data.IDbTransaction)">
+            <summary>
+            Асинхронно удаляет список записей по переданным объектам.
+            </summary>
+            <param name="entities">Сущности, которые необходимо удалить.</param>
+            <param name="connection">Открытое соединение с источником данных.</param>
+            <param name="transaction">Транзакция, которая должна быть выполнена в источнике данных.</param>
+            <typeparam name="T">Тип удаляемой сущности. Должен являться классом.</typeparam>
+            <returns>Список удаленных сущностей заданного типа T.</returns>
+        </member>
+        <member name="M:CG4.DataAccess.IBulkCrudRepositoryAsync.InsertAsync``1(System.Collections.Generic.IEnumerable{``0},System.Data.IDbConnection,System.Data.IDbTransaction)">
+            <summary>
+            Асинхронно добавляет список записей по переданным объектам.
+            </summary>
+            <param name="entities">Сущности, которые необходимо добавить.</param>
+            <param name="connection">Открытое соединение с источником данных.</param>
+            <param name="transaction">Транзакция, которая должна быть выполнена в источнике данных.</param>
+            <typeparam name="T">Тип добавляемой сущности. Должен являться классом.</typeparam>
+            <returns>Список добавленных сущностей заданного типа T.</returns>
+        </member>
+        <member name="M:CG4.DataAccess.IBulkCrudRepositoryAsync.UpdateAsync``1(System.Collections.Generic.IEnumerable{``0},System.Data.IDbConnection,System.Data.IDbTransaction)">
+            <summary>
+            Асинхронно обновляет список записей по переданным объектам.
+            </summary>
+            <param name="entities">Сущности, которые необходимо обновить.</param>
+            <param name="connection">Открытое соединение с источником данных.</param>
+            <param name="transaction">Транзакция, которая должна быть выполнена в источнике данных.</param>
+            <typeparam name="T">Тип обновляемой сущности. Должен являться классом.</typeparam>
+            <returns>Список обновленных сущностей заданного типа T.</returns>
+        </member>
+        <member name="T:CG4.DataAccess.IConnectionFactory">
+            <summary>
+            Фабрика, создающая подключение к источнику данных.
+            </summary>
+        </member>
+        <member name="M:CG4.DataAccess.IConnectionFactory.Create">
+            <summary>
+            Создаёт подключение к базе данных.
+            </summary>
+            <returns>Объект подключения.</returns>
+        </member>
+        <member name="M:CG4.DataAccess.IConnectionFactory.Create(System.String)">
+            <summary>
+            Создаёт подключение к базе данных по переданной строке подключения.
+            </summary>
+            <param name="connectionString">Строка подключения к источнику данных.</param>
+            <returns>Объект подключения.</returns>
+        </member>
+        <member name="M:CG4.DataAccess.IConnectionFactory.CreateAsync">
+            <summary>
+            Асинхронно создаёт подключение к базе данных.
+            </summary>
+            <returns>Объект подключения.</returns>
+        </member>
+        <member name="M:CG4.DataAccess.IConnectionFactory.CreateAsync(System.String)">
+            <summary>
+            Асинхронно создаёт подключение к базе данных по переданной строке подключения.
+            </summary>
+            <param name="connectionString">Строка подключения к источнику данных.</param>
+            <returns>Объект подключения.</returns>
+        </member>
+        <member name="T:CG4.DataAccess.IConnectionSettings">
+            <summary>
+            Настройки соеденения.
+            </summary>
+        </member>
+        <member name="P:CG4.DataAccess.IConnectionSettings.ConnectionString">
+            <summary>
+            Строка подключения.
+            </summary>
+        </member>
+        <member name="T:CG4.DataAccess.ICrudRepository">
+            <summary>
+            CRUD-репозиторий.
+            </summary>
+        </member>
+        <member name="M:CG4.DataAccess.ICrudRepository.Insert``1(``0,System.Data.IDbConnection,System.Data.IDbTransaction)">
+            <summary>
+            Создает запись по переданному объекту.
+            </summary>
+            <param name="entity">Сущность, которую необходимо добавить.</param>
+            <param name="connection">Открытое соединение с источником данных.</param>
+            <param name="transaction">Транзакция, которая должна быть выполнена в источнике данных.</param>
+            <typeparam name="T">Тип добавляемой сущности. Должен являться классом.</typeparam>
+            <returns>Результат добавления сущности заданного типа T, определяющийся динамически.</returns>
+        </member>
+        <member name="M:CG4.DataAccess.ICrudRepository.Update``1(``0,System.Data.IDbConnection,System.Data.IDbTransaction)">
+            <summary>
+            Обновляет запись по переданному объекту.
+            </summary>
+            <param name="entity">Сущность, которую необходимо обновить.</param>
+            <param name="connection">Открытое соединение с источником данных.</param>
+            <param name="transaction">Транзакция, которая должна быть выполнена в источнике данных.</param>
+            <typeparam name="T">Тип обновляемой сущности. Должен являться классом.</typeparam>
+            <returns>Результат успешности обновления сущности заданного типа T.</returns>
+        </member>
+        <member name="M:CG4.DataAccess.ICrudRepository.Delete``1(``0,System.Data.IDbConnection,System.Data.IDbTransaction)">
+            <summary>
+            Удаляет запись по переданному объекту.
+            </summary>
+            <param name="entity">Сущность, которую необходимо удалить.</param>
+            <param name="connection">Открытое соединение с источником данных.</param>
+            <param name="transaction">Транзакция, которая должна быть выполнена в источнике данных.</param>
+            <typeparam name="T">Тип удаляемой сущности. Должен являться классом.</typeparam>
+            <returns>Результат успешности удаления сущности заданного типа T.</returns>
+        </member>
+        <member name="T:CG4.DataAccess.ICrudRepositoryAsync">
+            <summary>
+            Асинхронный CRUD-репозиторий.
+            </summary>
+        </member>
+        <member name="M:CG4.DataAccess.ICrudRepositoryAsync.InsertAsync``1(``0,System.Data.IDbConnection,System.Data.IDbTransaction)">
+            <summary>
+            Асинхронно создает запись по переданному объекту.
+            </summary>
+            <param name="entity">Сущность, которую необходимо добавить.</param>
+            <param name="connection">Открытое соединение с источником данных.</param>
+            <param name="transaction">Транзакция, которая должна быть выполнена в источнике данных.</param>
+            <typeparam name="T">Тип добавляемой сущности. Должен являться классом.</typeparam>
+            <returns>Результат добавления сущности заданного типа T, определяющийся динамически.</returns>
+        </member>
+        <member name="M:CG4.DataAccess.ICrudRepositoryAsync.UpdateAsync``1(``0,System.Data.IDbConnection,System.Data.IDbTransaction)">
+            <summary>
+            Асинхронно обновляет запись по переданному объекту.
+            </summary>
+            <param name="entity">Сущность, которую необходимо обновить.</param>
+            <param name="connection">Открытое соединение с источником данных.</param>
+            <param name="transaction">Транзакция, которая должна быть выполнена в источнике данных.</param>
+            <typeparam name="T">Тип обновляемой сущности. Должен являться классом.</typeparam>
+            <returns>Результат успешности обновления сущности заданного типа T.</returns>
+        </member>
+        <member name="M:CG4.DataAccess.ICrudRepositoryAsync.DeleteAsync``1(``0,System.Data.IDbConnection,System.Data.IDbTransaction)">
+            <summary>
+            Асинхронно удаляет запись по переданному объекту.
+            </summary>
+            <param name="entity">Сущность, которую необходимо удалить.</param>
+            <param name="connection">Открытое соединение с источником данных.</param>
+            <param name="transaction">Транзакция, которая должна быть выполнена в источнике данных.</param>
+            <typeparam name="T">Тип удаляемой сущности. Должен являться классом.</typeparam>
+            <returns>Результат успешности удаления сущности заданного типа T.</returns>
+        </member>
+        <member name="T:CG4.DataAccess.ICrudService">
+            <summary>
+            CRUD-сервис.
+            </summary>
+        </member>
+        <member name="T:CG4.DataAccess.IRepository">
+            <summary>
+            Репозиторий.
+            </summary>
+        </member>
+        <member name="M:CG4.DataAccess.IRepository.Get``1(System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}},System.Data.IDbConnection,System.Data.IDbTransaction)">
+            <summary>
+            Получает запись по выражению.
+            </summary>
+            <param name="predicate">Выражение, принимающее функцию для поиска сущности.</param>
+            <param name="connection">Открытое соединение с источником данных.</param>
+            <param name="transaction">Транзакция, которая должна быть выполнена в источнике данных.</param>
+            <typeparam name="T">Тип извлекаемой сущности. Должен являться классом.</typeparam>
+            <returns>Сущность заданного типа T.</returns>
+        </member>
+        <member name="M:CG4.DataAccess.IRepository.GetAll``1(System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}},System.Data.IDbConnection,System.Data.IDbTransaction)">
+            <summary>
+            Получает список записей по выражению.
+            </summary>
+            <param name="predicate">Выражение, принимающее функцию для поиска сущности.</param>
+            <param name="connection">Открытое соединение с источником данных.</param>
+            <param name="transaction">Транзакция, которая должна быть выполнена в источнике данных.</param>
+            <typeparam name="T">Тип извлекаемой сущности. Должен являться классом.</typeparam>
+            <returns>Список сущностей заданного типа T.</returns>
+        </member>
+        <member name="M:CG4.DataAccess.IRepository.GetAll``2(System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}},System.Func{``0,``1},System.Boolean,System.Data.IDbConnection,System.Data.IDbTransaction)">
+            <summary>
+            Получает список записей по выражению с возможностью сортировки с преобразованием к другой сущности.
+            </summary>
+            <param name="predicate">Выражение, принимающее функцию для поиска сущности.</param>
+            <param name="orderSelector">Функция, задающая настройки сортировки.</param>
+            <param name="isAcending">Флаг, задающий сортировку по возрастанию.</param>
+            <param name="connection">Открытое соединение с источником данных.</param>
+            <param name="transaction">Транзакция, которая должна быть выполнена в источнике данных.</param>
+            <typeparam name="T">Тип извлекаемой сущности. Должен являться классом.</typeparam>
+            <typeparam name="TKey">Тип сущности, в которую необходимо преобразовать.</typeparam>
+            <returns>Список сущностей заданного типа TKey.</returns>
+        </member>
+        <member name="M:CG4.DataAccess.IRepository.GetPage``1(System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}},System.Int32,System.Int32)">
+            <summary>
+            Получает постраничный вывод записей по выражению.
+            </summary>
+            <param name="predicate">Выражение, принимающее функцию для поиска сущности.</param>
+            <param name="page">Номер страницы.</param>
+            <param name="resultsPerPage">Количество сущностей для изъятия.</param>
+            <typeparam name="T">Тип извлекаемой сущности. Должен являться классом.</typeparam>
+            <returns>Список сущностей заданного типа T.</returns>
+        </member>
+        <member name="M:CG4.DataAccess.IRepository.GetPage``2(System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}},System.Func{``0,``1},System.Boolean,System.Int32,System.Int32)">
+            <summary>
+            Получает постраничный вывод записей по выражению с преобразованием к другой сущности.
+            </summary>
+            <param name="predicate">Выражение, принимающее функцию для поиска сущности.</param>
+            <param name="orderSelector">Функция, задающая настройки сортировки.</param>
+            <param name="isAscending">Флаг, задающий сортировку по возрастанию.</param>
+            <param name="page">Номер страницы.</param>
+            <param name="resultsPerPage">Количество сущностей для изъятия.</param>
+            <typeparam name="T">Тип извлекаемой сущности. Должен являться классом.</typeparam>
+            <typeparam name="TKey">Тип сущности, в которую необходимо преобразовать.</typeparam>
+            <returns>Список сущностей заданного типа TKey.</returns>
+        </member>
+        <member name="T:CG4.DataAccess.IRepositoryAsync">
+            <summary>
+            Асинхронный репозиторий.
+            </summary>
+        </member>
+        <member name="M:CG4.DataAccess.IRepositoryAsync.GetAsync``1(System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}},System.Data.IDbConnection,System.Data.IDbTransaction)">
+            <summary>
+            Асинхронно получает запись по выражению.
+            </summary>
+            <param name="predicate">Выражение, принимающее функцию для поиска сущности.</param>
+            <param name="connection">Открытое соединение с источником данных.</param>
+            <param name="transaction">Транзакция, которая должна быть выполнена в источнике данных.</param>
+            <typeparam name="T">Тип извлекаемой сущности. Должен являться классом.</typeparam>
+            <returns>Сущность заданного типа T.</returns>
+        </member>
+        <member name="M:CG4.DataAccess.IRepositoryAsync.GetAllAsync``1(System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}},System.Data.IDbConnection,System.Data.IDbTransaction)">
+            <summary>
+            Асинхронно получает список записей по выражению.
+            </summary>
+            <param name="predicate">Выражение, принимающее функцию для поиска сущности.</param>
+            <param name="connection">Открытое соединение с источником данных.</param>
+            <param name="transaction">Транзакция, которая должна быть выполнена в источнике данных.</param>
+            <typeparam name="T">Тип извлекаемой сущности. Должен являться классом.</typeparam>
+            <returns>Список сущностей заданного типа T.</returns>
+        </member>
+        <member name="M:CG4.DataAccess.IRepositoryAsync.GetAllAsync``2(System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}},System.Func{``0,``1},System.Boolean,System.Data.IDbConnection,System.Data.IDbTransaction)">
+            <summary>
+            Асинхронно получает список записей по выражению с возможностью сортировки с преобразованием к другой сущности.
+            </summary>
+            <param name="predicate">Выражение, принимающее функцию для поиска сущности.</param>
+            <param name="orderSelector">Функция, задающая настройки сортировки.</param>
+            <param name="isAcending">Флаг, задающий сортировку по возрастанию.</param>
+            <param name="connection">Открытое соединение с источником данных.</param>
+            <param name="transaction">Транзакция, которая должна быть выполнена в источнике данных.</param>
+            <typeparam name="T">Тип извлекаемой сущности. Должен являться классом.</typeparam>
+            <typeparam name="TKey">Тип сущности, в которую необходимо преобразовать.</typeparam>
+            <returns>Список сущностей заданного типа TKey.</returns>
+        </member>
+        <member name="M:CG4.DataAccess.IRepositoryAsync.GetPageAsync``1(System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}},System.Int32,System.Int32)">
+            <summary>
+            Асинхронно получает постраничный вывод записей по выражению.
+            </summary>
+            <param name="predicate">Выражение, принимающее функцию для поиска сущности.</param>
+            <param name="page">Номер страницы.</param>
+            <param name="resultsPerPage">Количество сущностей для изъятия.</param>
+            <typeparam name="T">Тип извлекаемой сущности. Должен являться классом.</typeparam>
+            <returns>Список сущностей заданного типа T.</returns>
+        </member>
+        <member name="M:CG4.DataAccess.IRepositoryAsync.GetPageAsync``2(System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}},System.Func{``0,``1},System.Boolean,System.Int32,System.Int32)">
+            <summary>
+            Асинхронно получает постраничный вывод записей по выражению с преобразованием к другой сущности.
+            </summary>
+            <param name="predicate">Выражение, принимающее функцию для поиска сущности.</param>
+            <param name="orderSelector">Функция, задающая настройки сортировки.</param>
+            <param name="isAscending">Флаг, задающий сортировку по возрастанию.</param>
+            <param name="page">Номер страницы.</param>
+            <param name="resultsPerPage">Количество сущностей для изъятия.</param>
+            <typeparam name="T">Тип извлекаемой сущности. Должен являться классом.</typeparam>
+            <typeparam name="TKey">Тип сущности, в которую необходимо преобразовать.</typeparam>
+            <returns>Список сущностей заданного типа TKey.</returns>
+        </member>
+        <member name="T:CG4.DataAccess.ISqlRepository">
+            <summary>
+            Репозиторий для работы с SQL.
+            </summary>
+        </member>
+        <member name="M:CG4.DataAccess.ISqlRepository.Query``1(System.String,System.Object,System.Data.IDbConnection,System.Data.IDbTransaction)">
+            <summary>
+            Получает запись.
+            </summary>
+            <param name="sql">SQL-строка запроса.</param>
+            <param name="param">
+                <list type="number">
+                    <item>
+                        <description>
+                            <c>var objectParams = new { First = "A" };</c>
+                        </description>
+                    </item>
+                    <item>
+                        <description>
+                            <c>var objectParams = new Context { First = "A" };</c>
+                        </description>
+                    </item>
+                    <item>
+                        <description>
+                            <c>
+                                var dictParams = new Dictionary&#60;string, object&#62;
+                                {
+                                    { "First", "A" }
+                                };
+                            </c>
+                        </description>
+                    </item>
+                    <item>
+                        <description>
+                            <c>var listParams = new Context[] { new() { First = "A" } };</c>
+                        </description>
+                    </item>
+                </list>
+            </param>
+            <param name="connection">Открытое соединение с источником данных.</param>
+            <param name="transaction">Транзакция, которая должна быть выполнена в источнике данных.</param>
+            <typeparam name="T">Тип извлекаемой сущности.</typeparam>
+            <returns>Сущность заданного типа T.</returns>
+        </member>
+        <member name="M:CG4.DataAccess.ISqlRepository.QueryList``1(System.String,System.Object,System.Data.IDbConnection,System.Data.IDbTransaction)">
+            <summary>
+            Получает список записей.
+            </summary>
+            <param name="sql">SQL-строка запроса.</param>
+            <param name="param">
+                <list type="number">
+                    <item>
+                        <description>
+                            <c>var objectParams = new { First = "A" };</c>
+                        </description>
+                    </item>
+                    <item>
+                        <description>
+                            <c>var objectParams = new Context { First = "A" };</c>
+                        </description>
+                    </item>
+                    <item>
+                        <description>
+                            <c>
+                                var dictParams = new Dictionary&#60;string, object&#62;
+                                {
+                                    { "First", "A" }
+                                };
+                            </c>
+                        </description>
+                    </item>
+                    <item>
+                        <description>
+                            <c>var listParams = new Context[] { new() { First = "A" } };</c>
+                        </description>
+                    </item>
+                </list>
+            </param>
+            <param name="connection">Открытое соединение с источником данных.</param>
+            <param name="transaction">Транзакция, которая должна быть выполнена в источнике данных.</param>
+            <typeparam name="T">Тип извлекаемой сущности.</typeparam>
+            <returns>Список сущностей заданного типа T.</returns>
+        </member>
+        <member name="M:CG4.DataAccess.ISqlRepository.Execute(System.String,System.Object,System.Data.IDbConnection,System.Data.IDbTransaction)">
+            <summary>
+            Исполняет команду.
+            </summary>
+            <param name="sql">SQL-строка запроса.</param>
+            <param name="param">
+                <list type="number">
+                    <item>
+                        <description>
+                            <c>var objectParams = new { First = "A" };</c>
+                        </description>
+                    </item>
+                    <item>
+                        <description>
+                            <c>var objectParams = new Context { First = "A" };</c>
+                        </description>
+                    </item>
+                    <item>
+                        <description>
+                            <c>
+                                var dictParams = new Dictionary&#60;string, object&#62;
+                                {
+                                    { "First", "A" }
+                                };
+                            </c>
+                        </description>
+                    </item>
+                    <item>
+                        <description>
+                            <c>var listParams = new Context[] { new() { First = "A" } };</c>
+                        </description>
+                    </item>
+                </list>
+            </param>
+            <param name="connection">Открытое соединение с источником данных.</param>
+            <param name="transaction">Транзакция, которая должна быть выполнена в источнике данных.</param>
+            <returns>Количество затронутых сущностей.</returns>
+        </member>
+        <member name="M:CG4.DataAccess.ISqlRepositoryAsync.QueryAsync``1(System.String,System.Object,System.Data.IDbConnection,System.Data.IDbTransaction)">
+            <summary>
+            Асинхронно получает запись.
+            </summary>
+            <param name="sql">SQL-строка запроса.</param>
+            <param name="param">
+                <list type="number">
+                    <item>
+                        <description>
+                            <c>var objectParams = new { First = "A" };</c>
+                        </description>
+                    </item>
+                    <item>
+                        <description>
+                            <c>var objectParams = new Context { First = "A" };</c>
+                        </description>
+                    </item>
+                    <item>
+                        <description>
+                            <c>
+                                var dictParams = new Dictionary&#60;string, object&#62;
+                                {
+                                    { "First", "A" }
+                                };
+                            </c>
+                        </description>
+                    </item>
+                    <item>
+                        <description>
+                            <c>var listParams = new Context[] { new() { First = "A" } };</c>
+                        </description>
+                    </item>
+                </list>
+            </param>
+            <param name="connection">Открытое соединение с источником данных.</param>
+            <param name="transaction">Транзакция, которая должна быть выполнена в источнике данных.</param>
+            <typeparam name="T">Тип извлекаемой сущности.</typeparam>
+            <returns>Сущность заданного типа T.</returns>
+        </member>
+        <member name="M:CG4.DataAccess.ISqlRepositoryAsync.QueryListAsync``1(System.String,System.Object,System.Data.IDbConnection,System.Data.IDbTransaction)">
+            <summary>
+            Асинхронно получает список записей.
+            </summary>
+            <param name="sql">SQL-строка запроса.</param>
+            <param name="param">
+                <list type="number">
+                    <item>
+                        <description>
+                            <c>var objectParams = new { First = "A" };</c>
+                        </description>
+                    </item>
+                    <item>
+                        <description>
+                            <c>var objectParams = new Context { First = "A" };</c>
+                        </description>
+                    </item>
+                    <item>
+                        <description>
+                            <c>
+                                var dictParams = new Dictionary&#60;string, object&#62;
+                                {
+                                    { "First", "A" }
+                                };
+                            </c>
+                        </description>
+                    </item>
+                    <item>
+                        <description>
+                            <c>var listParams = new Context[] { new() { First = "A" } };</c>
+                        </description>
+                    </item>
+                </list>
+            </param>
+            <param name="connection">Открытое соединение с источником данных.</param>
+            <param name="transaction">Транзакция, которая должна быть выполнена в источнике данных.</param>
+            <typeparam name="T">Тип извлекаемой сущности.</typeparam>
+            <returns>Список сущностей заданного типа T.</returns>
+        </member>
+        <member name="M:CG4.DataAccess.ISqlRepositoryAsync.ExecuteAsync(System.String,System.Object,System.Data.IDbConnection,System.Data.IDbTransaction)">
+            <summary>
+            Асинхронно исполняет команду.
+            </summary>
+            <param name="sql">SQL-строка запроса.</param>
+            <param name="param">
+                <list type="number">
+                    <item>
+                        <description>
+                            <c>var objectParams = new { First = "A" };</c>
+                        </description>
+                    </item>
+                    <item>
+                        <description>
+                            <c>var objectParams = new Context { First = "A" };</c>
+                        </description>
+                    </item>
+                    <item>
+                        <description>
+                            <c>
+                                var dictParams = new Dictionary&#60;string, object&#62;
+                                {
+                                    { "First", "A" }
+                                };
+                            </c>
+                        </description>
+                    </item>
+                    <item>
+                        <description>
+                            <c>var listParams = new Context[] { new() { First = "A" } };</c>
+                        </description>
+                    </item>
+                </list>
+            </param>
+            <param name="connection">Открытое соединение с источником данных.</param>
+            <param name="transaction">Транзакция, которая должна быть выполнена в источнике данных.</param>
+            <returns>Количество затронутых сущностей.</returns>
+        </member>
+        <member name="M:CG4.DataAccess.Poco.IClassJoinSqlOptions`2.AppendWhere(CG4.DataAccess.Poco.Expressions.ExprBoolean)">
+            <summary>
+            Append where conditions without alias updates
+            </summary>
+            <param name="predicate">Additional conditions</param>
+        </member>
+        <member name="M:CG4.DataAccess.Poco.IClassSqlOptions`1.AppendWhere(CG4.DataAccess.Poco.Expressions.ExprBoolean)">
+            <summary>
+            Append where conditions without alias updates
+            </summary>
+            <param name="predicate">Additional conditions</param>
+        </member>
+        <member name="T:CG4.DataAccess.Poco.SqlSettings">
+            <summary>
+            Stores database options linked to a particular dialect.
+            </summary>
+        </member>
+        <member name="M:CG4.DataAccess.Poco.SqlSettings.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:CG4.DataAccess.Poco.SqlSettings"/> class.
+            Default constructor
+            </summary>
+        </member>
+        <member name="P:CG4.DataAccess.Poco.SqlSettings.StartDelimiter">
+            <summary>
+            Gets the start delimiter used for SQL identifiers.
+            </summary>
+        </member>
+        <member name="P:CG4.DataAccess.Poco.SqlSettings.EndDelimiter">
+            <summary>
+            Gets the end delimiter used for SQL identifiers.
+            </summary>
+        </member>
+        <member name="P:CG4.DataAccess.Poco.SqlSettings.ParameterPrefix">
+            <summary>
+            Gets the prefix used for named parameters
+            </summary>
+        </member>
+        <member name="P:CG4.DataAccess.Poco.SqlSettings.IsUsingSchemas">
+            <summary>
+            Gets a flag indicating the database is using schemas.
+            </summary>
+        </member>
+    </members>
+</doc>

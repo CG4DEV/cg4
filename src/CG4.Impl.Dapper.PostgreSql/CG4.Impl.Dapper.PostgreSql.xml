@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>CG4.Impl.Dapper.PostgreSql</name>
+    </assembly>
+    <members>
+        <member name="T:CG4.Impl.Dapper.PostgreSql.ConnectionFactoryPostgreSQL">
+            <summary>
+            Реализация <see cref="T:CG4.DataAccess.IConnectionFactory"/> для работы с PostgreSQL.
+            </summary>
+        </member>
+        <member name="M:CG4.Impl.Dapper.PostgreSql.ConnectionFactoryPostgreSQL.#ctor(CG4.DataAccess.IConnectionSettings)">
+            <summary>
+            Создание экземпляра класса <see cref="T:CG4.Impl.Dapper.PostgreSql.ConnectionFactoryPostgreSQL"/>.
+            </summary>
+            <param name="connectionString">Строка подключения к БД PostgreSQL.</param>
+        </member>
+    </members>
+</doc>
