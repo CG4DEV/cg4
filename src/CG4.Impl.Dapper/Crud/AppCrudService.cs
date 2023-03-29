@@ -142,6 +142,7 @@ namespace CG4.Impl.Dapper.Crud
             exprSql.Select = new();
             exprSql.Limit = null;
             exprSql.Offset = null;
+            exprSql.OrderBy = new();
 
             var exprFunc = new ExprFunctionCount();
 

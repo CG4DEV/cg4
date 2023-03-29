@@ -227,7 +227,7 @@ namespace CG4.Impl.Dapper.Poco.Visitors
         {
             sql.Select.Accept(this);
             sql.From.Accept(this);
-            sql.Where.Accept(this);
+            sql.Where?.Accept(this);
             sql.OrderBy.Accept(this);
 
             if (sql.Limit.HasValue)
