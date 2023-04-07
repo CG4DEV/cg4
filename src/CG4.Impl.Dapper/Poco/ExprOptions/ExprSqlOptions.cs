@@ -101,18 +101,17 @@ namespace CG4.Impl.Dapper.Poco.ExprOptions
 
         public IClassSqlOptions<TEntity> OrderBy<TKey>(Expression<Func<TEntity, TKey>> keySelector)
         {
-            var expr = SqlExprHelper.GenerateColumn(keySelector, Alias);
-            Sql.OrderBy.Add(new ExprOrderColumn(expr, true));
+            return OrderByInternal(keySelector, true);
+        }
 
-            return this;
+        public IClassSqlOptions<TEntity> OrderBy<TKey>(Expression<Func<TEntity, TKey>> keySelector, bool ask)
+        {
+            return OrderByInternal(keySelector, ask);
         }
 
         public IClassSqlOptions<TEntity> OrderByDesc<TKey>(Expression<Func<TEntity, TKey>> keySelector)
         {
-            var expr = SqlExprHelper.GenerateColumn(keySelector, Alias);
-            Sql.OrderBy.Add(new ExprOrderColumn(expr, false));
-
-            return this;
+            return OrderByInternal(keySelector, false);
         }
 
         public IClassSqlOptions<TEntity> Where(Expression<Func<TEntity, bool>> predicate)
@@ -152,6 +151,15 @@ namespace CG4.Impl.Dapper.Poco.ExprOptions
         public IClassSqlOptions<TEntity> Limit(int limit)
         {
             Sql.Limit = limit;
+            return this;
+        }
+
+        private IClassSqlOptions<TEntity> OrderByInternal<TKey>(Expression<Func<TEntity, TKey>> keySelector, bool ask)
+        {
+            var column = SqlExprHelper.GenerateColumn(keySelector, Alias);
+            var order = new ExprOrderColumn(column, ask);
+            _columns.Add(order);
+            Sql.OrderBy.Add(order);
             return this;
         }
     }
