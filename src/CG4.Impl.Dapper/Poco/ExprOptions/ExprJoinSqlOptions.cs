@@ -122,6 +122,11 @@ namespace CG4.Impl.Dapper.Poco.ExprOptions
             return OrderByInternal(keySelector, true);
         }
 
+        public IClassJoinSqlOptions<TEntity, TJoin> OrderBy<TKey>(Expression<Func<TJoin, TKey>> keySelector, bool ask)
+        {
+            return OrderByInternal(keySelector, ask);
+        }
+
         public IClassJoinSqlOptions<TEntity, TJoin> OrderByDesc<TKey>(Expression<Func<TJoin, TKey>> keySelector)
         {
             return OrderByInternal(keySelector, false);
@@ -150,7 +155,6 @@ namespace CG4.Impl.Dapper.Poco.ExprOptions
 
             return this;
         }
-
 
         /// <summary>
         /// Append where conditions without alias updates
