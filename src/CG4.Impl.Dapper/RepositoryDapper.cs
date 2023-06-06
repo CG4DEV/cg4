@@ -1,5 +1,6 @@
 ﻿using System.Data;
 using CG4.DataAccess;
+using CG4.DataAccess.Exceptions;
 using Dapper;
 
 namespace CG4.Impl.Dapper
@@ -28,12 +29,26 @@ namespace CG4.Impl.Dapper
             {
                 using (connection = _factory.Create())
                 {
-                    return connection.QuerySingleOrDefault<T>(sql, param, commandTimeout: _commandTimeout);
+                    try
+                    {
+                        return connection.QuerySingleOrDefault<T>(sql, param, commandTimeout: _commandTimeout);
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new CG4SqlException(sql, ex);
+                    }
                 }
             }
             else
             {
-                return connection.QuerySingleOrDefault<T>(sql, param, transaction, commandTimeout: _commandTimeout);
+                try
+                {
+                    return connection.QuerySingleOrDefault<T>(sql, param, transaction, commandTimeout: _commandTimeout);
+                }
+                catch (Exception ex)
+                {
+                    throw new CG4SqlException(sql, ex);
+                }
             }
         }
         
@@ -43,12 +58,26 @@ namespace CG4.Impl.Dapper
             {
                 using (connection = await _factory.CreateAsync())
                 {
-                    return await connection.QuerySingleOrDefaultAsync<T>(sql, param, commandTimeout: _commandTimeout);
+                    try
+                    {
+                        return await connection.QuerySingleOrDefaultAsync<T>(sql, param, commandTimeout: _commandTimeout);
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new CG4SqlException(sql, ex);
+                    }
                 }
             }
             else
             {
-                return await connection.QuerySingleOrDefaultAsync<T>(sql, param, transaction, commandTimeout: _commandTimeout);
+                try
+                {
+                    return await connection.QuerySingleOrDefaultAsync<T>(sql, param, transaction, commandTimeout: _commandTimeout);
+                }
+                catch (Exception ex)
+                {
+                    throw new CG4SqlException(sql, ex);
+                }
             }
         }
 
@@ -58,12 +87,26 @@ namespace CG4.Impl.Dapper
             {
                 using (connection = _factory.Create())
                 {
-                    return connection.Query<T>(sql, param, commandTimeout: _commandTimeout);
+                    try
+                    {
+                        return connection.Query<T>(sql, param, commandTimeout: _commandTimeout);
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new CG4SqlException(sql, ex);
+                    }
                 }
             }
             else
             {
-                return connection.Query<T>(sql, param, transaction, commandTimeout: _commandTimeout);
+                try
+                {
+                    return connection.Query<T>(sql, param, transaction, commandTimeout: _commandTimeout);
+                }
+                catch (Exception ex)
+                {
+                    throw new CG4SqlException(sql, ex);
+                }
             }
         }
         
@@ -74,12 +117,26 @@ namespace CG4.Impl.Dapper
             {
                 using (connection = await _factory.CreateAsync())
                 {
-                    return await connection.QueryAsync<T>(sql, param, commandTimeout: _commandTimeout);
+                    try
+                    {
+                        return await connection.QueryAsync<T>(sql, param, commandTimeout: _commandTimeout);
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new CG4SqlException(sql, ex);
+                    }
                 }
             }
             else
             {
-                return await connection.QueryAsync<T>(sql, param, transaction, commandTimeout: _commandTimeout);
+                try
+                {
+                    return await connection.QueryAsync<T>(sql, param, transaction, commandTimeout: _commandTimeout);
+                }
+                catch (Exception ex)
+                {
+                    throw new CG4SqlException(sql, ex);
+                }
             }
         }
 
@@ -90,12 +147,26 @@ namespace CG4.Impl.Dapper
             {
                 using (connection = _factory.Create())
                 {
-                    return connection.Execute(sql, param, transaction: transaction);
+                    try
+                    {
+                        return connection.Execute(sql, param, transaction: transaction);
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new CG4SqlException(sql, ex);
+                    }
                 }
             }
             else
             {
-                return connection.Execute(sql, param, transaction: transaction);
+                try
+                {
+                    return connection.Execute(sql, param, transaction: transaction);
+                }
+                catch (Exception ex)
+                {
+                    throw new CG4SqlException(sql, ex);
+                }
             }
         }
 
@@ -106,12 +177,26 @@ namespace CG4.Impl.Dapper
             {
                 using (connection = await _factory.CreateAsync())
                 {
-                    return await connection.ExecuteAsync(sql, param, transaction: transaction);
+                    try
+                    {
+                        return await connection.ExecuteAsync(sql, param, transaction: transaction);
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new CG4SqlException(sql, ex);
+                    }
                 }
             }
             else
             {
-                return await connection.ExecuteAsync(sql, param, transaction: transaction);
+                try
+                {
+                    return await connection.ExecuteAsync(sql, param, transaction: transaction);
+                }
+                catch (Exception ex)
+                {
+                    throw new CG4SqlException(sql, ex);
+                }
             }
         }
     }
