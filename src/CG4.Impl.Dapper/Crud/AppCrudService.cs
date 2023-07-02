@@ -118,23 +118,23 @@ namespace CG4.Impl.Dapper.Crud
             return ExecuteAsync(sql, new { Id = id }, connection, transaction);
         }
 
-        public Task<PageResult<TEntity>> GetPageAsync<TEntity>(int page, int take, Expression<Action<IClassSqlOptions<TEntity>>> predicate = null, IDbConnection connection = null, IDbTransaction transaction = null)
+        public Task<PageResult<TEntity>> GetPageAsync<TEntity>(int? page, int? take, Expression<Action<IClassSqlOptions<TEntity>>> predicate = null, IDbConnection connection = null, IDbTransaction transaction = null)
             where TEntity : class, IEntityBase, new()
         {
             return GetPageAsync<TEntity, TEntity>(page, take, predicate, connection, transaction);
         }
 
-        public async Task<PageResult<TResult>> GetPageAsync<TEntity, TResult>(int page, int take, Expression<Action<IClassSqlOptions<TEntity>>> predicate = null, IDbConnection connection = null, IDbTransaction transaction = null)
+        public async Task<PageResult<TResult>> GetPageAsync<TEntity, TResult>(int? page, int? take, Expression<Action<IClassSqlOptions<TEntity>>> predicate = null, IDbConnection connection = null, IDbTransaction transaction = null)
             where TEntity : class, IEntityBase, new()
             where TResult : class, new()
         {
-            var limit = take > 0 ? take : 25;
+            take = take.HasValue ? take : 25;
             page = page > 0 ? page : 0;
-            var offset = page * limit;
+            var offset = page * take;
 
             var exprSql = _sqlBuilder.GenerateSql(predicate);
 
-            exprSql.Limit = limit;
+            exprSql.Limit = take;
             exprSql.Offset = offset;
 
             var sql = _sqlBuilder.Serialize(exprSql);
@@ -157,7 +157,7 @@ namespace CG4.Impl.Dapper.Crud
             return new PageResult<TResult>
             {
                 Data = list,
-                Page = page,
+                Page = page.Value,
                 FilteredCount = count,
                 Count = count,
             };

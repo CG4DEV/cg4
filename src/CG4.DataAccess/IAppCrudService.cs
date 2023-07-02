@@ -124,7 +124,7 @@ namespace CG4.DataAccess
         /// <param name="transaction">Транзакция, которая должна быть выполнена в источнике данных.</param>
         /// <typeparam name="TEntity">Тип извлекаемой сущности. Должен реализовывать <see cref="IEntityBase"/>.</typeparam>
         /// <returns>Страница сущностей заданного типа TEntity.</returns>
-        Task<PageResult<TEntity>> GetPageAsync<TEntity>(int page, int take, Expression<Action<IClassSqlOptions<TEntity>>> predicate = null, IDbConnection connection = null, IDbTransaction transaction = null)
+        Task<PageResult<TEntity>> GetPageAsync<TEntity>(int? page, int? take, Expression<Action<IClassSqlOptions<TEntity>>> predicate = null, IDbConnection connection = null, IDbTransaction transaction = null)
             where TEntity : class, IEntityBase, new();
 
         /// <summary>
@@ -138,7 +138,7 @@ namespace CG4.DataAccess
         /// <typeparam name="TEntity">Тип извлекаемой сущности. Должен реализовывать <see cref="IEntityBase"/>.</typeparam>
         /// <typeparam name="TResult">Тип сущности, в которую необходимо преобразовать. Должен являться классом.</typeparam>
         /// <returns>Страница сущностей заданного типа TResult.</returns>
-        Task<PageResult<TResult>> GetPageAsync<TEntity, TResult>(int page, int take, Expression<Action<IClassSqlOptions<TEntity>>> predicate = null, IDbConnection connection = null, IDbTransaction transaction = null)
+        Task<PageResult<TResult>> GetPageAsync<TEntity, TResult>(int? page, int? take, Expression<Action<IClassSqlOptions<TEntity>>> predicate = null, IDbConnection connection = null, IDbTransaction transaction = null)
             where TEntity : class, IEntityBase, new()
             where TResult : class, new();
     }
