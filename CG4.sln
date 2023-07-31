@@ -58,7 +58,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{01A4B3
 		.github\workflows\dotnet.yml = .github\workflows\dotnet.yml
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CG4.Templ.WebApi", "src\CG4.Templ.WebApi\CG4.Templ.WebApi.csproj", "{6DBABF4F-99BD-40BD-AC4A-DADD0B21D092}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CG4.Templ.WebApi", "src\CG4.Templ.WebApi\CG4.Templ.WebApi.csproj", "{6DBABF4F-99BD-40BD-AC4A-DADD0B21D092}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CG4.Web", "src\CG4.Web\CG4.Web.csproj", "{560DBAE7-DC04-43A0-B851-C0208DDB84A5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -150,6 +152,10 @@ Global
 		{6DBABF4F-99BD-40BD-AC4A-DADD0B21D092}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6DBABF4F-99BD-40BD-AC4A-DADD0B21D092}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6DBABF4F-99BD-40BD-AC4A-DADD0B21D092}.Release|Any CPU.Build.0 = Release|Any CPU
+		{560DBAE7-DC04-43A0-B851-C0208DDB84A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{560DBAE7-DC04-43A0-B851-C0208DDB84A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{560DBAE7-DC04-43A0-B851-C0208DDB84A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{560DBAE7-DC04-43A0-B851-C0208DDB84A5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
