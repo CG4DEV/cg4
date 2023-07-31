@@ -8,7 +8,7 @@ using Xunit;
 
 namespace CG4.SqlBuilder.Tests
 {
-    public class ExprSqlBuilderTests
+    public partial class ExprSqlBuilderTests
     {
         private readonly ISqlSettings _sqlSettings = new PostreSqlOptions();
 
@@ -40,7 +40,7 @@ namespace CG4.SqlBuilder.Tests
             var builder = new ExprSqlBuilder(_sqlSettings);
 
             var sql = builder.Insert<TestSecondEntity>();
-            
+
             Assert.NotNull(sql);
             Assert.Equal("INSERT INTO \"test_second_entity\" (\"name\", \"create_date\", \"update_date\") VALUES (@Name, @CreateDate, @UpdateDate) RETURNING id", sql);
         }
@@ -62,7 +62,7 @@ namespace CG4.SqlBuilder.Tests
             var builder = new ExprSqlBuilder(_sqlSettings);
 
             var sql = builder.UpdateById<TestSecondEntity>();
-            
+
             Assert.NotNull(sql);
             Assert.Equal("UPDATE \"test_second_entity\" SET \"name\" = @Name,\"update_date\" = @UpdateDate WHERE \"id\" = @Id", sql);
         }
@@ -89,7 +89,7 @@ WHERE t.""number"" = 10 AND t.""id"" = @Id
             var builder = new ExprSqlBuilder(_sqlSettings);
 
             var sql = builder.GetById<TestSecondEntity>();
-            
+
             Assert.NotNull(sql);
             Assert.Equal(@"SELECT t.""name"" AS ""Name"", t.""id"" AS ""Id"", t.""create_date"" AS ""CreateDate"", t.""update_date"" AS ""UpdateDate""
 FROM ""test_second_entity"" AS t
@@ -119,7 +119,7 @@ FROM ""test_entity"" AS t
             var builder = new ExprSqlBuilder(_sqlSettings);
 
             var sql = builder.GetAll<TestSecondEntity>();
-            
+
             Assert.NotNull(sql);
             Assert.Equal(@"SELECT t.""name"" AS ""Name"", t.""id"" AS ""Id"", t.""create_date"" AS ""CreateDate"", t.""update_date"" AS ""UpdateDate""
 FROM ""test_second_entity"" AS t
@@ -529,7 +529,7 @@ WHERE t.""code"" = 'test'
         {
             [Column("name")]
             public string Name { get; set; }
-            
+
             [NotMapped]
             public int Age { get; set; }
         }

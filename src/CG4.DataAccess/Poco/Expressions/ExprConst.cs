@@ -9,11 +9,15 @@ namespace CG4.DataAccess.Poco.Expressions
             { typeof(string), x => new ExprStr { Value = (string)x } },
             { typeof(long), x => new ExprLong { Value = (long)x } },
             { typeof(int), x => new ExprInt { Value = (int)x } },
+            { typeof(short), x => new ExprInt { Value = (short)x } },
+            { typeof(byte), x => new ExprInt { Value = (byte)x } },
             { typeof(DateTimeOffset), x => new ExprDateTimeOffset { Value = (DateTimeOffset)x } },
             { typeof(bool), x => new ExprBool { Value = (bool)x } },
 
             { typeof(long?), x => new ExprLong { Value = (long)x } },
             { typeof(int?), x => new ExprInt { Value = (int)x } },
+            { typeof(short?), x => new ExprInt { Value = (short)x } },
+            { typeof(byte?), x => new ExprInt { Value = (byte)x } },
             { typeof(DateTimeOffset?), x => new ExprDateTimeOffset { Value = (DateTimeOffset)x } },
             { typeof(bool?), x => new ExprBool { Value = (bool)x } },
         };
@@ -32,7 +36,9 @@ namespace CG4.DataAccess.Poco.Expressions
 
             if (valueType.IsEnum)
             {
-                return _builders[typeof(int)].Invoke(value);
+                var member = ((System.Reflection.TypeInfo)valueType).DeclaredFields.First();
+
+                return _builders[member.FieldType].Invoke(value);
             }
 
             if (valueType.IsAssignableTo(typeof(IEnumerable)))
