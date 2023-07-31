@@ -240,6 +240,5 @@ namespace CG4.DataAccess.Poco.Expressions
 
             return (col, val);
         }
-
     }
 }
