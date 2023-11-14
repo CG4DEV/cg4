@@ -1,12 +1,12 @@
 {
   "profiles": {
-    "Dev": {
+    "Migration.Dev": {
       "commandName": "Project",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "Test": {
+    "Migration.Test": {
       "commandName": "Project",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Test"

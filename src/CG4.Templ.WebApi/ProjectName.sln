@@ -1,4 +1,8 @@
-﻿Microsoft Visual Studio Solution File, Format Version 12.00
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34031.279
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Apps", "Apps", "{D4444582-35D2-489E-9B79-A604C9A51C2D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Main", "Main", "{6FB43CF5-C8BB-42A2-80A4-AB96874B2D77}"
@@ -7,26 +11,23 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Migrations", "Migrations", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{3D5DEC8E-EDA9-4D39-AB61-3C2FB48E2208}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectName.Web", "src\ProjectName.Web\ProjectName.Web.csproj", "{6950D6BA-A723-47B7-B357-CB97D1A61B1A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectName.Story", "src\ProjectName.Story\ProjectName.Story.csproj", "{1F55338B-D3CA-4599-93A7-2E8E88D07D4B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectName.Story", "src\ProjectName.Story\ProjectName.Story.csproj", "{1F55338B-D3CA-4599-93A7-2E8E88D07D4B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectName.WebApp", "src\ProjectName.WebApp\ProjectName.WebApp.csproj", "{E7423F68-1B5D-4EA8-9378-DE1A1E29CABF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectName.WebApp", "src\ProjectName.WebApp\ProjectName.WebApp.csproj", "{E7423F68-1B5D-4EA8-9378-DE1A1E29CABF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectName.Migrations", "src\ProjectName.Migrations\ProjectName.Migrations.csproj", "{3DAE41DF-2081-4D8C-AFCE-DB2ADCA583AE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectName.Migrations", "src\ProjectName.Migrations\ProjectName.Migrations.csproj", "{3DAE41DF-2081-4D8C-AFCE-DB2ADCA583AE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectName.Integration.Tests", "tests\ProjectName.Integration.Tests\ProjectName.Integration.Tests.csproj", "{889D5117-1DE4-49BB-9A03-DF867571364B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectName.Integration.Tests", "tests\ProjectName.Integration.Tests\ProjectName.Integration.Tests.csproj", "{889D5117-1DE4-49BB-9A03-DF867571364B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectName", "src\ProjectName\ProjectName.csproj", "{86C45137-E1BF-49A8-8712-140CDB87E215}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectName", "src\ProjectName\ProjectName.csproj", "{86C45137-E1BF-49A8-8712-140CDB87E215}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectName.Domain", "src\ProjectName.Domain\ProjectName.Domain.csproj", "{B03AB5D7-94D1-435A-9E56-780E7E93D76F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectName.Domain", "src\ProjectName.Domain\ProjectName.Domain.csproj", "{B03AB5D7-94D1-435A-9E56-780E7E93D76F}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectName.Consumer", "src\ProjectName.Consumer\ProjectName.Consumer.csproj", "{1E3687FF-8EE7-4001-9FE3-D8C9F6C1853F}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectName.Common", "src\ProjectName.Common\ProjectName.Common.csproj", "{805C7419-4522-4447-8530-51743A44ADD9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectName.Common", "src\ProjectName.Common\ProjectName.Common.csproj", "{805C7419-4522-4447-8530-51743A44ADD9}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{97FDB6C5-2CE1-42A8-B51C-0F60AE8FE077}"
 	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
 		.gitignore = .gitignore
 		README.md = README.md
 	EndProjectSection
@@ -37,7 +38,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "configs", "configs", "{CEC0
 		shared\configs\connectionStrings.Test.json = shared\configs\connectionStrings.Test.json
 		shared\configs\serilog.Development.json = shared\configs\serilog.Development.json
 		shared\configs\serilog.Test.json = shared\configs\serilog.Test.json
-		shared\configs\sphinx.conf = shared\configs\sphinx.conf
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deploy", "deploy", "{AA75F40E-3201-4DF8-B320-C0C535DA24B5}"
@@ -45,16 +45,16 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deploy", "deploy", "{AA75F4
 		deploy\LowerCaseProjectName-webapp.yml = deploy\LowerCaseProjectName-webapp.yml
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectName.Web", "src\ProjectName.Web\ProjectName.Web.csproj", "{A73A15D0-89DF-42A3-92AC-9F20F61C87F6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectName.Contracts", "src\ProjectName.Contracts\ProjectName.Contracts.csproj", "{B050545B-CAF9-4730-902C-9CEDBCBAA6E9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{6950D6BA-A723-47B7-B357-CB97D1A61B1A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6950D6BA-A723-47B7-B357-CB97D1A61B1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6950D6BA-A723-47B7-B357-CB97D1A61B1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6950D6BA-A723-47B7-B357-CB97D1A61B1A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1F55338B-D3CA-4599-93A7-2E8E88D07D4B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1F55338B-D3CA-4599-93A7-2E8E88D07D4B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1F55338B-D3CA-4599-93A7-2E8E88D07D4B}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -79,30 +79,34 @@ Global
 		{B03AB5D7-94D1-435A-9E56-780E7E93D76F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B03AB5D7-94D1-435A-9E56-780E7E93D76F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B03AB5D7-94D1-435A-9E56-780E7E93D76F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1E3687FF-8EE7-4001-9FE3-D8C9F6C1853F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1E3687FF-8EE7-4001-9FE3-D8C9F6C1853F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1E3687FF-8EE7-4001-9FE3-D8C9F6C1853F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1E3687FF-8EE7-4001-9FE3-D8C9F6C1853F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{805C7419-4522-4447-8530-51743A44ADD9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{805C7419-4522-4447-8530-51743A44ADD9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{805C7419-4522-4447-8530-51743A44ADD9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{805C7419-4522-4447-8530-51743A44ADD9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A73A15D0-89DF-42A3-92AC-9F20F61C87F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A73A15D0-89DF-42A3-92AC-9F20F61C87F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A73A15D0-89DF-42A3-92AC-9F20F61C87F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A73A15D0-89DF-42A3-92AC-9F20F61C87F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B050545B-CAF9-4730-902C-9CEDBCBAA6E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B050545B-CAF9-4730-902C-9CEDBCBAA6E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B050545B-CAF9-4730-902C-9CEDBCBAA6E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B050545B-CAF9-4730-902C-9CEDBCBAA6E9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{6950D6BA-A723-47B7-B357-CB97D1A61B1A} = {D4444582-35D2-489E-9B79-A604C9A51C2D}
+		{1F55338B-D3CA-4599-93A7-2E8E88D07D4B} = {6FB43CF5-C8BB-42A2-80A4-AB96874B2D77}
+		{E7423F68-1B5D-4EA8-9378-DE1A1E29CABF} = {6FB43CF5-C8BB-42A2-80A4-AB96874B2D77}
 		{3DAE41DF-2081-4D8C-AFCE-DB2ADCA583AE} = {F22C2D51-E011-4746-863C-A70F432E8FCE}
 		{889D5117-1DE4-49BB-9A03-DF867571364B} = {3D5DEC8E-EDA9-4D39-AB61-3C2FB48E2208}
 		{86C45137-E1BF-49A8-8712-140CDB87E215} = {6FB43CF5-C8BB-42A2-80A4-AB96874B2D77}
 		{B03AB5D7-94D1-435A-9E56-780E7E93D76F} = {6FB43CF5-C8BB-42A2-80A4-AB96874B2D77}
-		{1E3687FF-8EE7-4001-9FE3-D8C9F6C1853F} = {D4444582-35D2-489E-9B79-A604C9A51C2D}
 		{805C7419-4522-4447-8530-51743A44ADD9} = {6FB43CF5-C8BB-42A2-80A4-AB96874B2D77}
-		{1F55338B-D3CA-4599-93A7-2E8E88D07D4B} = {6FB43CF5-C8BB-42A2-80A4-AB96874B2D77}
 		{CEC04EC4-6156-48B4-BBCA-B34601B4A755} = {97FDB6C5-2CE1-42A8-B51C-0F60AE8FE077}
 		{AA75F40E-3201-4DF8-B320-C0C535DA24B5} = {97FDB6C5-2CE1-42A8-B51C-0F60AE8FE077}
-		{E7423F68-1B5D-4EA8-9378-DE1A1E29CABF} = {6FB43CF5-C8BB-42A2-80A4-AB96874B2D77}
+		{A73A15D0-89DF-42A3-92AC-9F20F61C87F6} = {D4444582-35D2-489E-9B79-A604C9A51C2D}
+		{B050545B-CAF9-4730-902C-9CEDBCBAA6E9} = {6FB43CF5-C8BB-42A2-80A4-AB96874B2D77}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {05696894-64AA-4C5F-ADB0-763A9A6F8EEA}

@@ -6,43 +6,42 @@ using System.Reflection;
 using System.Threading.Tasks;
 using CG4.DataAccess;
 using CG4.DataAccess.Domain;
-using CG4.Impl.Dapper;
-using CG4.Impl.Dapper.Crud;
 using Microsoft.Extensions.DependencyInjection;
-using ProjectName.Common;
 
 namespace ProjectName.Integration.Tests
 {
     public class DatabaseFixture
     {
-        public ICrudService CrudService => _crudService;
-        public ISearchService SearchService => _searchService;
-        public IConnectionFactory ConnectionFactory => _connectionFactory;
-
         private readonly IConnectionFactory _connectionFactory;
         private readonly ICrudService _crudService;
-        private readonly ISearchService _searchService;
 
         public DatabaseFixture()
         {
             var serviceProvider = Factory.GetServiceProvider();
 
             _crudService = serviceProvider.GetService<ICrudService>();
-            _searchService = serviceProvider.GetService<ISearchService>();
             _connectionFactory = serviceProvider.GetService<IConnectionFactory>();
         }
+
+        public ICrudService CrudService => _crudService;
+
+        public IConnectionFactory ConnectionFactory => _connectionFactory;
 
         public async Task CleanUpAsync(IEnumerable<EntityBase> listToRemove)
         {
             var sql = GetSQLForDelete(listToRemove);
-            await CrudService.ExecuteAsync(sql);
+
+            if (!string.IsNullOrEmpty(sql))
+            {
+                await CrudService.ExecuteAsync(sql);
+            }
         }
 
         public static string GetSQLForDelete(IEnumerable<EntityBase> listToRemove)
         {
             if (!listToRemove.Any())
             {
-                return null;
+                return string.Empty;
             }
 
             var sqlList = new List<string>();

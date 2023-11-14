@@ -1,58 +1,36 @@
-using System;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Hosting;
-using Serilog;
+using ProjectName.WebApp;
 
 namespace ProjectName.Web
 {
     public class Program
     {
-        static Task Main(string[] args)
+        public static void Main(string[] args)
         {
-            var host = Host.CreateDefaultBuilder(args)
-                .ConfigureApp<Startup>(args)
-                .Build();
+            var builder = WebApplication.CreateBuilder(args);
 
-            return host.RunAsync();
-        }
-    }
+            builder.Services.ConfigureApp();
 
-    public static class HostBuilderExtension
-    {
-        public static IHostBuilder ConfigureApp<TStartup>(this IHostBuilder hostBuilder, string[] args)
-            where TStartup : class
-        {
-            hostBuilder.ConfigureAppConfiguration((context, configBuilder) =>
+            builder.Services.AddControllers();
+            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddSwaggerGen(opt =>
             {
-                configBuilder.Sources.Clear();
-                var env = context.HostingEnvironment.EnvironmentName;
-
-                configBuilder.AddJsonFile("appsettings.json");
-                configBuilder.AddJsonFile($"appsettings.{env}.json", optional: true);
-                configBuilder.AddJsonFile($"Configs/connectionStrings.{env}.json", optional: true);
-                configBuilder.AddJsonFile($"Configs/serilog.{env}.json", optional: true);
-
-                configBuilder.AddEnvironmentVariables();
-
-                if (args != null)
-                {
-                    configBuilder.AddCommandLine(args);
-                }
+                opt.IncludeXmlComments("ProjectName.WebApp.xml");
+                opt.IncludeXmlComments("ProjectName.Contracts.xml");
             });
 
-            hostBuilder.UseSerilog((hostingContext, loggerConfiguration) =>
-            {
-                loggerConfiguration.ReadFrom.Configuration(hostingContext.Configuration);
-            });
+            var app = builder.Build();
 
-            hostBuilder.ConfigureWebHostDefaults(webBuilder =>
+            if (!app.Environment.IsProduction())
             {
-                webBuilder.UseStartup<TStartup>();
-            });
+                app.UseSwagger();
+                app.UseSwaggerUI();
+            }
 
-            return hostBuilder;
+            app.UseHttpsRedirection();
+            app.UseAuthorization();
+            app.MapControllers();
+
+            app.Run();
         }
     }
 }

@@ -7,15 +7,13 @@ using CG4.Impl.Dapper.Crud;
 using CG4.Impl.Dapper.Poco.ExprOptions;
 using CG4.Impl.Dapper.PostgreSql;
 using Microsoft.Extensions.DependencyInjection;
-using ProjectName.Common;
-using ProjectName.Common.Impl;
 using ProjectName.Story;
 
 namespace ProjectName.WebApp
 {
     public static class AppDIConfigure
     {
-        public static IServiceCollection Configure(IServiceCollection services)
+        public static IServiceCollection ConfigureApp(this IServiceCollection services)
         {
             services.AddExecutors(options =>
             {
@@ -31,8 +29,6 @@ namespace ProjectName.WebApp
             
             services.AddScoped<ICrudService, AppCrudService>();
             services.AddScoped<IAppCrudService, AppCrudService>();
-
-            services.AddTransient<ISearchService, DbSearchService>();
 
             services.AddHttpContextAccessor();
 

@@ -46,6 +46,7 @@ namespace ProjectName.Integration.Tests.Story
             {
                 Login = Guid.NewGuid().ToString("N"),
                 Password = Guid.NewGuid().ToString("N"),
+                Name = Guid.NewGuid().ToString("N"),
             });
         }
     }

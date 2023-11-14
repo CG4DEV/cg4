@@ -3,7 +3,6 @@
     <PropertyGroup>
         <TargetFramework>net6.0</TargetFramework>
         <IsPackable>false</IsPackable>
-        <RootNamespace>ProjectName</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
@@ -11,6 +10,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\ProjectName.Contracts\ProjectName.Contracts.csproj" />
       <ProjectReference Include="..\ProjectName.Domain\ProjectName.Domain.csproj" />
     </ItemGroup>
 

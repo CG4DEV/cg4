@@ -1,6 +1,5 @@
 {
   "ConnectionStrings": {
-    "ProjectName": "User ID=postgres;Password=postgres;Host=localhost;Port=5432;Database=database_name_parameter;",
-    "Sphinx": "Server=192.168.10.1;port=9306;Character Set=utf8;SslMode=none"
+    "ProjectName": "User ID=postgres;Password=postgres;Host=localhost;Port=5432;Database=database_name_parameter;"
   }
 }
