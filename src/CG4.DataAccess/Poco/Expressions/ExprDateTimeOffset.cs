@@ -6,6 +6,6 @@ namespace CG4.DataAccess.Poco.Expressions
     {
         public DateTimeOffset Value { get; set; }
 
-        public override void Accept(IExprVisitor visitor) => visitor.VisitDateTime(this);
+        public override void Accept(IExprVisitor visitor) => visitor.VisitDateTimeOffset(this);
     }
 }

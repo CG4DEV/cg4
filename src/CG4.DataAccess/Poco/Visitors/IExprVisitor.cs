@@ -22,7 +22,9 @@ namespace CG4.DataAccess.Poco.Visitors
 
         void VisitInt(ExprInt @int);
 
-        void VisitDateTime(ExprDateTimeOffset dateTime);
+        void VisitDateTime(ExprDateTime dateTime);
+
+        void VisitDateTimeOffset(ExprDateTimeOffset dateTimeOffset);
 
         void VisitOrderColumn(ExprOrderColumn order);
 

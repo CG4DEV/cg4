@@ -88,6 +88,18 @@ namespace CG4.DataAccess.Poco.Expressions
             Value = new ExprBool { Value = value },
         };
 
+        public static ExprBoolean operator ==(ExprColumn column, DateTime value) => new ExprBoolEqPredicate
+        {
+            Column = column,
+            Value = new ExprDateTime { Value = value },
+        };
+
+        public static ExprBoolean operator !=(ExprColumn column, DateTime value) => new ExprBoolNotEqPredicate
+        {
+            Column = column,
+            Value = new ExprDateTime { Value = value },
+        };
+
         public static ExprBoolean operator ==(ExprColumn column, DateTimeOffset value) => new ExprBoolEqPredicate
         {
             Column = column,
@@ -122,6 +134,18 @@ namespace CG4.DataAccess.Poco.Expressions
         {
             Column = column,
             Value = value.HasValue ? new ExprBool { Value = value.Value } : new ExprNull(),
+        };
+
+        public static ExprBoolean operator ==(ExprColumn column, DateTime? value) => new ExprBoolEqPredicate
+        {
+            Column = column,
+            Value = value.HasValue ? new ExprDateTime { Value = value.Value } : new ExprNull(),
+        };
+
+        public static ExprBoolean operator !=(ExprColumn column, DateTime? value) => new ExprBoolNotEqPredicate
+        {
+            Column = column,
+            Value = value.HasValue ? new ExprDateTime { Value = value.Value } : new ExprNull(),
         };
 
         public static ExprBoolean operator ==(ExprColumn column, DateTimeOffset? value) => new ExprBoolEqPredicate
