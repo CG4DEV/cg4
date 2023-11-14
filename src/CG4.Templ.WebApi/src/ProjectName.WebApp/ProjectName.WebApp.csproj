@@ -11,9 +11,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="CG4.Extensions" Version="1.1.121-beta" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.1" />
-	<PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+    <PackageReference Include="CG4.Extensions" Version="1.1.123-beta" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
   </ItemGroup>
 
   <ItemGroup>
