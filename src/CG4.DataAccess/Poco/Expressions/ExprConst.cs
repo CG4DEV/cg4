@@ -11,6 +11,7 @@ namespace CG4.DataAccess.Poco.Expressions
             { typeof(int), x => new ExprInt { Value = (int)x } },
             { typeof(short), x => new ExprInt { Value = (short)x } },
             { typeof(byte), x => new ExprInt { Value = (byte)x } },
+            { typeof(DateTime), x => new ExprDateTime { Value = (DateTime)x } },
             { typeof(DateTimeOffset), x => new ExprDateTimeOffset { Value = (DateTimeOffset)x } },
             { typeof(bool), x => new ExprBool { Value = (bool)x } },
 
@@ -18,6 +19,7 @@ namespace CG4.DataAccess.Poco.Expressions
             { typeof(int?), x => new ExprInt { Value = (int)x } },
             { typeof(short?), x => new ExprInt { Value = (short)x } },
             { typeof(byte?), x => new ExprInt { Value = (byte)x } },
+            { typeof(DateTime?), x => new ExprDateTime { Value = (DateTime)x } },
             { typeof(DateTimeOffset?), x => new ExprDateTimeOffset { Value = (DateTimeOffset)x } },
             { typeof(bool?), x => new ExprBool { Value = (bool)x } },
         };

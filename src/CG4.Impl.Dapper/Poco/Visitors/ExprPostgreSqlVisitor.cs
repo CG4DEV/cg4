@@ -6,7 +6,7 @@ namespace CG4.Impl.Dapper.Poco.Visitors
 {
     public class ExprPostgreSqlVisitor : IExprVisitor
     {
-        readonly StringBuilder _stringBuilder;
+        private readonly StringBuilder _stringBuilder;
 
         public ExprPostgreSqlVisitor()
         {
@@ -135,10 +135,17 @@ namespace CG4.Impl.Dapper.Poco.Visitors
             _stringBuilder.Append(@int.Value);
         }
 
-        public void VisitDateTime(ExprDateTimeOffset dateTime)
+        public void VisitDateTime(ExprDateTime dateTime)
         {
             _stringBuilder.Append('\'');
-            _stringBuilder.Append(dateTime.Value.ToString("yyyy-MM-dd HH:mm:ss.fff zzz"));
+            _stringBuilder.Append(dateTime.Value.ToString("yyyy-MM-dd HH:mm:ss.fff"));
+            _stringBuilder.Append('\'');
+        }
+
+        public void VisitDateTimeOffset(ExprDateTimeOffset dateTimeOffset)
+        {
+            _stringBuilder.Append('\'');
+            _stringBuilder.Append(dateTimeOffset.Value.ToString("yyyy-MM-dd HH:mm:ss.fff zzz"));
             _stringBuilder.Append('\'');
         }
 
