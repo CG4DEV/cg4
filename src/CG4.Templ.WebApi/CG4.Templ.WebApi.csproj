@@ -15,7 +15,6 @@
         <Content Include="src\**\*" Exclude="**\bin\**\*;**\obj\**\*" />
         <Content Include="tests\**\*" Exclude="**\bin\**\*;**\obj\**\*" />
         <Content Include="shared\**\*" />
-        <Content Include="lint\*" />
         <Content Include="deploy\*" />
         <Content Include=".gitignore" />
         <Content Include="coverage.bat" />

@@ -1,86 +1,39 @@
-﻿using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using CG4.DataAccess;
 using CG4.DataAccess.Domain;
+using CG4.DataAccess.Poco;
+using CG4.DataAccess.Poco.Expressions;
 using CG4.Executor.Story;
-using ProjectName.Common;
+using ProjectName.Contracts.Accounts;
 using ProjectName.Domain.Entities;
 
 namespace ProjectName.Story.Accounts
 {
-    public class GetAccountsPageStory : IStory<GetAccountsPageStoryContext, PageResult<Account>>
+    public class GetAccountsPageStory : IStory<GetAccountsPageStoryContext, PageResult<AccountDto>>
     {
         private readonly ICrudService _crudService;
-        private readonly ISearchService _searchService;
 
-        private const string ACCOUNT_QUERY = @"SELECT 
-                                                a.id,
-                                                a.login,
-                                                a.password,
-                                                a.create_date AS CreateDate,
-                                                a.update_date AS UpdateDate
-                                            FROM 
-                                                accounts AS a 
-                                            WHERE 
-                                                a.id = ANY(@Ids)";
-        
-        private const string ACCOUNT_COUNT_QUERY = @"SELECT 
-                                                      Count(a.*) 
-                                                  FROM 
-                                                      accounts AS a 
-                                                  WHERE 
-                                                      a.id = ANY(@Ids)";
-
-        private const string ACCOUNT_SEARCH_QUERY = @"SELECT 
-                                                       a.id 
-                                                   FROM 
-                                                       accounts AS a";
-
-        public GetAccountsPageStory(ICrudService crudService, ISearchService searchService)
+        public GetAccountsPageStory(ICrudService crudService)
         {
             _crudService = crudService;
-            _searchService = searchService;
         }
-        
-        public async Task<PageResult<Account>> ExecuteAsync(GetAccountsPageStoryContext context)
+
+        public Task<PageResult<AccountDto>> ExecuteAsync(GetAccountsPageStoryContext context)
         {
-            var searchQuery = new StringBuilder(ACCOUNT_SEARCH_QUERY);
             var limit = context.Limit ?? 25;
             var page = context.Page ?? 0;
 
-            if (!string.IsNullOrEmpty(context.FastSearch))
+            var expr = ExprBoolean.Empty;
+
+            if (!string.IsNullOrEmpty(context.Query.Name))
             {
-                if (long.TryParse(context.FastSearch, out var searchToLong))
-                {
-                    searchQuery.Append($" WHERE a.id = {searchToLong}");
-                }
-                else
-                {
-                    searchQuery.Append($" WHERE a.login LIKE '{context.FastSearch}'");
-                }
+                expr |= SqlExprHelper.GenerateWhere<Account>(x => x.Name.Contains(context.Query.Name));
             }
 
-            searchQuery.Append(" OFFSET @Offset");
-            searchQuery.Append(" LIMIT @Limit");
-
-            var accountsIds = await _searchService.SearchAsync(searchQuery.ToString(), new
-            {
-                Limit = limit,
-                Offset = page * limit
-            });
-
-            var accountsTask = _crudService.QueryListAsync<Account>(ACCOUNT_QUERY, new { Ids = accountsIds });
-            var accountsCountTask = _crudService.QueryAsync<int>(ACCOUNT_COUNT_QUERY, new { Ids = accountsIds });
-
-            await Task.WhenAll(accountsTask, accountsCountTask);
-
-            return new PageResult<Account>
-            {
-                Data = accountsTask.Result,
-                Page = page,
-                Count = accountsCountTask.Result,
-                FilteredCount = accountsCountTask.Result
-            };
+            return _crudService.GetPageAsync<Account, AccountDto>(
+                page,
+                limit,
+                x => x.Where(expr));
         }
     }
 }

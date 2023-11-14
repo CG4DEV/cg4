@@ -7,8 +7,6 @@ using CG4.Impl.Dapper.Poco.ExprOptions;
 using CG4.Impl.Dapper.PostgreSql;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using ProjectName.Common;
-using ProjectName.Common.Impl;
 using ProjectName.WebApp;
 
 namespace ProjectName.Integration.Tests
@@ -34,11 +32,10 @@ namespace ProjectName.Integration.Tests
             services.AddSingleton<IConnectionFactory, ConnectionFactoryPostgreSQL>();
             services.AddSingleton<ISqlBuilder, ExprSqlBuilder>();
             services.AddSingleton<ISqlSettings, PostreSqlOptions>();
-            
+
             services
                 .AddScoped<ICrudService, AppCrudService>()
-                .AddScoped<IAppCrudService, AppCrudService>()
-                .AddScoped<ISearchService, DbSearchService>();
+                .AddScoped<IAppCrudService, AppCrudService>();
 
             return services.BuildServiceProvider();
         }

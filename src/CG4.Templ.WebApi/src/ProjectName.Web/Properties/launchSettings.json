@@ -1,28 +1,26 @@
 ﻿{
   "$schema": "https://json.schemastore.org/launchsettings.json",
   "profiles": {
-    "Development": {
+    "ProjectName.Dev": {
       "commandName": "Project",
       "workingDirectory": "bin\\Debug\\net6.0",
       "dotnetRunMessages": true,
       "launchBrowser": true,
-      "launchUrl": "",
+      "launchUrl": "swagger",
       "applicationUrl": "http://localhost:5000",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development",
-        "urls": "http://+:5000"
+        "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "Test": {
+    "ProjectName.Test": {
       "commandName": "Project",
       "workingDirectory": "bin\\Debug\\net6.0",
       "dotnetRunMessages": true,
-      "launchBrowser": false,
-      "launchUrl": "",
+      "launchBrowser": true,
+      "launchUrl": "swagger",
       "applicationUrl": "http://localhost:5000",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Testing",
-        "urls": "http://+:5000"
+        "ASPNETCORE_ENVIRONMENT": "Test"
       }
     }
   }

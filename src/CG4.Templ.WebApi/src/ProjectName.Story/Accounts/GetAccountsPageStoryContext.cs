@@ -1,10 +1,11 @@
 ﻿using CG4.DataAccess.Domain;
 using CG4.Executor;
+using ProjectName.Contracts.Accounts;
 using ProjectName.Domain.Entities;
 
 namespace ProjectName.Story.Accounts
 {
-    public class GetAccountsPageStoryContext : IResult<PageResult<Account>>
+    public class GetAccountsPageStoryContext : IResult<PageResult<AccountDto>>
     {
         /// <summary>
         /// Количество выводимых строк. По умолчанию - 25.
@@ -17,8 +18,8 @@ namespace ProjectName.Story.Accounts
         public int? Page { get; set; }
         
         /// <summary>
-        /// Строка полиска.
+        /// Поисковой запрос.
         /// </summary>
-        public string FastSearch { get; set; }
+        public AccountQueryDto Query { get; set; }
     }
 }

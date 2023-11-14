@@ -17,5 +17,11 @@ namespace ProjectName.Domain.Entities
         /// </summary>
         [Column("password")]
         public string Password { get; set; }
+
+        /// <summary>
+        /// Account's last name.
+        /// </summary>
+        [Column("name")]
+        public string Name { get; set; }
     }
 }

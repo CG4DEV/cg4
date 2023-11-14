@@ -12,6 +12,7 @@ namespace ProjectName.Migrations._2022
             Create.Table("accounts")
                 .WithColumn("id").AsInt64().PrimaryKey().Identity()
                 .WithColumn("login").AsString().NotNullable()
+                .WithColumn("name").AsString().NotNullable()
                 .WithColumn("password").AsString().NotNullable()
                 .WithColumn("create_date").AsDateTime().NotNullable().WithDefault(SystemMethods.CurrentDateTime)
                 .WithColumn("update_date").AsDateTime().NotNullable().WithDefault(SystemMethods.CurrentDateTime);
@@ -20,6 +21,7 @@ namespace ProjectName.Migrations._2022
                 .Row(new Dictionary<string, object>
                 {
                     ["login"] = "Test login",
+                    ["name"] = "First user",
                     ["password"] = "Test password",
                     ["create_date"] = DateTimeOffset.UtcNow,
                     ["update_date"] = DateTimeOffset.UtcNow
@@ -27,6 +29,7 @@ namespace ProjectName.Migrations._2022
                 .Row(new Dictionary<string, object>
                 {
                     ["login"] = "Some login",
+                    ["name"] = "Second user",
                     ["password"] = "Some password",
                     ["create_date"] = DateTimeOffset.UtcNow,
                     ["update_date"] = DateTimeOffset.UtcNow
@@ -34,6 +37,7 @@ namespace ProjectName.Migrations._2022
                 .Row(new Dictionary<string, object>
                 {
                     ["login"] = "Login",
+                    ["name"] = "Third user",
                     ["password"] = "Password",
                     ["create_date"] = DateTimeOffset.UtcNow,
                     ["update_date"] = DateTimeOffset.UtcNow
