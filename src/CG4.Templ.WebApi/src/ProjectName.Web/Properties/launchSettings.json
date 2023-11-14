@@ -3,7 +3,7 @@
   "profiles": {
     "ProjectName.Dev": {
       "commandName": "Project",
-      "workingDirectory": "bin\\Debug\\net6.0",
+      "workingDirectory": "$(OutDir)",
       "dotnetRunMessages": true,
       "launchBrowser": true,
       "launchUrl": "swagger",
@@ -14,7 +14,7 @@
     },
     "ProjectName.Test": {
       "commandName": "Project",
-      "workingDirectory": "bin\\Debug\\net6.0",
+      "workingDirectory": "$(OutDir)",
       "dotnetRunMessages": true,
       "launchBrowser": true,
       "launchUrl": "swagger",
