@@ -45,9 +45,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deploy", "deploy", "{AA75F4
 		deploy\LowerCaseProjectName-webapp.yml = deploy\LowerCaseProjectName-webapp.yml
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectName.Web", "src\ProjectName.Web\ProjectName.Web.csproj", "{A73A15D0-89DF-42A3-92AC-9F20F61C87F6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectName.Web", "src\ProjectName.Web\ProjectName.Web.csproj", "{A73A15D0-89DF-42A3-92AC-9F20F61C87F6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectName.Contracts", "src\ProjectName.Contracts\ProjectName.Contracts.csproj", "{B050545B-CAF9-4730-902C-9CEDBCBAA6E9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectName.Contracts", "src\ProjectName.Contracts\ProjectName.Contracts.csproj", "{B050545B-CAF9-4730-902C-9CEDBCBAA6E9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
