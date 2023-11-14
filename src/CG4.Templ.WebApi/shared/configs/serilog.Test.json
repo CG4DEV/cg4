@@ -5,8 +5,7 @@
       "Override": {
         "Microsoft": "Warning",
         "Microsoft.Hosting.Lifetime": "Warning",
-        "System": "Error",
-        "Tolar.Logging.BusinessLog": "Information"
+        "System": "Error"
       }
     },
     "Using": [ "Serilog.Sinks.Console" ],
@@ -14,7 +13,7 @@
       {
         "Name": "Console",
         "Args": {
-          "formatter": "Serilog.Formatting.Json.JsonFormatter, Serilog"
+          "formatter": "Serilog.Formatting.Elasticsearch.ElasticsearchJsonFormatter, Serilog.Formatting.Elasticsearch"
         }
       }
     ]
