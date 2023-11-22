@@ -79,5 +79,7 @@ namespace CG4.DataAccess.Poco.Visitors
         void VisitGreaterThanOrEqPredicate(ExprGreaterThanOrEq greaterEqPredicate);
 
         void VisitLessThanOrEqPredicate(ExprLessThanOrEq lesssEqPredicate);
+
+        void VisitConstValue(string value);
     }
 }
