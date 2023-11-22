@@ -16,7 +16,7 @@ namespace CG4.SqlBuilder.Tests
         [Fact]
         public void GetAll_QueryByNewExprType_BuildSQLWithNewConstType()
         {
-            ExprConstRegister.Register(typeof(DateOnly), new DateOnlyExprConstBuilder());
+            ExprConstBuildRegister.Register(typeof(DateOnly), new DateOnlyExprConstBuilder());
 
             var builder = new ExprSqlBuilder(_sqlSettings);
             var date = new DateOnly(2023, 11, 22);

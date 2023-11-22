@@ -2,7 +2,7 @@
 
 namespace CG4.DataAccess.Poco
 {
-    public static class ExprConstRegister
+    public static class ExprConstBuildRegister
     {
         private static readonly Dictionary<Type, IExprConstBuilder> _defaultBuilders = new()
         {

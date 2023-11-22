@@ -11,7 +11,7 @@ namespace CG4.DataAccess.Poco.Expressions
                 return new ExprNull();
             }
 
-            var builder = ExprConstRegister.Get(valueType);
+            var builder = ExprConstBuildRegister.Get(valueType);
 
             if (builder is not null)
             {
@@ -21,7 +21,7 @@ namespace CG4.DataAccess.Poco.Expressions
             if (valueType.IsEnum)
             {
                 var member = ((System.Reflection.TypeInfo)valueType).DeclaredFields.First();
-                var b = ExprConstRegister.Get(member.FieldType);
+                var b = ExprConstBuildRegister.Get(member.FieldType);
 
                 return b.Build(member.FieldType, value);
             }
