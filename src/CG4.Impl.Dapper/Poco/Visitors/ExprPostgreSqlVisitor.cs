@@ -362,6 +362,11 @@ namespace CG4.Impl.Dapper.Poco.Visitors
             lesssEqPredicate.Value.Accept(this);
         }
 
+        public void VisitConstValue(string value)
+        {
+            _stringBuilder.Append(value);
+        }
+
         private void AcceptList(IEnumerable<Expr> expressions, string separator = ", ")
         {
             bool isFirst = true;

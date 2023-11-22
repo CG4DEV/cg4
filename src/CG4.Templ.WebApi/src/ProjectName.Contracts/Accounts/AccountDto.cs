@@ -12,7 +12,6 @@ namespace ProjectName.Contracts.Accounts
         /// <summary>
         /// Account's login.
         /// </summary>
-        [Column("login")]
         public string Login { get; set; }
 
         /// <summary>

@@ -4,26 +4,6 @@ namespace CG4.DataAccess.Poco.Expressions
 {
     public abstract class ExprConst : Expr
     {
-        private static readonly Dictionary<Type, Func<object, ExprConst>> _builders = new()
-        {
-            { typeof(string), x => new ExprStr { Value = (string)x } },
-            { typeof(long), x => new ExprLong { Value = (long)x } },
-            { typeof(int), x => new ExprInt { Value = (int)x } },
-            { typeof(short), x => new ExprInt { Value = (short)x } },
-            { typeof(byte), x => new ExprInt { Value = (byte)x } },
-            { typeof(DateTime), x => new ExprDateTime { Value = (DateTime)x } },
-            { typeof(DateTimeOffset), x => new ExprDateTimeOffset { Value = (DateTimeOffset)x } },
-            { typeof(bool), x => new ExprBool { Value = (bool)x } },
-
-            { typeof(long?), x => new ExprLong { Value = (long)x } },
-            { typeof(int?), x => new ExprInt { Value = (int)x } },
-            { typeof(short?), x => new ExprInt { Value = (short)x } },
-            { typeof(byte?), x => new ExprInt { Value = (byte)x } },
-            { typeof(DateTime?), x => new ExprDateTime { Value = (DateTime)x } },
-            { typeof(DateTimeOffset?), x => new ExprDateTimeOffset { Value = (DateTimeOffset)x } },
-            { typeof(bool?), x => new ExprBool { Value = (bool)x } },
-        };
-
         public static ExprConst Create(Type valueType, object value)
         {
             if (value == null)
@@ -31,16 +11,19 @@ namespace CG4.DataAccess.Poco.Expressions
                 return new ExprNull();
             }
 
-            if (_builders.TryGetValue(valueType, out var builder))
+            var builder = ExprConstBuildRegister.Get(valueType);
+
+            if (builder is not null)
             {
-                return builder.Invoke(value);
+                return builder.Build(valueType, value);
             }
 
             if (valueType.IsEnum)
             {
                 var member = ((System.Reflection.TypeInfo)valueType).DeclaredFields.First();
+                var b = ExprConstBuildRegister.Get(member.FieldType);
 
-                return _builders[member.FieldType].Invoke(value);
+                return b.Build(member.FieldType, value);
             }
 
             if (valueType.IsAssignableTo(typeof(IEnumerable)))
