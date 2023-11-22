@@ -7,7 +7,6 @@ namespace ProjectName.Contracts.Accounts
         /// <summary>
         /// Account's login.
         /// </summary>
-        [Column("login")]
         public string Login { get; set; }
 
         /// <summary>
@@ -18,7 +17,6 @@ namespace ProjectName.Contracts.Accounts
         /// <summary>
         /// Account's password.
         /// </summary>
-        [Column("password")]
         public string Password { get; set; }
     }
 }

@@ -7,8 +7,6 @@ namespace ProjectName.WebApp.Controllers
     [ApiExplorerSettings(IgnoreApi = true)]
     public class HomeController : Controller
     {
-        private static readonly DateTimeOffset _starts = DateTimeOffset.UtcNow; 
-        
         /// <summary>
         /// Get version app from file 'appversion.txt'.
         /// </summary>
@@ -25,16 +23,6 @@ namespace ProjectName.WebApp.Controllers
             }
 
             return null;
-        }
-
-        /// <summary>
-        /// Service start date.
-        /// </summary>
-        [Route("/starts")]
-        [HttpGet]
-        public DateTimeOffset Starts()
-        {
-            return _starts;
         }
     }
 }
