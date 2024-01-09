@@ -7,10 +7,17 @@ namespace CG4.Impl.MongoDB
     public class MongoDBRepository : IMongoDBRepository
     {
         private readonly IMongoDatabase _db;
+        private readonly IMongoCollationSettings _cs; 
 
         public MongoDBRepository(IMongoDBClient client)
         {
             _db = client.GetDatabase();
+        }
+
+        public MongoDBRepository(IMongoDBClient client, IMongoCollationSettings collationSettings)
+        {
+            _db = client.GetDatabase();
+            _cs = collationSettings;
         }
 
         public virtual T Get<T>(Expression<Func<T, bool>> predicate)
@@ -87,6 +94,7 @@ namespace CG4.Impl.MongoDB
                 Sort = SortGenerate<T>(sort),
                 Skip = skip <= 0 ? null : (int?)skip,
                 Limit = limit <= 0 ? null : (int?)limit,
+                Collation = GetCollation()
             });
 
             return await findResult.ToListAsync();
@@ -290,6 +298,16 @@ namespace CG4.Impl.MongoDB
             }
 
             return collectionName;
+        }
+
+        protected Collation GetCollation()
+        {
+            if (_cs == null || _cs.Locale.NullOrEmpty())
+            {
+                return null;
+            }
+
+            return new Collation(_cs.Locale, strength: _cs.CollationStrength);
         }
 
         private SortDefinition<T> SortGenerate<T>(IList<ISort> sort)
