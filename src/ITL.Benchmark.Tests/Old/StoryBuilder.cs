@@ -1,4 +1,4 @@
-﻿namespace ITL
+﻿namespace ITLTeam
 {
     /// <summary>
     /// Реализация класса для построений историй

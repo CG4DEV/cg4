@@ -1,7 +1,7 @@
-﻿namespace ITL.Impl
+﻿namespace ITLTeam.Impl
 {
     using System;
-    using ITL;
+    using ITLTeam;
     using Microsoft.Extensions.DependencyInjection;
 
     /// <inheritdoc/>

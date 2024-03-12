@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace ITL
+namespace ITLTeam
 {
     /// <summary>
     /// Интерфейс истории

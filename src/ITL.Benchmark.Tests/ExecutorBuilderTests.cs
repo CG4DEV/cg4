@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
 using BenchmarkDotNet.Attributes;
-using ITL.Impl;
+using ITLTeam;
+using ITLTeam.Impl;
 using ITL.Benchmark.Tests.Preparation;
 using ITL.Executor.Extensions;
 using ITL.Executor.Story;
@@ -20,7 +21,7 @@ namespace ITL.Benchmark.Tests
         public ExecutorBuilderTests()
         {
             var collection = new ServiceCollection();
-            collection.AddTransient<IStory<TestStoryContext, int>, TestStory>();
+            collection.AddTransient<ITLTeam.IStory<TestStoryContext, int>, TestStory>();
             collection.AddMediatR(typeof(Program));
             collection.AddExecutors(options =>
             {

@@ -1,4 +1,4 @@
-﻿namespace ITL
+﻿namespace ITLTeam
 {
     /// <summary>
     /// Интерфейс для построений историй
