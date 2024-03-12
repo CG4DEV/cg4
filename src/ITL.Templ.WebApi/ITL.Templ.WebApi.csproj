@@ -1,0 +1,37 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <IncludeContentInPack>true</IncludeContentInPack>
+        <IncludeBuildOutput>false</IncludeBuildOutput>
+        <ContentTargetFolders>content</ContentTargetFolders>
+        <EnableDefaultItems>false</EnableDefaultItems>
+        <NoDefaultExcludes>true</NoDefaultExcludes>
+        <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+        <PackageOutputPath>.</PackageOutputPath>
+        <IsPackable>true</IsPackable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <Content Include="src\**\*" Exclude="**\bin\**\*;**\obj\**\*" />
+        <Content Include="tests\**\*" Exclude="**\bin\**\*;**\obj\**\*" />
+        <Content Include="shared\**\*" />
+        <Content Include="deploy\*" />
+        <Content Include=".gitignore" />
+        <Content Include="coverage.bat" />
+        <Content Include="README.md" />
+        <Content Include=".template.config\**" />
+        <Content Include="*.sln" />
+        <Compile Remove="**\*" />
+    </ItemGroup>
+
+    <PropertyGroup>
+        <PackageType>Template</PackageType>
+        <Version>0.0.1</Version>
+        <PackageId>ITL.Templ.WebApi</PackageId>
+        <Title>ITL.Templ.WebApi</Title>
+        <Authors>ITL</Authors>
+        <Description>Template for Web API</Description>
+        <PackageTags>C#;dotnet-core;webapi;template</PackageTags>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    </PropertyGroup>
+</Project>

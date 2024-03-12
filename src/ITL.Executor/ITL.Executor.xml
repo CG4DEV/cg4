@@ -1,0 +1,193 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ITL.Executor</name>
+    </assembly>
+    <members>
+        <member name="T:ITL.Executor.BaseExecutor">
+            <summary>
+            Базовый класс выполнения стори.
+            </summary>
+        </member>
+        <member name="M:ITL.Executor.BaseExecutor.Execute``1(ITL.Executor.IResult{``0})">
+            <summary>
+            Выполнение с возвращаемым значением.
+            </summary>
+            <param name="context">Контекст стори.</param>
+            <typeparam name="TStoryResult">Тип возвращаемого значения.</typeparam>
+            <returns>Возвращаемое значение стори.</returns>
+            <exception cref="M:ITL.Executor.BaseExecutor.InvalidOperationException(System.String)">Не найден исполнитель стори по переданному контексту.</exception>
+        </member>
+        <member name="M:ITL.Executor.BaseExecutor.Execute(ITL.Executor.IResult)">
+            <summary>
+            Выполнение.
+            </summary>
+            <param name="context">Контекст стори.</param>
+            <exception cref="M:ITL.Executor.BaseExecutor.InvalidOperationException(System.String)">Не найден исполнитель стори по переданному контексту.</exception>
+        </member>
+        <member name="T:ITL.Executor.Extensions.CacheExecutor">
+            <summary>
+            Cache for implementation of <see cref="T:ITL.Executor.IExecution`2"/>.
+            </summary>
+        </member>
+        <member name="P:ITL.Executor.Extensions.CacheExecutor.Cache">
+            <summary>
+            Cache values.
+            </summary>
+        </member>
+        <member name="M:ITL.Executor.Extensions.CacheExecutor.TryGetValue(System.Type,System.ValueTuple{System.Type,System.Reflection.MethodInfo}@)">
+            <summary>
+            Try getting value from cache.
+            </summary>
+            <param name="context">Type of Context for implementation of <see cref="T:ITL.Executor.IExecution`2"/>.</param>
+            <param name="executor">Tuple of pair execution type and method from <see cref="T:ITL.Executor.IExecution`2"/>.</param>
+        </member>
+        <member name="M:ITL.Executor.Extensions.CacheExecutor.TryAdd(System.Type,System.ValueTuple{System.Type,System.Reflection.MethodInfo})">
+            <summary>
+            Try add value to cache.
+            </summary>
+            <param name="context">Type of Context for implementation of <see cref="T:ITL.Executor.IExecution`2"/>.</param>
+            <param name="executor">Tuple of pair execution type and method from <see cref="T:ITL.Executor.IExecution`2"/>.</param>
+            <returns></returns>
+        </member>
+        <member name="T:ITL.Executor.Extensions.ExecutorOptions">
+            <summary>
+            Options to configure executor and executions types.
+            </summary>
+        </member>
+        <member name="P:ITL.Executor.Extensions.ExecutorOptions.ExecutorInterfaceType">
+            <summary>
+            Executor interface type.
+            </summary>
+        </member>
+        <member name="P:ITL.Executor.Extensions.ExecutorOptions.ExecutorImplementationType">
+            <summary>
+            Executor current type. Required property.
+            <example>
+                For example:
+                <code>
+                    options.ExecutorImplementationType = typeof(ExampleExecutor)
+                </code>
+            </example>
+            </summary>
+        </member>
+        <member name="P:ITL.Executor.Extensions.ExecutorOptions.ExecutorLifetime">
+            <summary>
+            Executor lifetime.
+            </summary>
+        </member>
+        <member name="P:ITL.Executor.Extensions.ExecutorOptions.ExecutionTypesLifetime">
+            <summary>
+            Execution types lifetime.
+            </summary>
+        </member>
+        <member name="P:ITL.Executor.Extensions.ExecutorOptions.ExecutionTypes">
+            <summary>
+            Types that implements <see cref="T:ITL.Executor.IExecution`2"/>. Required property. 
+            </summary>
+        </member>
+        <member name="T:ITL.Executor.Extensions.ExecutorsExtensions">
+            <summary>
+            Extensions for scan and registers executor and executions types.
+            </summary>
+        </member>
+        <member name="M:ITL.Executor.Extensions.ExecutorsExtensions.AddExecutors(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Action{ITL.Executor.Extensions.ExecutorOptions},System.Type[])">
+            <summary>
+            Registers executor and executions types from the specified assemblies.
+            </summary>
+            <param name="services">The <see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/>.</param>
+            <param name="options">Options to configure executor and executions types.</param>
+            <param name="handlerAssemblyMarkerTypes">Mark type to find assemblies to scan</param>
+            <returns></returns>
+        </member>
+        <member name="M:ITL.Executor.Extensions.ExecutorsExtensions.AddExecutors(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Action{ITL.Executor.Extensions.ExecutorOptions},System.Reflection.Assembly[])">
+            <summary>
+            Registers executor and executions types from the specified assemblies.
+            </summary>
+            <param name="services">The <see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/>.</param>
+            <param name="options">Options to configure executor and executions types.</param>
+            <param name="assembliesToScan">Assemblies to scan.</param>
+            <returns></returns>
+        </member>
+        <member name="T:ITL.Executor.IExecution`2">
+            <summary>
+            Выполнение с возвращаемым значением.
+            </summary>
+            <typeparam name="TExecutionContext">Тип контекста.</typeparam>
+            <typeparam name="TExecutionResult">Тип возвращаемого значения.</typeparam>
+        </member>
+        <member name="M:ITL.Executor.IExecution`2.ExecuteAsync(`0)">
+            <summary>
+            Асинхронно выполняет алгоритм, связанный с контекстом.
+            </summary>
+            <param name="context">Контекст.</param>
+            <returns>Возвращаемое значение контекста.</returns>
+        </member>
+        <member name="T:ITL.Executor.IExecution`1">
+            <summary>
+            Выполнение.
+            </summary>
+            <typeparam name="TExecutionContext">Тип контекста.</typeparam>
+        </member>
+        <member name="M:ITL.Executor.IExecution`1.ExecuteAsync(`0)">
+            <summary>
+            Асинхронно выполняет алгоритм, связанный с контекстом.
+            </summary>
+            <param name="context">Контекст.</param>
+        </member>
+        <member name="T:ITL.Executor.IResult`1">
+            <summary>
+            Интерфейс, описывающий возращаемое значение из стори.
+            </summary>
+            <typeparam name="T">Контекст стори.</typeparam>
+        </member>
+        <member name="T:ITL.Executor.IResult">
+            <summary>
+            Интерфейс, описывающий контекст стори без возвращаемого значения.
+            </summary>
+        </member>
+        <member name="T:ITL.Executor.Story.IStory`2">
+            <summary>
+            Интерфейс стори с возвращаемым значением.
+            </summary>
+            <typeparam name="TStoryContext">Тип контекста.</typeparam>
+            <typeparam name="TStoryResult">Тип возвращаемого значения.</typeparam>
+        </member>
+        <member name="T:ITL.Executor.Story.IStory`1">
+            <summary>
+            Интерфейс стори.
+            </summary>
+            <typeparam name="TStoryContext">Тип контекста.</typeparam>
+        </member>
+        <member name="T:ITL.Executor.Story.IStoryExecutor">
+            <summary>
+            Интерфейс создания и исполнения стори.
+            </summary>
+        </member>
+        <member name="M:ITL.Executor.Story.IStoryExecutor.Execute``1(ITL.Executor.IResult{``0})">
+            <summary>
+            Создает и исполняет стори.
+            </summary>
+            <typeparam name="TStoryResult">Тип возвращаемого значения.</typeparam>
+            <param name="context">Контекст стори.</param>
+            <returns>Возвращаемое значение.</returns>
+        </member>
+        <member name="M:ITL.Executor.Story.IStoryExecutor.Execute(ITL.Executor.IResult)">
+            <summary>
+            Создания и исполнение стори.
+            </summary>
+            <param name="context">Контекст стори.</param>
+        </member>
+        <member name="T:ITL.Executor.Story.StoryExecutor">
+            <summary>
+            Implemetation of <see cref="T:ITL.Executor.Story.IStoryExecutor"/>.
+            </summary>
+        </member>
+        <member name="M:ITL.Executor.Story.StoryExecutor.#ctor(System.IServiceProvider)">
+            <summary>
+            Initializes a new instance of the <see cref="T:ITL.Executor.Story.StoryExecutor"/> class.
+            </summary>
+            <param name="provider">Mechanism for retrieving a service object.</param>
+        </member>
+    </members>
+</doc>

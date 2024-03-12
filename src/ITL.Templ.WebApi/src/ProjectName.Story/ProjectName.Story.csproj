@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ITL.Executor" Version="1.1.123-beta" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ProjectName.Common\ProjectName.Common.csproj" />
+    <ProjectReference Include="..\ProjectName.Contracts\ProjectName.Contracts.csproj" />
+    <ProjectReference Include="..\ProjectName\ProjectName.csproj" />
+  </ItemGroup>
+
+</Project>

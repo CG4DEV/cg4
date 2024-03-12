@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ITL.Impl.EF</name>
+    </assembly>
+    <members>
+        <member name="T:ITL.Impl.EF.EfRepository">
+            <summary>
+            Репозиторий для работы с EntityFramework.
+            </summary>
+        </member>
+        <member name="M:ITL.Impl.EF.EfRepository.#ctor(ITL.Impl.EF.IDbContextFactory)">
+            <summary>
+            Создание экземпляра класса <see cref="T:ITL.Impl.EF.EfRepository"/>.
+            </summary>
+            <param name="dbContextFactory">Фабрика, позволяющая создать контекст БД.</param>
+        </member>
+    </members>
+</doc>
