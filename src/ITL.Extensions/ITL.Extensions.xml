@@ -1,0 +1,194 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ITL.Extensions</name>
+    </assembly>
+    <members>
+        <member name="T:ITL.Extensions.ArgumentsExtension">
+            <summary>
+            Содержит расширения для проверки объектов на null.
+            </summary>
+        </member>
+        <member name="M:ITL.Extensions.ArgumentsExtension.CheckNull``1(``0,System.String)">
+            <summary>
+            Проверяет объект на null.
+            </summary>
+            <typeparam name="T">Тип объекта для проверки.</typeparam>
+            <param name="arg">Проверяемый объект.</param>
+            <param name="message">Сообщение об ошибке, если объект равен <see langword="null"/>.</param>
+            <exception cref="T:System.ArgumentNullException">Если объект равен <see langword="null"/>.</exception>
+            <returns>Возвращает переданный не пустой объект.</returns>
+        </member>
+        <member name="M:ITL.Extensions.ArgumentsExtension.CheckNullOrEmpty``1(System.Collections.Generic.IEnumerable{``0},System.String)">
+            <summary>
+            Проверяет коллекцию.
+            </summary>
+            <param name="arg">Проверяемый объект.</param>
+            <param name="message">Сообщение об ошибке, если объект равен <see langword="null"/>.</param>
+            <typeparam name="T">Тип объекта для проверки.</typeparam>
+            <returns>Список сущностей заданного типа T.</returns>
+            <exception cref="T:System.ArgumentNullException">Коллекция равна <see langword="null"/> или пуста.</exception>
+        </member>
+        <member name="T:ITL.Extensions.DocumentationExtensions">
+            <summary>
+            Utility class to provide documentation for various types where available with the assembly
+            </summary>
+        </member>
+        <member name="F:ITL.Extensions.DocumentationExtensions.Cache">
+            <summary>
+            A cache used to remember Xml documentation for assemblies
+            </summary>
+        </member>
+        <member name="F:ITL.Extensions.DocumentationExtensions.FailCache">
+            <summary>
+            A cache used to store failure exceptions for assembly lookups
+            </summary>
+        </member>
+        <member name="M:ITL.Extensions.DocumentationExtensions.GetSummary(System.Type)">
+            <summary>
+            Gets the summary portion of a type's documenation or returns an empty string if not available
+            </summary>
+            <param name="type"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ITL.Extensions.DocumentationExtensions.GetSummary(System.Reflection.MethodInfo)">
+            <summary>
+            Returns the Xml documentation summary comment for this method
+            </summary>
+            <param name="methodInfo"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ITL.Extensions.DocumentationExtensions.GetSummary(System.Reflection.MemberInfo)">
+            <summary>
+            Returns the Xml documenation summary comment for this member
+            </summary>
+            <param name="memberInfo"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ITL.Extensions.DocumentationExtensions.GetSummary(System.Xml.XmlElement)">
+            <summary>
+            Find summary node and return inner text from this XmlElement
+            </summary>
+            <param name="element"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ITL.Extensions.DocumentationExtensions.GetDocumentation(System.Reflection.MethodInfo)">
+            <summary>
+            Provides the documentation comments for a specific method
+            </summary>
+            <param name="methodInfo">The MethodInfo (reflection data ) of the member to find documentation for</param>
+            <returns>The XML fragment describing the method</returns>
+        </member>
+        <member name="M:ITL.Extensions.DocumentationExtensions.GetDocumentation(System.Reflection.MemberInfo)">
+            <summary>
+            Provides the documentation comments for a specific member
+            </summary>
+            <param name="memberInfo">The MemberInfo (reflection data) or the member to find documentation for</param>
+            <returns>The XML fragment describing the member</returns>
+        </member>
+        <member name="M:ITL.Extensions.DocumentationExtensions.GetDocumentation(System.Type)">
+            <summary>
+            Provides the documentation comments for a specific type
+            </summary>
+            <param name="type">Type to find the documentation for</param>
+            <returns>The XML fragment that describes the type</returns>
+        </member>
+        <member name="M:ITL.Extensions.DocumentationExtensions.XmlFromAssembly(System.Reflection.Assembly)">
+            <summary>
+            Obtains the documentation file for the specified assembly
+            </summary>
+            <param name="assembly">The assembly to find the XML document for</param>
+            <returns>The XML document</returns>
+            <remarks>This version uses a cache to preserve the assemblies, so that the XML file is not loaded and parsed on every single lookup</remarks>
+        </member>
+        <member name="M:ITL.Extensions.DocumentationExtensions.XmlFromName(System.Type,System.Char,System.String)">
+            <summary>
+            Obtains the XML Element that describes a reflection element by searching the members for a member that has a name that describes the element.
+            </summary>
+            <param name="type">The type or parent type, used to fetch the assembly</param>
+            <param name="prefix">The prefix as seen in the name attribute in the documentation XML</param>
+            <param name="name">Where relevant, the full name qualifier for the element</param>
+            <returns>The member that has a name that describes the specified reflection element</returns>
+        </member>
+        <member name="M:ITL.Extensions.DocumentationExtensions.XmlFromAssemblyNonCached(System.Reflection.Assembly)">
+            <summary>
+            Loads and parses the documentation file for the specified assembly
+            </summary>
+            <param name="assembly">The assembly to find the XML document for</param>
+            <returns>The XML document</returns>
+        </member>
+        <member name="T:ITL.Extensions.LinqExtension">
+            <summary>
+            Содержит расширения для работы с коллекциями.
+            </summary>
+        </member>
+        <member name="M:ITL.Extensions.LinqExtension.NullOrEmpty``1(System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            Проверяет, что коллекция равна <see langword="null"/> или пуста.
+            </summary>
+            <typeparam name="TSource">Тип коллекции.</typeparam>
+            <param name="source">Коллекция.</param>
+            <returns><see langword="true"/> - коллекция пуста или равна <see langword="null"/>.</returns>
+        </member>
+        <member name="T:ITL.Extensions.StringExtension">
+            <summary>
+            Расширения для манипуляции строками.
+            </summary>
+        </member>
+        <member name="M:ITL.Extensions.StringExtension.ToStr(System.String)">
+            <summary>
+            Возвращает входную строку, если она не пустая, иначе <see langword="null"/>.
+            </summary>
+            <param name="str">Входная строка.</param>
+            <returns>Строка, если не пустая или <see langword="null"/>, иначе <see langword="null"/>.</returns>
+        </member>
+        <member name="M:ITL.Extensions.StringExtension.ToInt(System.String,System.Nullable{System.Int32})">
+            <summary>
+            Если передана не пустая строка, то парсит строку в целое число, иначе возвращает число по умолчанию.
+            </summary>
+            <param name="str">Входная строка.</param>
+            <param name="defValue">Число по умолчанию.</param>
+            <returns>Целое число.</returns>
+        </member>
+        <member name="M:ITL.Extensions.StringExtension.ToShort(System.String,System.Nullable{System.UInt16})">
+            <summary>
+            Если передана не пустая строка, то парсит строку в целое число типа <see langword="ushort"/>,
+            иначе возвращает число по умолчанию.
+            </summary>
+            <param name="str">Входная строка.</param>
+            <param name="defValue">Число по умолчанию.</param>
+            <returns>Целое число типа <see langword="ushort"/>.</returns>
+        </member>
+        <member name="M:ITL.Extensions.StringExtension.ToFloat(System.String,System.Nullable{System.Single})">
+            <summary>
+            Если передана не пустая строка, то парсит строку в число с плавающей точкой, иначе возвращает число по умолчанию.
+            </summary>
+            <param name="str">Входная строка.</param>
+            <param name="defValue">Число по умолчанию.</param>
+            <returns>Число с плавающей точкой.</returns>
+        </member>
+        <member name="M:ITL.Extensions.StringExtension.ToDateTime(System.String)">
+            <summary>
+            Если передана не пустая строка, то парсит строку в дату и время.
+            </summary>
+            <param name="str">Входная строка.</param>
+            <returns>Дата и время.</returns>
+        </member>
+        <member name="M:ITL.Extensions.StringExtension.ToExactDateTime(System.String,System.String)">
+            <summary>
+            Если передана не пустая строка, то парсит строку в дату и время по шаблону.
+            </summary>
+            <param name="str">Входная строка.</param>
+            <param name="pattern">Шаблон даты.</param>
+            <returns>Дата и время.</returns>
+        </member>
+        <member name="M:ITL.Extensions.StringExtension.FirstLetterToUpper(System.String)">
+            <summary>
+            Делает первую букву переданной строки заглавной.
+            </summary>
+            <param name="str">Входная строка.</param>
+            <exception cref="T:System.ArgumentException">Пустая строка.</exception>
+            <returns>Строка с первой заглавной буквой.</returns>
+        </member>
+    </members>
+</doc>

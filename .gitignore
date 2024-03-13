@@ -11,12 +11,12 @@
 *.sln.docstates
 
 # Auto generated docs
-CG4.DataAccess.xml
-CG4.Executor.xml
-CG4.Extensions.xml
-CG4.Impl.Dapper.xml
-CG4.Impl.Dapper.PostgreSql.xml
-CG4.Impl.EF.xml
+ITL.DataAccess.xml
+ITL.Executor.xml
+ITL.Extensions.xml
+ITL.Impl.Dapper.xml
+ITL.Impl.Dapper.PostgreSql.xml
+ITL.Impl.EF.xml
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs

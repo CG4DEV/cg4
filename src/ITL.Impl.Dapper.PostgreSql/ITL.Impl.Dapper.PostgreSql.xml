@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ITL.Impl.Dapper.PostgreSql</name>
+    </assembly>
+    <members>
+        <member name="T:ITL.Impl.Dapper.PostgreSql.ConnectionFactoryPostgreSQL">
+            <summary>
+            Реализация <see cref="T:ITL.DataAccess.IConnectionFactory"/> для работы с PostgreSQL.
+            </summary>
+        </member>
+        <member name="M:ITL.Impl.Dapper.PostgreSql.ConnectionFactoryPostgreSQL.#ctor(ITL.DataAccess.IConnectionSettings)">
+            <summary>
+            Создание экземпляра класса <see cref="T:ITL.Impl.Dapper.PostgreSql.ConnectionFactoryPostgreSQL"/>.
+            </summary>
+            <param name="connectionString">Строка подключения к БД PostgreSQL.</param>
+        </member>
+    </members>
+</doc>

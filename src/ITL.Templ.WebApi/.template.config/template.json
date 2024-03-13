@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json.schemastore.org/template",
+  "classifications": [ "ITL", "Web API", "Consumer App" ],
+  "author": "ITL",
+  "name": "ITL Web API",
+  "identity": "ITL.WebAPI",
+  "groupIdentity": "ITL.WebApi",
+  "shortName": "itlapi",
+  "tags": {
+    "language": "C#",
+    "type": "solution"
+  },
+  "sourceName": "ProjectName",
+  "preferNameDirectory": false,
+  "symbols": {
+    "correctName": {
+      "type": "derived",
+      "valueSource": "name",
+      "valueTransform": "IncorrectName",
+      "replaces": "ProjectName",
+      "fileRename": "ProjectName"
+    },
+    "lowerCaseName": {
+      "type": "derived",
+      "valueSource": "name",
+      "valueTransform": "LowerCaseName",
+      "replaces": "LowerCaseProjectName",
+      "fileRename": "LowerCaseProjectName"
+    },
+    "Database": {
+      "type": "parameter",
+      "datatype": "string",
+      "replaces": "database_name_parameter",
+      "defaultValue": "postgres",
+      "description": "The database name for PostgreSQL connection string/"
+    }
+  },
+  "forms": {
+    "IncorrectName": {
+      "identifier": "replace",
+      "pattern": "[\\W]",
+      "replacement": ""
+    },
+    "LowerCaseName": {
+      "identifier": "lowerCase"
+    }
+  },
+  "sources": [
+    {
+      "source": "./",
+      "target": "./",
+      "exclude": [
+        "**/.gitattributes",
+        "**/.vs/**",
+        "**/.git/**",
+        "**/.idea/**",
+        "**/[Bb]in/**",
+        "**/[Oo]bj/**",
+        "**/.template.config/**"
+      ]
+    }
+  ]
+}
