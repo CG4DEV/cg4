@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Diagnostics.Metrics;
 using System.Reflection;
 
 namespace ITL.DataAccess.Poco.Expressions
@@ -21,15 +22,27 @@ namespace ITL.DataAccess.Poco.Expressions
 
             if (valueType.IsEnum)
             {
-                var member = ((TypeInfo)valueType).DeclaredFields.First();
-                var b = ExprConstBuildRegister.Get(member.FieldType);
+                var enumUnderlyingType = Enum.GetUnderlyingType(valueType);
+                var b = ExprConstBuildRegister.Get(enumUnderlyingType);
 
-                return b.Build(member.FieldType, value);
+                if (b is null)
+                {
+                    throw new NotSupportedException($"Enum underlying type '{enumUnderlyingType}' not supported");
+                }
+
+                return b.Build(enumUnderlyingType, value);
             }
 
             if (valueType.IsAssignableTo(typeof(IEnumerable)))
             {
                 return CreateArray(value as IEnumerable);
+            }
+
+            var t = Nullable.GetUnderlyingType(valueType);
+
+            if (t is not null)
+            {
+                return Create(t, value);
             }
 
             throw new NotSupportedException($"Type '{valueType.Name}' not supported");
