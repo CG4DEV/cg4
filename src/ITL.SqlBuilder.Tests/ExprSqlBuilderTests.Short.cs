@@ -48,7 +48,6 @@ namespace ITL.SqlBuilder.Tests
         [Table("test_entity")]
         private class ShortTypeEntity
         {
-
             [Column("level")]
             public short Level { get; set; }
 

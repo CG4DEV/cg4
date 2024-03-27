@@ -8,7 +8,7 @@ on:
 
 env:
   NUGET_AUTH_TOKEN: ${{ secrets.NUGET_API }}
-  VERSION_STATIC: 1.1.${{ github.run_number }}-beta
+  VERSION_STATIC: 1.0.${{ github.run_number }}
 
 jobs:
   build_and_publish:
