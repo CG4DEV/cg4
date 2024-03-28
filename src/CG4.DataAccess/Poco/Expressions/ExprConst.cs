@@ -20,10 +20,13 @@ namespace CG4.DataAccess.Poco.Expressions
 
             if (valueType.IsEnum)
             {
-                var member = ((System.Reflection.TypeInfo)valueType).DeclaredFields.First();
-                var b = ExprConstBuildRegister.Get(member.FieldType);
-
-                return b.Build(member.FieldType, value);
+                var member = Enum.GetUnderlyingType(valueType);
+                var b = ExprConstBuildRegister.Get(member);
+                
+                if (b is not null)
+                {
+                    return b.Build(member, value);
+                }
             }
 
             if (valueType.IsAssignableTo(typeof(IEnumerable)))
