@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using ITL.Executor.Extensions;
 using ITL.Executor.Story;
 using ITL.Executor.Tests.Preparation;
@@ -47,17 +48,18 @@ namespace ITL.Executor.Tests
         }
 
         [Fact]
-        public void StoryBuilder_ResolveNotRegisteredExecutorContext_Exception()
+        public async Task StoryBuilder_ResolveNotRegisteredExecutorContext_Exception()
         {
             var builder = (IStoryExecutor)_provider.GetRequiredService(typeof(IStoryExecutor));
-            Assert.Throws<InvalidOperationException>(() => { builder.Execute((IResult<int>)new NotRegisteredExecutorContext()); });
+
+            await Assert.ThrowsAsync<InvalidOperationException>(async () => await builder.Execute(new NotRegisteredExecutorContext()));
         }
 
         [Fact]
-        public void StoryBuilder_ResolveNotRegisteredVoidStoryExecutor_Exception()
+        public async Task StoryBuilder_ResolveNotRegisteredVoidStoryExecutor_Exception()
         {
             var builder = (IStoryExecutor)_provider.GetRequiredService(typeof(IStoryExecutor));
-            Assert.Throws<InvalidOperationException>(() => { builder.Execute((IResult)new NotRegisteredExecutorContext()); });
+            await Assert.ThrowsAsync<InvalidOperationException>(() => builder.Execute(new NotRegisteredExecutorContext()));
         }
     }
 }
