@@ -7,7 +7,7 @@ namespace ITL.Impl.Rabbit
     /// </summary>
     public class ConnectionFactoryRabbitMQ : IConnectionFactory, IDisposable
     {
-        private static readonly object _lock = new object();
+        private readonly object _lock = new object();
         private bool disposed;
         private ConnectionFactory _connectionFactory;
         private IConnection _connection;
