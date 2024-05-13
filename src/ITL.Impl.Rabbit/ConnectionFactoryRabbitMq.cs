@@ -4,8 +4,6 @@ namespace ITL.Impl.Rabbit
 {
     /// <summary>
     /// Фабрика подключений к RabbitMQ
-    /// для удерживания подключения в singleton
-    /// после переноса в базовые сборки отключить из Trcont.Common nuget библиотеку ITL.Impl.Rabbit
     /// </summary>
     public class ConnectionFactoryRabbitMQ : IConnectionFactory, IDisposable
     {
@@ -130,6 +128,8 @@ namespace ITL.Impl.Rabbit
         }
 
         public string ClientProvidedName { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public ICredentialsProvider CredentialsProvider { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public ICredentialsRefresher CredentialsRefresher { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         public IAuthMechanismFactory AuthMechanismFactory(IList<string> mechanismNames)
         {
@@ -152,29 +152,45 @@ namespace ITL.Impl.Rabbit
             return _connection;
         }
 
+        private IConnection CreateConnectionInternal(Func<IConnection> func)
+        {
+            if (_connection == null || !_connection.IsOpen)
+            {
+                lock (_lock)
+                {
+                    if (_connection == null || !_connection.IsOpen)
+                    {
+                        _connection = func();
+                    }
+                }
+            }
+
+            return _connection;
+        }
+
         public IConnection CreateConnection(string clientProvidedName)
         {
-            throw new NotImplementedException();
+            return CreateConnectionInternal(() => _connectionFactory.CreateConnection(clientProvidedName));
         }
 
         public IConnection CreateConnection(IList<string> hostnames)
         {
-            throw new NotImplementedException();
+            return CreateConnectionInternal(() => _connectionFactory.CreateConnection(hostnames));
         }
 
         public IConnection CreateConnection(IList<string> hostnames, string clientProvidedName)
         {
-            throw new NotImplementedException();
+            return CreateConnectionInternal(() => _connectionFactory.CreateConnection(hostnames, clientProvidedName));
         }
 
         public IConnection CreateConnection(IList<AmqpTcpEndpoint> endpoints)
         {
-            throw new NotImplementedException();
+            return CreateConnectionInternal(() => _connectionFactory.CreateConnection(endpoints));
         }
 
         public IConnection CreateConnection(IList<AmqpTcpEndpoint> endpoints, string clientProvidedName)
         {
-            throw new NotImplementedException();
+            return CreateConnectionInternal(() => _connectionFactory.CreateConnection(endpoints, clientProvidedName));
         }
 
         public void Dispose()
