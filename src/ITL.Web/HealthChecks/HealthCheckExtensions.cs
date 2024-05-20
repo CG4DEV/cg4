@@ -1,6 +1,7 @@
 ﻿using ITL.Web.HealthChecks.Visitors;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
@@ -11,18 +12,28 @@ namespace ITL.Web.HealthChecks
     {
         public static IEndpointConventionBuilder MapHealthChecksFormatter(this IEndpointRouteBuilder routeBuilder, string pattern = "health")
         {
+            var settings = routeBuilder.ServiceProvider.GetService<IHealthCheckSettings>();
             var writer = routeBuilder.ServiceProvider.GetRequiredService<IReportWriter>();
+            var options = BuildHealthCheckOptions(writer);
 
-            return routeBuilder.MapHealthChecks(pattern, new HealthCheckOptions
+            var builder = routeBuilder.MapHealthChecks(pattern, options);
+            if (settings?.Port is not null)
             {
-                ResultStatusCodes = new Dictionary<HealthStatus, int>
-                {
-                    { HealthStatus.Healthy, 200 },
-                    { HealthStatus.Degraded, 200 },
-                    { HealthStatus.Unhealthy, 500 },
-                },
-                ResponseWriter = writer.WriteAsync
-            });
+                builder = builder.RequireHost($"*:{settings.Port}");
+            }
+
+            return builder;
+        }
+
+        public static IApplicationBuilder UseITLHealthChecks(this IApplicationBuilder applicationBuilder, string path = "/health")
+        {
+            var settings = applicationBuilder.ApplicationServices.GetService<IHealthCheckSettings>();
+            var writer = applicationBuilder.ApplicationServices.GetRequiredService<IReportWriter>();
+            var options = BuildHealthCheckOptions(writer);
+
+            return settings?.Port is null
+                ? applicationBuilder.UseHealthChecks(path, options)
+                : applicationBuilder.UseHealthChecks(path, settings.Port.Value, options);
         }
 
         public static IServiceCollection AddHealthCheckTextFormatter(this IServiceCollection services)
@@ -37,6 +48,20 @@ namespace ITL.Web.HealthChecks
             return services
                 .AddTransient<INodeVisitor, PrometheusNodeVisitor>()
                 .AddTransient<IReportWriter, ReportWriter>();
+        }
+
+        private static HealthCheckOptions BuildHealthCheckOptions(IReportWriter reportWriter)
+        {
+            return new HealthCheckOptions
+            {
+                ResultStatusCodes = new Dictionary<HealthStatus, int>
+                {
+                    { HealthStatus.Healthy, 200 },
+                    { HealthStatus.Degraded, 200 },
+                    { HealthStatus.Unhealthy, 500 },
+                },
+                ResponseWriter = reportWriter.WriteAsync
+            };
         }
     }
 }
