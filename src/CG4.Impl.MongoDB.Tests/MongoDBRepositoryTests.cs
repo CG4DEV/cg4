@@ -1,4 +1,5 @@
 ﻿using System;
+using MongoDB.Driver;
 using Moq;
 using Xunit;
 
@@ -7,12 +8,13 @@ namespace CG4.Impl.MongoDB.Tests
     public class MongoDBRepositoryTests
     {
         private readonly Mock<IMongoDBClient> _clientMock;
-        private readonly MongoDBRepositoryOnlyForTest _repository;
+        private readonly Mock<IMongoCollationSettings> _settingsMock;
+        private MongoDBRepositoryOnlyForTest _repository;
 
         public MongoDBRepositoryTests()
         {
             _clientMock = new Mock<IMongoDBClient>();
-            _repository = new MongoDBRepositoryOnlyForTest(_clientMock.Object);
+            _settingsMock = new Mock<IMongoCollationSettings>();           
         }
 
         [Theory]
@@ -23,8 +25,36 @@ namespace CG4.Impl.MongoDB.Tests
         [InlineData(typeof(GenericType<GenericType<String, Int32>, GenericType<String, Int32>>), "GenericType_GenericType_String_Int32_GenericType_String_Int32")]
         public void GetCollectionName_FromGenericType_ReturnsCollectionName(Type type, string expected)
         {
+            _repository = new MongoDBRepositoryOnlyForTest(_clientMock.Object);
+
             var collectionName = _repository.GetCollectionName(type);
             Assert.Equal(expected, collectionName);
+        }
+
+        [Fact]
+        public void GetCollation_ExistCollationSettings_ReturnsCollation()
+        {
+            var expected = new { Locale = "en", CollationStrength = CollationStrength.Secondary };
+
+            _settingsMock.SetupGet(x => x.Locale).Returns(expected.Locale);
+            _settingsMock.SetupGet(x => x.CollationStrength).Returns(expected.CollationStrength);
+
+            _repository = new MongoDBRepositoryOnlyForTest(_clientMock.Object, _settingsMock.Object);
+
+            var collation = _repository.GetCollation();
+
+            Assert.Equal(expected.Locale, collation.Locale);
+            Assert.Equal(expected.CollationStrength, collation.Strength);
+        }
+
+        [Fact]
+        public void GetCollation_NotExistCollationSettings_ReturnsNull()
+        {
+            _repository = new MongoDBRepositoryOnlyForTest(_clientMock.Object);
+
+            var collation = _repository.GetCollation();
+
+            Assert.Null(collation);
         }
 
         private class GenericType<T>
@@ -45,9 +75,18 @@ namespace CG4.Impl.MongoDB.Tests
             {
             }
 
+            public MongoDBRepositoryOnlyForTest(IMongoDBClient client, IMongoCollationSettings settings) : base(client, settings)
+            {
+            }
+
             public string GetCollectionName(Type type)
             {
                 return base.GetCollectionName(type);
+            }
+
+            public Collation GetCollation()
+            {
+                return base.GetCollation();
             }
         }
     }
