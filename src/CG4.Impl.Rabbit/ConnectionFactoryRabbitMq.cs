@@ -130,6 +130,8 @@ namespace CG4.Impl.Rabbit
         }
 
         public string ClientProvidedName { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public ICredentialsProvider CredentialsProvider { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public ICredentialsRefresher CredentialsRefresher { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         public IAuthMechanismFactory AuthMechanismFactory(IList<string> mechanismNames)
         {

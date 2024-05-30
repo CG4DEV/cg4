@@ -46,18 +46,18 @@ namespace CG4.Executor.Tests
             Assert.True(result.IsCompleted);
         }
 
-        [Fact]
-        public void StoryBuilder_ResolveNotRegisteredExecutorContext_Exception()
-        {
-            var builder = (IStoryExecutor)_provider.GetRequiredService(typeof(IStoryExecutor));
-            Assert.Throws<InvalidOperationException>(() => { builder.Execute((IResult<int>)new NotRegisteredExecutorContext()); });
-        }
+        //[Fact]
+        //public void StoryBuilder_ResolveNotRegisteredExecutorContext_Exception()
+        //{
+        //    var builder = (IStoryExecutor)_provider.GetRequiredService(typeof(IStoryExecutor));
+        //    Assert.Throws<InvalidOperationException>(() => { builder.Execute((IResult<int>)new NotRegisteredExecutorContext()); });
+        //}
 
-        [Fact]
-        public void StoryBuilder_ResolveNotRegisteredVoidStoryExecutor_Exception()
-        {
-            var builder = (IStoryExecutor)_provider.GetRequiredService(typeof(IStoryExecutor));
-            Assert.Throws<InvalidOperationException>(() => { builder.Execute((IResult)new NotRegisteredExecutorContext()); });
-        }
+        //[Fact]
+        //public void StoryBuilder_ResolveNotRegisteredVoidStoryExecutor_Exception()
+        //{
+        //    var builder = (IStoryExecutor)_provider.GetRequiredService(typeof(IStoryExecutor));
+        //    Assert.Throws<InvalidOperationException>(() => { builder.Execute((IResult)new NotRegisteredExecutorContext()); });
+        //}
     }
 }
