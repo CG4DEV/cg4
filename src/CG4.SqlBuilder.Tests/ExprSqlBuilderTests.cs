@@ -511,6 +511,24 @@ WHERE t.""code"" = 'test'
             Assert.Contains(@"WHERE a1.""id"" = 12", sql);
         }
 
+        [Fact]
+        public void GetAll_ExprGuid_ReturnSql()
+        {
+            var builder = new ExprSqlBuilder(_sqlSettings);
+            var guid = Guid.NewGuid();
+
+
+            var sql = builder.GetAll<TestEntity>(x => x.Where(p => p.UserId == guid));
+
+            Assert.NotNull(sql);
+            Assert.Equal(
+                $@"SELECT t.""code"" AS ""Code"", t.""number"" AS ""Number"", t.""test_second_entity_id"" AS ""SecondId"", t.""guidcode"" AS ""UserId"", t.""id"" AS ""Id"", t.""create_date"" AS ""CreateDate"", t.""update_date"" AS ""UpdateDate""
+FROM ""test_entity"" AS t
+WHERE t.""guidcode"" = '{guid}'
+",
+                sql);
+        }
+
         [Table("test_entity")]
         public class TestEntity : EntityBase
         {
@@ -522,6 +540,9 @@ WHERE t.""code"" = 'test'
 
             [Column("test_second_entity_id")]
             public long SecondId { get; set; }
+
+            [Column("guidcode")]
+            public Guid UserId { get; set; }
         }
 
         [Table("test_second_entity")]

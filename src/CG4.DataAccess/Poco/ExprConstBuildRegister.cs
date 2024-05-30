@@ -14,6 +14,7 @@ namespace CG4.DataAccess.Poco
             { typeof(DateTime), new LambdaExprConstBuilder(x => new ExprDateTime { Value = (DateTime)x }) },
             { typeof(DateTimeOffset), new LambdaExprConstBuilder(x => new ExprDateTimeOffset { Value = (DateTimeOffset)x }) },
             { typeof(bool), new LambdaExprConstBuilder(x => new ExprBool { Value = (bool)x }) },
+            { typeof(Guid), new LambdaExprConstBuilder(x => new ExprGuid { Value = (Guid)x }) },
 
             { typeof(long?), new LambdaExprConstBuilder(x => new ExprLong { Value = (long)x }) },
             { typeof(int?), new LambdaExprConstBuilder(x => new ExprInt { Value = (int)x }) },

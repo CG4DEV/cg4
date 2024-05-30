@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Runtime.InteropServices;
+using System.Text;
 using CG4.DataAccess.Poco.Expressions;
 using CG4.DataAccess.Poco.Visitors;
 
@@ -302,6 +303,13 @@ namespace CG4.Impl.Dapper.Poco.Visitors
             {
                 _stringBuilder.Append("FALSE");
             }
+        }
+
+        public void VisitGuid(ExprGuid guid)
+        {
+            _stringBuilder.Append('\'');
+            _stringBuilder.Append(guid.Value);
+            _stringBuilder.Append('\'');
         }
 
         public void VisitLike(ExprLike exprLike)

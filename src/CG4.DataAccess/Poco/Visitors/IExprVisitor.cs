@@ -64,6 +64,8 @@ namespace CG4.DataAccess.Poco.Visitors
 
         void VisitBool(ExprBool exprBool);
 
+        void VisitGuid(ExprGuid guid);
+
         void VisitLike(ExprLike like);
 
         void VisitIn(ExprIn exprIn);
