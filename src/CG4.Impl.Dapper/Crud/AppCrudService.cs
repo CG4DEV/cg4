@@ -158,7 +158,7 @@ namespace CG4.Impl.Dapper.Crud
             {
                 Data = list,
                 Page = page.Value,
-                FilteredCount = count,
+                FilteredCount = list.Count(),
                 Count = count,
             };
         }
