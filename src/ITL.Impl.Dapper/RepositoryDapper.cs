@@ -21,181 +21,217 @@ namespace ITL.Impl.Dapper
         {
             _factory = factory;
         }
-        
-        public T Query<T>(string sql, object param = null, IDbConnection connection = null,
-            IDbTransaction transaction = null)
-        {
-            if (connection == null)
-            {
-                using (connection = _factory.Create())
-                {
-                    try
-                    {
-                        return connection.QuerySingleOrDefault<T>(sql, param, commandTimeout: _commandTimeout);
-                    }
-                    catch (Exception ex)
-                    {
-                        throw new ITLSqlException(sql, ex);
-                    }
-                }
-            }
-            else
-            {
-                try
-                {
-                    return connection.QuerySingleOrDefault<T>(sql, param, transaction, commandTimeout: _commandTimeout);
-                }
-                catch (Exception ex)
-                {
-                    throw new ITLSqlException(sql, ex);
-                }
-            }
-        }
-        
-        public async Task<T> QueryAsync<T>(string sql, object param = null, IDbConnection connection = null, IDbTransaction transaction = null)
-        {
-            if (connection == null)
-            {
-                using (connection = await _factory.CreateAsync())
-                {
-                    try
-                    {
-                        return await connection.QuerySingleOrDefaultAsync<T>(sql, param, commandTimeout: _commandTimeout);
-                    }
-                    catch (Exception ex)
-                    {
-                        throw new ITLSqlException(sql, ex);
-                    }
-                }
-            }
-            else
-            {
-                try
-                {
-                    return await connection.QuerySingleOrDefaultAsync<T>(sql, param, transaction, commandTimeout: _commandTimeout);
-                }
-                catch (Exception ex)
-                {
-                    throw new ITLSqlException(sql, ex);
-                }
-            }
-        }
 
-        public IEnumerable<T> QueryList<T>(string sql, object param = null, IDbConnection connection = null, IDbTransaction transaction = null)
-        {
-            if (connection == null)
-            {
-                using (connection = _factory.Create())
-                {
-                    try
-                    {
-                        return connection.Query<T>(sql, param, commandTimeout: _commandTimeout);
-                    }
-                    catch (Exception ex)
-                    {
-                        throw new ITLSqlException(sql, ex);
-                    }
-                }
-            }
-            else
-            {
-                try
-                {
-                    return connection.Query<T>(sql, param, transaction, commandTimeout: _commandTimeout);
-                }
-                catch (Exception ex)
-                {
-                    throw new ITLSqlException(sql, ex);
-                }
-            }
-        }
-        
-        public async Task<IEnumerable<T>> QueryListAsync<T>(string sql, object param = null, IDbConnection connection = null,
+        /// <inheritdoc/>
+        public T Query<T>(
+            string sql, 
+            object param = null, 
+            IDbConnection connection = null,
             IDbTransaction transaction = null)
         {
-            if (connection == null)
-            {
-                using (connection = await _factory.CreateAsync())
+            T result = default;
+
+            ExecuteInTransaction(
+                sql,
+                connection,
+                transaction,
+                (c, t) =>
                 {
-                    try
-                    {
-                        return await connection.QueryAsync<T>(sql, param, commandTimeout: _commandTimeout);
-                    }
-                    catch (Exception ex)
-                    {
-                        throw new ITLSqlException(sql, ex);
-                    }
-                }
-            }
-            else
-            {
-                try
-                {
-                    return await connection.QueryAsync<T>(sql, param, transaction, commandTimeout: _commandTimeout);
-                }
-                catch (Exception ex)
-                {
-                    throw new ITLSqlException(sql, ex);
-                }
-            }
+                    result = c.QuerySingleOrDefault(sql, param, transaction: transaction, commandTimeout: _commandTimeout);
+                });
+
+            return result;
         }
 
         /// <inheritdoc/>
-        public int Execute(string sql, object param = null, IDbConnection connection = null, IDbTransaction transaction = null)
+        public async Task<T> QueryAsync<T>(
+            string sql, 
+            object param = null, 
+            IDbConnection connection = null, 
+            IDbTransaction transaction = null, 
+            CancellationToken ct = default)
         {
-            if (connection == null)
-            {
-                using (connection = _factory.Create())
+            T result = default;
+            
+            await ExecuteInTransactionAsync(
+                sql,
+                connection,
+                transaction,
+                async (c, t) =>
                 {
-                    try
-                    {
-                        return connection.Execute(sql, param, transaction: transaction);
-                    }
-                    catch (Exception ex)
-                    {
-                        throw new ITLSqlException(sql, ex);
-                    }
-                }
-            }
-            else
+                    var command = new CommandDefinition(sql, param, transaction: transaction, commandTimeout: _commandTimeout, cancellationToken: ct);
+                    result = await c.QuerySingleOrDefaultAsync<T>(command);
+                });
+
+            return result;
+        }
+
+        /// <inheritdoc/>
+        public IEnumerable<T> QueryList<T>(
+            string sql, 
+            object param = null, 
+            IDbConnection connection = null, 
+            IDbTransaction transaction = null)
+        {
+            IEnumerable<T> result = default;
+
+            ExecuteInTransaction(
+                sql,
+                connection,
+                transaction,
+                (c, t) =>
+                {
+                    result = c.Query<T>(sql, param, transaction: transaction, commandTimeout: _commandTimeout);
+                });
+
+            return result;
+        }
+
+        /// <inheritdoc/>
+        public async Task<IEnumerable<T>> QueryListAsync<T>(
+            string sql, 
+            object param = null, 
+            IDbConnection connection = null,
+            IDbTransaction transaction = null, 
+            CancellationToken ct = default)
+        {
+            IEnumerable<T> result = default;           
+
+            await ExecuteInTransactionAsync(
+                sql,
+                connection,
+                transaction,
+                async (c, t) =>
+                {
+                    var command = new CommandDefinition(sql, param, transaction: transaction, commandTimeout: _commandTimeout, cancellationToken: ct);
+                    result = await c.QueryAsync<T>(command);
+                });
+
+            return result;
+        }
+
+        /// <inheritdoc/>
+        public int Execute(
+            string sql, 
+            object param = null, 
+            IDbConnection connection = null, 
+            IDbTransaction transaction = null)
+        {
+            int result = default;
+
+            ExecuteInTransaction(
+                sql,
+                connection,
+                transaction,
+                (c, t) =>
+                {
+                    result = c.Execute(sql, param, transaction: transaction, commandTimeout: _commandTimeout);
+                });
+
+            return result;
+        }
+
+        /// <inheritdoc/>
+        public async Task<int> ExecuteAsync(
+            string sql, 
+            object param = null, 
+            IDbConnection connection = null, 
+            IDbTransaction transaction = null, 
+            CancellationToken ct = default)
+        {
+            int result = default;
+            
+            await ExecuteInTransactionAsync(
+                sql,
+                connection,
+                transaction,
+                async (c, t) =>
+                {
+                    var command = new CommandDefinition(sql, param, transaction: transaction, commandTimeout: _commandTimeout, cancellationToken: ct);
+                    result = await c.ExecuteAsync(command);
+                });
+
+            return result;
+        }
+
+        private void ExecuteInTransaction(
+            string sql,
+            IDbConnection connection,
+            IDbTransaction transaction,
+            Action<IDbConnection, IDbTransaction> f)
+        {
+            var disposing = false;
+
+            try
             {
+                if (connection is null)
+                {
+                    disposing = true;
+                    connection = _factory.Create();
+                    transaction = connection.BeginTransaction();
+                }
+
                 try
                 {
-                    return connection.Execute(sql, param, transaction: transaction);
+                    f(connection, transaction);
                 }
                 catch (Exception ex)
                 {
                     throw new ITLSqlException(sql, ex);
+                }
+
+                if (disposing)
+                {
+                    transaction.Commit();
+                }
+            }
+            finally
+            {
+                if (disposing)
+                {
+                    connection?.Dispose();
+                    transaction?.Dispose();
                 }
             }
         }
 
-        /// <inheritdoc/>
-        public async Task<int> ExecuteAsync(string sql, object param = null, IDbConnection connection = null, IDbTransaction transaction = null)
+        private async Task ExecuteInTransactionAsync(
+            string sql,
+            IDbConnection connection,
+            IDbTransaction transaction,
+            Func<IDbConnection, IDbTransaction, ValueTask> f)
         {
-            if (connection == null)
+            var disposing = false;
+
+            try
             {
-                using (connection = await _factory.CreateAsync())
+                if (connection is null)
                 {
-                    try
-                    {
-                        return await connection.ExecuteAsync(sql, param, transaction: transaction);
-                    }
-                    catch (Exception ex)
-                    {
-                        throw new ITLSqlException(sql, ex);
-                    }
+                    disposing = true;
+                    connection = await _factory.CreateAsync();
+                    transaction = connection.BeginTransaction();
                 }
-            }
-            else
-            {
+
                 try
                 {
-                    return await connection.ExecuteAsync(sql, param, transaction: transaction);
+                    await f(connection, transaction);
                 }
                 catch (Exception ex)
                 {
                     throw new ITLSqlException(sql, ex);
+                }               
+
+                if (disposing)
+                {
+                    transaction.Commit();
+                }
+            }
+            finally
+            {
+                if (disposing)
+                {
+                    connection?.Dispose();
+                    transaction?.Dispose();
                 }
             }
         }

@@ -17,6 +17,39 @@
             <param name="factory">Фабрика, создающая подключение к источнику данных.</param>
             <param name="sqlBuilder">Генератор SQL-кода.</param>
         </member>
+        <member name="M:ITL.Impl.Dapper.Crud.AppCrudService.GetAsync``1(System.Int64,System.Data.IDbConnection,System.Data.IDbTransaction,System.Threading.CancellationToken)">
+            <inheritdoc/>
+        </member>
+        <member name="M:ITL.Impl.Dapper.Crud.AppCrudService.GetAsync``1(System.Linq.Expressions.Expression{System.Action{ITL.DataAccess.Poco.IClassSqlOptions{``0}}},System.Data.IDbConnection,System.Data.IDbTransaction,System.Threading.CancellationToken)">
+            <inheritdoc/>
+        </member>
+        <member name="M:ITL.Impl.Dapper.Crud.AppCrudService.GetAsync``2(System.Int64,System.Data.IDbConnection,System.Data.IDbTransaction,System.Threading.CancellationToken)">
+            <inheritdoc/>
+        </member>
+        <member name="M:ITL.Impl.Dapper.Crud.AppCrudService.GetAsync``2(System.Linq.Expressions.Expression{System.Action{ITL.DataAccess.Poco.IClassSqlOptions{``0}}},System.Data.IDbConnection,System.Data.IDbTransaction,System.Threading.CancellationToken)">
+            <inheritdoc/>
+        </member>
+        <member name="M:ITL.Impl.Dapper.Crud.AppCrudService.GetAllAsync``1(System.Linq.Expressions.Expression{System.Action{ITL.DataAccess.Poco.IClassSqlOptions{``0}}},System.Data.IDbConnection,System.Data.IDbTransaction,System.Threading.CancellationToken)">
+            <inheritdoc/>
+        </member>
+        <member name="M:ITL.Impl.Dapper.Crud.AppCrudService.GetAllAsync``2(System.Linq.Expressions.Expression{System.Action{ITL.DataAccess.Poco.IClassSqlOptions{``0}}},System.Data.IDbConnection,System.Data.IDbTransaction,System.Threading.CancellationToken)">
+            <inheritdoc/>
+        </member>
+        <member name="M:ITL.Impl.Dapper.Crud.AppCrudService.CreateAsync``1(``0,System.Data.IDbConnection,System.Data.IDbTransaction,System.Threading.CancellationToken)">
+            <inheritdoc/>
+        </member>
+        <member name="M:ITL.Impl.Dapper.Crud.AppCrudService.UpdateAsync``1(``0,System.Data.IDbConnection,System.Data.IDbTransaction,System.Threading.CancellationToken)">
+            <inheritdoc/>
+        </member>
+        <member name="M:ITL.Impl.Dapper.Crud.AppCrudService.DeleteAsync``1(System.Int64,System.Data.IDbConnection,System.Data.IDbTransaction,System.Threading.CancellationToken)">
+            <inheritdoc/>
+        </member>
+        <member name="M:ITL.Impl.Dapper.Crud.AppCrudService.GetPageAsync``1(System.Nullable{System.Int32},System.Nullable{System.Int32},System.Linq.Expressions.Expression{System.Action{ITL.DataAccess.Poco.IClassSqlOptions{``0}}},System.Data.IDbConnection,System.Data.IDbTransaction,System.Threading.CancellationToken)">
+            <inheritdoc/>
+        </member>
+        <member name="M:ITL.Impl.Dapper.Crud.AppCrudService.GetPageAsync``2(System.Nullable{System.Int32},System.Nullable{System.Int32},System.Linq.Expressions.Expression{System.Action{ITL.DataAccess.Poco.IClassSqlOptions{``0}}},System.Data.IDbConnection,System.Data.IDbTransaction,System.Threading.CancellationToken)">
+            <inheritdoc/>
+        </member>
         <member name="M:ITL.Impl.Dapper.Poco.ExprOptions.ExprJoinSqlOptions`2.AppendWhere(ITL.DataAccess.Poco.Expressions.ExprBoolean)">
             <summary>
             Append where conditions without alias updates
@@ -40,10 +73,22 @@
             </summary>
             <param name="factory">Фабрика, создающая подключение к источнику данных.</param>
         </member>
+        <member name="M:ITL.Impl.Dapper.RepositoryDapper.Query``1(System.String,System.Object,System.Data.IDbConnection,System.Data.IDbTransaction)">
+            <inheritdoc/>
+        </member>
+        <member name="M:ITL.Impl.Dapper.RepositoryDapper.QueryAsync``1(System.String,System.Object,System.Data.IDbConnection,System.Data.IDbTransaction,System.Threading.CancellationToken)">
+            <inheritdoc/>
+        </member>
+        <member name="M:ITL.Impl.Dapper.RepositoryDapper.QueryList``1(System.String,System.Object,System.Data.IDbConnection,System.Data.IDbTransaction)">
+            <inheritdoc/>
+        </member>
+        <member name="M:ITL.Impl.Dapper.RepositoryDapper.QueryListAsync``1(System.String,System.Object,System.Data.IDbConnection,System.Data.IDbTransaction,System.Threading.CancellationToken)">
+            <inheritdoc/>
+        </member>
         <member name="M:ITL.Impl.Dapper.RepositoryDapper.Execute(System.String,System.Object,System.Data.IDbConnection,System.Data.IDbTransaction)">
             <inheritdoc/>
         </member>
-        <member name="M:ITL.Impl.Dapper.RepositoryDapper.ExecuteAsync(System.String,System.Object,System.Data.IDbConnection,System.Data.IDbTransaction)">
+        <member name="M:ITL.Impl.Dapper.RepositoryDapper.ExecuteAsync(System.String,System.Object,System.Data.IDbConnection,System.Data.IDbTransaction,System.Threading.CancellationToken)">
             <inheritdoc/>
         </member>
     </members>

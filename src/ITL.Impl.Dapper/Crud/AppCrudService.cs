@@ -26,81 +26,121 @@ namespace ITL.Impl.Dapper.Crud
             _sqlBuilder = sqlBuilder;
         }
 
-        public Task<T> GetAsync<T>(long id, IDbConnection connection = null, IDbTransaction transaction = null)
+        /// <inheritdoc/>
+        public Task<T> GetAsync<T>(
+            long id, 
+            IDbConnection connection = null, 
+            IDbTransaction transaction = null, 
+            CancellationToken ct = default)
             where T : class, IEntityBase, new()
         {
             var exprSql = _sqlBuilder.GenerateSql<T>(x => x.Where(w => w.Id == id));
             var sql = _sqlBuilder.Serialize(exprSql);
 
-            return QueryAsync<T>(sql, connection: connection, transaction: transaction);
+            return QueryAsync<T>(sql, connection: connection, transaction: transaction, ct: ct);
         }
 
-        public Task<T> GetAsync<T>(Expression<Action<IClassSqlOptions<T>>> predicate, IDbConnection connection = null, IDbTransaction transaction = null)
+        /// <inheritdoc/>
+        public Task<T> GetAsync<T>(
+            Expression<Action<IClassSqlOptions<T>>> predicate, 
+            IDbConnection connection = null, 
+            IDbTransaction transaction = null, 
+            CancellationToken ct = default)
             where T : class, IEntityBase, new()
         {
             var sql = _sqlBuilder.GetAll(predicate);
 
-            return QueryAsync<T>(sql, connection: connection, transaction: transaction);
+            return QueryAsync<T>(sql, connection: connection, transaction: transaction, ct: ct);
         }
 
-        public Task<TResult> GetAsync<TEntity, TResult>(long id, IDbConnection connection = null, IDbTransaction transaction = null)
+        /// <inheritdoc/>
+        public Task<TResult> GetAsync<TEntity, TResult>(
+            long id, 
+            IDbConnection connection = null, 
+            IDbTransaction transaction = null, 
+            CancellationToken ct = default)
             where TEntity : class, IEntityBase, new()
             where TResult : class, new()
         {
             var exprSql = _sqlBuilder.GenerateSql<TEntity>(x => x.Where(w => w.Id == id));
             var sql = _sqlBuilder.Serialize(exprSql);
 
-            return QueryAsync<TResult>(sql, connection: connection, transaction: transaction);
+            return QueryAsync<TResult>(sql, connection: connection, transaction: transaction, ct: ct);
         }
 
-        public Task<TResult> GetAsync<TEntity, TResult>(Expression<Action<IClassSqlOptions<TEntity>>> predicate, IDbConnection connection = null, IDbTransaction transaction = null)
+        /// <inheritdoc/>
+        public Task<TResult> GetAsync<TEntity, TResult>(
+            Expression<Action<IClassSqlOptions<TEntity>>> predicate, 
+            IDbConnection connection = null, 
+            IDbTransaction transaction = null, 
+            CancellationToken ct = default)
             where TEntity : class, IEntityBase, new()
             where TResult : class, new()
         {
             var sql = _sqlBuilder.GetAll(predicate);
 
-            return QueryAsync<TResult>(sql, connection: connection, transaction: transaction);
+            return QueryAsync<TResult>(sql, connection: connection, transaction: transaction, ct: ct);
         }
 
-        public Task<IEnumerable<T>> GetAllAsync<T>(Expression<Action<IClassSqlOptions<T>>> predicate = null, IDbConnection connection = null, IDbTransaction transaction = null)
+        /// <inheritdoc/>
+        public Task<IEnumerable<T>> GetAllAsync<T>(
+            Expression<Action<IClassSqlOptions<T>>> predicate = null, 
+            IDbConnection connection = null, 
+            IDbTransaction transaction = null, 
+            CancellationToken ct = default)
             where T : class, IEntityBase, new()
         {
             var sql = _sqlBuilder.GetAll(predicate);
 
-            return QueryListAsync<T>(sql, connection: connection, transaction: transaction);
+            return QueryListAsync<T>(sql, connection: connection, transaction: transaction, ct: ct);
         }
 
-        public Task<IEnumerable<TResult>> GetAllAsync<TEntity, TResult>(Expression<Action<IClassSqlOptions<TEntity>>> predicate = null, IDbConnection connection = null, IDbTransaction transaction = null)
+        /// <inheritdoc/>
+        public Task<IEnumerable<TResult>> GetAllAsync<TEntity, TResult>(
+            Expression<Action<IClassSqlOptions<TEntity>>> predicate = null, 
+            IDbConnection connection = null, 
+            IDbTransaction transaction = null, 
+            CancellationToken ct = default)
             where TEntity : class, IEntityBase, new()
             where TResult : class, new()
         {
             var sql = _sqlBuilder.GetAll(predicate);
 
-            return QueryListAsync<TResult>(sql, connection: connection, transaction: transaction);
+            return QueryListAsync<TResult>(sql, connection: connection, transaction: transaction, ct: ct);
         }
 
-        public async Task<T> CreateAsync<T>(T entity, IDbConnection connection = null, IDbTransaction transaction = null)
+        /// <inheritdoc/>
+        public async Task<T> CreateAsync<T>(
+            T entity, 
+            IDbConnection connection = null, 
+            IDbTransaction transaction = null, 
+            CancellationToken ct = default)
             where T : class, IEntityBase, new()
         {
             entity.CreateDate = DateTimeOffset.UtcNow;
             entity.UpdateDate = DateTimeOffset.UtcNow;
 
             var sql = _sqlBuilder.Insert<T>();
-            var identityValue = await QueryAsync<long>(sql, entity, connection, transaction);
+            var identityValue = await QueryAsync<long>(sql, entity, connection, transaction, ct: ct);
 
             entity.Id = identityValue;
 
             return entity;
         }
 
-        public async Task<T> UpdateAsync<T>(T entity, IDbConnection connection = null, IDbTransaction transaction = null)
+        /// <inheritdoc/>
+        public async Task<T> UpdateAsync<T>(
+            T entity, 
+            IDbConnection connection = null, 
+            IDbTransaction transaction = null, 
+            CancellationToken ct = default)
             where T : class, IEntityBase, new()
         {
             entity.UpdateDate = DateTimeOffset.UtcNow;
 
             var sql2 = _sqlBuilder.UpdateById<T>();
 
-            var entityUpdated = await ExecuteAsync(sql2, entity, connection, transaction);
+            var entityUpdated = await ExecuteAsync(sql2, entity, connection, transaction, ct: ct);
 
             if (entityUpdated == 0)
             {
@@ -110,21 +150,40 @@ namespace ITL.Impl.Dapper.Crud
             return entity;
         }
 
-        public Task DeleteAsync<T>(long id, IDbConnection connection = null, IDbTransaction transaction = null)
+        /// <inheritdoc/>
+        public Task DeleteAsync<T>(
+            long id, 
+            IDbConnection connection = null, 
+            IDbTransaction transaction = null, 
+            CancellationToken ct = default)
             where T : class, IEntityBase, new()
         {
             var sql = _sqlBuilder.DeleteById<T>();
 
-            return ExecuteAsync(sql, new { Id = id }, connection, transaction);
+            return ExecuteAsync(sql, new { Id = id }, connection, transaction, ct: ct);
         }
 
-        public Task<PageResult<TEntity>> GetPageAsync<TEntity>(int? page, int? take, Expression<Action<IClassSqlOptions<TEntity>>> predicate = null, IDbConnection connection = null, IDbTransaction transaction = null)
+        /// <inheritdoc/>
+        public Task<PageResult<TEntity>> GetPageAsync<TEntity>(
+            int? page, 
+            int? take, 
+            Expression<Action<IClassSqlOptions<TEntity>>> predicate = null, 
+            IDbConnection connection = null, 
+            IDbTransaction transaction = null, 
+            CancellationToken ct = default)
             where TEntity : class, IEntityBase, new()
         {
-            return GetPageAsync<TEntity, TEntity>(page, take, predicate, connection, transaction);
+            return GetPageAsync<TEntity, TEntity>(page, take, predicate, connection, transaction, ct: ct);
         }
 
-        public async Task<PageResult<TResult>> GetPageAsync<TEntity, TResult>(int? page, int? take, Expression<Action<IClassSqlOptions<TEntity>>> predicate = null, IDbConnection connection = null, IDbTransaction transaction = null)
+        /// <inheritdoc/>
+        public async Task<PageResult<TResult>> GetPageAsync<TEntity, TResult>(
+            int? page, 
+            int? take, 
+            Expression<Action<IClassSqlOptions<TEntity>>> predicate = null, 
+            IDbConnection connection = null, 
+            IDbTransaction transaction = null, 
+            CancellationToken ct = default)
             where TEntity : class, IEntityBase, new()
             where TResult : class, new()
         {
@@ -151,8 +210,8 @@ namespace ITL.Impl.Dapper.Crud
 
             var sqlCount = _sqlBuilder.Serialize(exprSql);
 
-            var list = await QueryListAsync<TResult>(sql, null, connection, transaction);
-            var count = await QueryAsync<int>(sqlCount, null, connection, transaction);
+            var list = await QueryListAsync<TResult>(sql, null, connection, transaction, ct);
+            var count = await QueryAsync<int>(sqlCount, null, connection, transaction, ct);
 
             return new PageResult<TResult>
             {
