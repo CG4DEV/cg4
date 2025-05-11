@@ -21,9 +21,18 @@ namespace CG4.Impl.Dapper
         {
             _factory = factory;
         }
-        
-        public T Query<T>(string sql, object param = null, IDbConnection connection = null,
-            IDbTransaction transaction = null)
+
+        /// <summary>
+        /// Query
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="sql"></param>
+        /// <param name="param"></param>
+        /// <param name="connection"></param>
+        /// <param name="transaction"></param>
+        /// <returns></returns>
+        /// <exception cref="CG4SqlException"></exception>
+        public T? Query<T>(string sql, object? param = null, IDbConnection? connection = null, IDbTransaction? transaction = null)
         {
             if (connection == null)
             {
@@ -51,8 +60,18 @@ namespace CG4.Impl.Dapper
                 }
             }
         }
-        
-        public async Task<T> QueryAsync<T>(string sql, object param = null, IDbConnection connection = null, IDbTransaction transaction = null)
+
+        /// <summary>
+        /// QueryAsync
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="sql"></param>
+        /// <param name="param"></param>
+        /// <param name="connection"></param>
+        /// <param name="transaction"></param>
+        /// <returns></returns>
+        /// <exception cref="CG4SqlException"></exception>
+        public async Task<T?> QueryAsync<T>(string sql, object? param = null, IDbConnection? connection = null, IDbTransaction? transaction = null)
         {
             if (connection == null)
             {
@@ -81,7 +100,17 @@ namespace CG4.Impl.Dapper
             }
         }
 
-        public IEnumerable<T> QueryList<T>(string sql, object param = null, IDbConnection connection = null, IDbTransaction transaction = null)
+        /// <summary>
+        /// QueryList
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="sql"></param>
+        /// <param name="param"></param>
+        /// <param name="connection"></param>
+        /// <param name="transaction"></param>
+        /// <returns></returns>
+        /// <exception cref="CG4SqlException"></exception>
+        public IEnumerable<T> QueryList<T>(string sql, object? param = null, IDbConnection? connection = null, IDbTransaction? transaction = null)
         {
             if (connection == null)
             {
@@ -109,9 +138,18 @@ namespace CG4.Impl.Dapper
                 }
             }
         }
-        
-        public async Task<IEnumerable<T>> QueryListAsync<T>(string sql, object param = null, IDbConnection connection = null,
-            IDbTransaction transaction = null)
+
+        /// <summary>
+        /// QueryListAsync
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="sql"></param>
+        /// <param name="param"></param>
+        /// <param name="connection"></param>
+        /// <param name="transaction"></param>
+        /// <returns></returns>
+        /// <exception cref="CG4SqlException"></exception>
+        public async Task<IEnumerable<T>> QueryListAsync<T>(string sql, object? param = null, IDbConnection? connection = null, IDbTransaction? transaction = null)
         {
             if (connection == null)
             {
@@ -140,8 +178,16 @@ namespace CG4.Impl.Dapper
             }
         }
 
-        /// <inheritdoc/>
-        public int Execute(string sql, object param = null, IDbConnection connection = null, IDbTransaction transaction = null)
+        /// <summary>
+        /// Execute
+        /// </summary>
+        /// <param name="sql"></param>
+        /// <param name="param"></param>
+        /// <param name="connection"></param>
+        /// <param name="transaction"></param>
+        /// <returns></returns>
+        /// <exception cref="CG4SqlException"></exception>
+        public int Execute(string sql, object? param = null, IDbConnection? connection = null, IDbTransaction? transaction = null)
         {
             if (connection == null)
             {
@@ -170,8 +216,16 @@ namespace CG4.Impl.Dapper
             }
         }
 
-        /// <inheritdoc/>
-        public async Task<int> ExecuteAsync(string sql, object param = null, IDbConnection connection = null, IDbTransaction transaction = null)
+        /// <summary>
+        /// ExecuteAsync
+        /// </summary>
+        /// <param name="sql"></param>
+        /// <param name="param"></param>
+        /// <param name="connection"></param>
+        /// <param name="transaction"></param>
+        /// <returns></returns>
+        /// <exception cref="CG4SqlException"></exception>
+        public async Task<int> ExecuteAsync(string sql, object? param = null, IDbConnection? connection = null, IDbTransaction? transaction = null)
         {
             if (connection == null)
             {

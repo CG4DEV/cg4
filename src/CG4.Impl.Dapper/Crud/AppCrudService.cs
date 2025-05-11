@@ -26,7 +26,15 @@ namespace CG4.Impl.Dapper.Crud
             _sqlBuilder = sqlBuilder;
         }
 
-        public Task<T> GetAsync<T>(long id, IDbConnection connection = null, IDbTransaction transaction = null)
+        /// <summary>
+        /// GetAsync
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="id"></param>
+        /// <param name="connection"></param>
+        /// <param name="transaction"></param>
+        /// <returns></returns>
+        public Task<T?> GetAsync<T>(long id, IDbConnection? connection = null, IDbTransaction? transaction = null)
             where T : class, IEntityBase, new()
         {
             var exprSql = _sqlBuilder.GenerateSql<T>(x => x.Where(w => w.Id == id));
@@ -35,7 +43,15 @@ namespace CG4.Impl.Dapper.Crud
             return QueryAsync<T>(sql, connection: connection, transaction: transaction);
         }
 
-        public Task<T> GetAsync<T>(Expression<Action<IClassSqlOptions<T>>> predicate, IDbConnection connection = null, IDbTransaction transaction = null)
+        /// <summary>
+        /// GetAsync
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="predicate"></param>
+        /// <param name="connection"></param>
+        /// <param name="transaction"></param>
+        /// <returns></returns>
+        public Task<T?> GetAsync<T>(Expression<Action<IClassSqlOptions<T>>> predicate, IDbConnection? connection = null, IDbTransaction? transaction = null)
             where T : class, IEntityBase, new()
         {
             var sql = _sqlBuilder.GetAll(predicate);
@@ -43,7 +59,16 @@ namespace CG4.Impl.Dapper.Crud
             return QueryAsync<T>(sql, connection: connection, transaction: transaction);
         }
 
-        public Task<TResult> GetAsync<TEntity, TResult>(long id, IDbConnection connection = null, IDbTransaction transaction = null)
+        /// <summary>
+        /// GetAsync
+        /// </summary>
+        /// <typeparam name="TEntity"></typeparam>
+        /// <typeparam name="TResult"></typeparam>
+        /// <param name="id"></param>
+        /// <param name="connection"></param>
+        /// <param name="transaction"></param>
+        /// <returns></returns>
+        public Task<TResult?> GetAsync<TEntity, TResult>(long id, IDbConnection? connection = null, IDbTransaction? transaction = null)
             where TEntity : class, IEntityBase, new()
             where TResult : class, new()
         {
@@ -53,7 +78,16 @@ namespace CG4.Impl.Dapper.Crud
             return QueryAsync<TResult>(sql, connection: connection, transaction: transaction);
         }
 
-        public Task<TResult> GetAsync<TEntity, TResult>(Expression<Action<IClassSqlOptions<TEntity>>> predicate, IDbConnection connection = null, IDbTransaction transaction = null)
+        /// <summary>
+        /// GetAsync
+        /// </summary>
+        /// <typeparam name="TEntity"></typeparam>
+        /// <typeparam name="TResult"></typeparam>
+        /// <param name="predicate"></param>
+        /// <param name="connection"></param>
+        /// <param name="transaction"></param>
+        /// <returns></returns>
+        public Task<TResult?> GetAsync<TEntity, TResult>(Expression<Action<IClassSqlOptions<TEntity>>> predicate, IDbConnection? connection = null, IDbTransaction? transaction = null)
             where TEntity : class, IEntityBase, new()
             where TResult : class, new()
         {
@@ -62,7 +96,15 @@ namespace CG4.Impl.Dapper.Crud
             return QueryAsync<TResult>(sql, connection: connection, transaction: transaction);
         }
 
-        public Task<IEnumerable<T>> GetAllAsync<T>(Expression<Action<IClassSqlOptions<T>>> predicate = null, IDbConnection connection = null, IDbTransaction transaction = null)
+        /// <summary>
+        /// GetAllAsync
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="predicate"></param>
+        /// <param name="connection"></param>
+        /// <param name="transaction"></param>
+        /// <returns></returns>
+        public Task<IEnumerable<T>> GetAllAsync<T>(Expression<Action<IClassSqlOptions<T>>>? predicate = null, IDbConnection? connection = null, IDbTransaction? transaction = null)
             where T : class, IEntityBase, new()
         {
             var sql = _sqlBuilder.GetAll(predicate);
@@ -70,7 +112,16 @@ namespace CG4.Impl.Dapper.Crud
             return QueryListAsync<T>(sql, connection: connection, transaction: transaction);
         }
 
-        public Task<IEnumerable<TResult>> GetAllAsync<TEntity, TResult>(Expression<Action<IClassSqlOptions<TEntity>>> predicate = null, IDbConnection connection = null, IDbTransaction transaction = null)
+        /// <summary>
+        /// GetAllAsync
+        /// </summary>
+        /// <typeparam name="TEntity"></typeparam>
+        /// <typeparam name="TResult"></typeparam>
+        /// <param name="predicate"></param>
+        /// <param name="connection"></param>
+        /// <param name="transaction"></param>
+        /// <returns></returns>
+        public Task<IEnumerable<TResult>> GetAllAsync<TEntity, TResult>(Expression<Action<IClassSqlOptions<TEntity>>>? predicate = null, IDbConnection? connection = null, IDbTransaction? transaction = null)
             where TEntity : class, IEntityBase, new()
             where TResult : class, new()
         {
@@ -79,7 +130,15 @@ namespace CG4.Impl.Dapper.Crud
             return QueryListAsync<TResult>(sql, connection: connection, transaction: transaction);
         }
 
-        public async Task<T> CreateAsync<T>(T entity, IDbConnection connection = null, IDbTransaction transaction = null)
+        /// <summary>
+        /// CreateAsync
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="entity"></param>
+        /// <param name="connection"></param>
+        /// <param name="transaction"></param>
+        /// <returns></returns>
+        public async Task<T> CreateAsync<T>(T entity, IDbConnection? connection = null, IDbTransaction? transaction = null)
             where T : class, IEntityBase, new()
         {
             entity.CreateDate = DateTimeOffset.UtcNow;
@@ -93,7 +152,15 @@ namespace CG4.Impl.Dapper.Crud
             return entity;
         }
 
-        public async Task<T> UpdateAsync<T>(T entity, IDbConnection connection = null, IDbTransaction transaction = null)
+        /// <summary>
+        /// UpdateAsync
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="entity"></param>
+        /// <param name="connection"></param>
+        /// <param name="transaction"></param>
+        /// <returns></returns>
+        public async Task<T> UpdateAsync<T>(T entity, IDbConnection? connection = null, IDbTransaction? transaction = null)
             where T : class, IEntityBase, new()
         {
             entity.UpdateDate = DateTimeOffset.UtcNow;
@@ -104,13 +171,37 @@ namespace CG4.Impl.Dapper.Crud
 
             if (entityUpdated == 0)
             {
-                return null;
+                return default;
             }
 
             return entity;
         }
 
-        public Task DeleteAsync<T>(long id, IDbConnection connection = null, IDbTransaction transaction = null)
+        /// <summary>
+        /// DeleteAsync
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="entity"></param>
+        /// <param name="connection"></param>
+        /// <param name="transaction"></param>
+        /// <returns></returns>
+        public Task DeleteAsync<T>(T entity, IDbConnection? connection = null, IDbTransaction? transaction = null)
+            where T : class, IEntityBase, new()
+        {
+            var sql = _sqlBuilder.DeleteById<T>();
+
+            return ExecuteAsync(sql, new { entity.Id }, connection, transaction);
+        }
+
+        /// <summary>
+        /// DeleteAsync
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="id"></param>
+        /// <param name="connection"></param>
+        /// <param name="transaction"></param>
+        /// <returns></returns>
+        public Task DeleteAsync<T>(long id, IDbConnection? connection = null, IDbTransaction? transaction = null)
             where T : class, IEntityBase, new()
         {
             var sql = _sqlBuilder.DeleteById<T>();
@@ -118,13 +209,34 @@ namespace CG4.Impl.Dapper.Crud
             return ExecuteAsync(sql, new { Id = id }, connection, transaction);
         }
 
-        public Task<PageResult<TEntity>> GetPageAsync<TEntity>(int? page, int? take, Expression<Action<IClassSqlOptions<TEntity>>> predicate = null, IDbConnection connection = null, IDbTransaction transaction = null)
+        /// <summary>
+        /// GetPageAsync
+        /// </summary>
+        /// <typeparam name="TEntity"></typeparam>
+        /// <param name="page"></param>
+        /// <param name="take"></param>
+        /// <param name="predicate"></param>
+        /// <param name="connection"></param>
+        /// <param name="transaction"></param>
+        /// <returns></returns>
+        public Task<PageResult<TEntity>> GetPageAsync<TEntity>(int? page, int? take, Expression<Action<IClassSqlOptions<TEntity>>>? predicate = null, IDbConnection? connection = null, IDbTransaction? transaction = null)
             where TEntity : class, IEntityBase, new()
         {
             return GetPageAsync<TEntity, TEntity>(page, take, predicate, connection, transaction);
         }
 
-        public async Task<PageResult<TResult>> GetPageAsync<TEntity, TResult>(int? page, int? take, Expression<Action<IClassSqlOptions<TEntity>>> predicate = null, IDbConnection connection = null, IDbTransaction transaction = null)
+        /// <summary>
+        /// GetPageAsync
+        /// </summary>
+        /// <typeparam name="TEntity"></typeparam>
+        /// <typeparam name="TResult"></typeparam>
+        /// <param name="page"></param>
+        /// <param name="take"></param>
+        /// <param name="predicate"></param>
+        /// <param name="connection"></param>
+        /// <param name="transaction"></param>
+        /// <returns></returns>
+        public async Task<PageResult<TResult>> GetPageAsync<TEntity, TResult>(int? page, int? take, Expression<Action<IClassSqlOptions<TEntity>>>? predicate = null, IDbConnection? connection = null, IDbTransaction? transaction = null)
             where TEntity : class, IEntityBase, new()
             where TResult : class, new()
         {
