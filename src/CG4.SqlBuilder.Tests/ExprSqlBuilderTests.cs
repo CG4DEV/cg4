@@ -31,7 +31,7 @@ namespace CG4.SqlBuilder.Tests
             var sql = builder.Insert<TestEntity>();
 
             Assert.NotNull(sql);
-            Assert.Equal("INSERT INTO \"test_entity\" (\"code\", \"number\", \"test_second_entity_id\", \"create_date\", \"update_date\") VALUES (@Code, @Number, @SecondId, @CreateDate, @UpdateDate) RETURNING id", sql);
+            Assert.Equal("INSERT INTO \"test_entity\" (\"code\", \"number\", \"test_second_entity_id\", \"guidcode\", \"create_date\", \"update_date\") VALUES (@Code, @Number, @SecondId, @UserId, @CreateDate, @UpdateDate) RETURNING id", sql);
         }
 
         [Fact]
@@ -53,7 +53,7 @@ namespace CG4.SqlBuilder.Tests
             var sql = builder.UpdateById<TestEntity>();
 
             Assert.NotNull(sql);
-            Assert.Equal("UPDATE \"test_entity\" SET \"code\" = @Code,\"number\" = @Number,\"test_second_entity_id\" = @SecondId,\"update_date\" = @UpdateDate WHERE \"id\" = @Id", sql);
+            Assert.Equal("UPDATE \"test_entity\" SET \"code\" = @Code, \"number\" = @Number, \"test_second_entity_id\" = @SecondId, \"guidcode\" = @UserId, \"update_date\" = @UpdateDate WHERE \"id\" = @Id", sql);
         }
 
         [Fact]
@@ -64,7 +64,7 @@ namespace CG4.SqlBuilder.Tests
             var sql = builder.UpdateById<TestSecondEntity>();
 
             Assert.NotNull(sql);
-            Assert.Equal("UPDATE \"test_second_entity\" SET \"name\" = @Name,\"update_date\" = @UpdateDate WHERE \"id\" = @Id", sql);
+            Assert.Equal("UPDATE \"test_second_entity\" SET \"name\" = @Name, \"update_date\" = @UpdateDate WHERE \"id\" = @Id", sql);
         }
 
         [Fact]
@@ -75,12 +75,9 @@ namespace CG4.SqlBuilder.Tests
             var sql = builder.GetById<TestEntity>(x => x.Where(p => p.Number == 10));
 
             Assert.NotNull(sql);
-            Assert.Equal(
-                @"SELECT t.""code"" AS ""Code"", t.""number"" AS ""Number"", t.""test_second_entity_id"" AS ""SecondId"", t.""id"" AS ""Id"", t.""create_date"" AS ""CreateDate"", t.""update_date"" AS ""UpdateDate""
+            Assert.Equal(@"SELECT t.""code"" AS ""Code"", t.""number"" AS ""Number"", t.""test_second_entity_id"" AS ""SecondId"", t.""guidcode"" AS ""UserId"", t.""id"" AS ""Id"", t.""create_date"" AS ""CreateDate"", t.""update_date"" AS ""UpdateDate""
 FROM ""test_entity"" AS t
-WHERE t.""number"" = 10 AND t.""id"" = @Id
-",
-                sql);
+WHERE t.""number"" = 10 AND t.""id"" = @Id", sql.TrimEnd());
         }
 
         [Fact]
@@ -93,9 +90,7 @@ WHERE t.""number"" = 10 AND t.""id"" = @Id
             Assert.NotNull(sql);
             Assert.Equal(@"SELECT t.""name"" AS ""Name"", t.""id"" AS ""Id"", t.""create_date"" AS ""CreateDate"", t.""update_date"" AS ""UpdateDate""
 FROM ""test_second_entity"" AS t
-WHERE t.""id"" = @Id
-",
-                sql);
+WHERE t.""id"" = @Id", sql.TrimEnd());
         }
 
         [Fact]
@@ -106,11 +101,8 @@ WHERE t.""id"" = @Id
             var sql = builder.GetAll<TestEntity>();
 
             Assert.NotNull(sql);
-            Assert.Equal(
-                @"SELECT t.""code"" AS ""Code"", t.""number"" AS ""Number"", t.""test_second_entity_id"" AS ""SecondId"", t.""id"" AS ""Id"", t.""create_date"" AS ""CreateDate"", t.""update_date"" AS ""UpdateDate""
-FROM ""test_entity"" AS t
-",
-                sql);
+            Assert.Equal(@"SELECT t.""code"" AS ""Code"", t.""number"" AS ""Number"", t.""test_second_entity_id"" AS ""SecondId"", t.""guidcode"" AS ""UserId"", t.""id"" AS ""Id"", t.""create_date"" AS ""CreateDate"", t.""update_date"" AS ""UpdateDate""
+FROM ""test_entity"" AS t", sql.TrimEnd());
         }
 
         [Fact]
@@ -122,9 +114,7 @@ FROM ""test_entity"" AS t
 
             Assert.NotNull(sql);
             Assert.Equal(@"SELECT t.""name"" AS ""Name"", t.""id"" AS ""Id"", t.""create_date"" AS ""CreateDate"", t.""update_date"" AS ""UpdateDate""
-FROM ""test_second_entity"" AS t
-",
-                sql);
+FROM ""test_second_entity"" AS t", sql.TrimEnd());
         }
 
         [Fact]
@@ -135,11 +125,9 @@ FROM ""test_second_entity"" AS t
             var sql = builder.GetAll<TestEntity>(x => x.Limit(10).Offset(10));
 
             Assert.NotNull(sql);
-            Assert.Equal(
-                @"SELECT t.""code"" AS ""Code"", t.""number"" AS ""Number"", t.""test_second_entity_id"" AS ""SecondId"", t.""id"" AS ""Id"", t.""create_date"" AS ""CreateDate"", t.""update_date"" AS ""UpdateDate""
+            Assert.Equal(@"SELECT t.""code"" AS ""Code"", t.""number"" AS ""Number"", t.""test_second_entity_id"" AS ""SecondId"", t.""guidcode"" AS ""UserId"", t.""id"" AS ""Id"", t.""create_date"" AS ""CreateDate"", t.""update_date"" AS ""UpdateDate""
 FROM ""test_entity"" AS t
-LIMIT 10 OFFSET 10",
-                sql);
+LIMIT 10 OFFSET 10", sql.TrimEnd());
         }
 
         [Fact]
@@ -153,13 +141,10 @@ LIMIT 10 OFFSET 10",
                     .OrderByDesc(p => p.Number));
 
             Assert.NotNull(sql);
-            Assert.Equal(
-                @"SELECT t.""code"" AS ""Code"", t.""number"" AS ""Number"", t.""test_second_entity_id"" AS ""SecondId"", t.""id"" AS ""Id"", t.""create_date"" AS ""CreateDate"", t.""update_date"" AS ""UpdateDate""
+            Assert.Equal(@"SELECT t.""code"" AS ""Code"", t.""number"" AS ""Number"", t.""test_second_entity_id"" AS ""SecondId"", t.""guidcode"" AS ""UserId"", t.""id"" AS ""Id"", t.""create_date"" AS ""CreateDate"", t.""update_date"" AS ""UpdateDate""
 FROM ""test_entity"" AS t
 WHERE t.""code"" = 'test'
-ORDER BY t.""create_date"" ASC, t.""number"" DESC
-",
-                sql);
+ORDER BY t.""create_date"" ASC, t.""number"" DESC", sql.TrimEnd());
         }
 
         [Fact]
@@ -172,13 +157,10 @@ ORDER BY t.""create_date"" ASC, t.""number"" DESC
                     .Join<TestSecondEntity, long>(p => p.SecondId, "Second"));
 
             Assert.NotNull(sql);
-            Assert.Equal(
-                @"SELECT t.""code"" AS ""Code"", t.""number"" AS ""Number"", t.""test_second_entity_id"" AS ""SecondId"", t.""id"" AS ""Id"", t.""create_date"" AS ""CreateDate"", t.""update_date"" AS ""UpdateDate"", t0.""name"" AS ""SecondName"", t0.""create_date"" AS ""SecondCreateDate"", t0.""update_date"" AS ""SecondUpdateDate""
+            Assert.Equal(@"SELECT t.""code"" AS ""Code"", t.""number"" AS ""Number"", t.""test_second_entity_id"" AS ""SecondId"", t.""guidcode"" AS ""UserId"", t.""id"" AS ""Id"", t.""create_date"" AS ""CreateDate"", t.""update_date"" AS ""UpdateDate"", t0.""name"" AS ""SecondName"", t0.""create_date"" AS ""SecondCreateDate"", t0.""update_date"" AS ""SecondUpdateDate""
 FROM ""test_entity"" AS t
 INNER JOIN ""test_second_entity"" AS t0 ON t0.""id"" = t.""test_second_entity_id""
-WHERE t.""code"" = 'test'
-",
-                sql);
+WHERE t.""code"" = 'test'", sql.TrimEnd());
         }
 
         //[Fact]

@@ -377,17 +377,16 @@ namespace CG4.Impl.Dapper.Poco.Visitors
 
         private void AcceptList(IEnumerable<Expr> expressions, string separator = ", ")
         {
-            bool isFirst = true;
-
-            foreach (var expr in expressions)
+            var first = true;
+            foreach (var expression in expressions)
             {
-                if (!isFirst)
+                if (!first)
                 {
                     _stringBuilder.Append(separator);
                 }
 
-                expr.Accept(this);
-                isFirst = false;
+                expression.Accept(this);
+                first = false;
             }
         }
     }
