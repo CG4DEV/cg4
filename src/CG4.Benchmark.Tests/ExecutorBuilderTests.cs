@@ -22,7 +22,7 @@ namespace CG4.Benchmark.Tests
         {
             var collection = new ServiceCollection();
             collection.AddTransient<bgTeam.IStory<TestStoryContext, int>, TestStory>();
-            collection.AddMediatR(typeof(Program));
+            collection.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
             collection.AddExecutors(options =>
             {
                 var executionTypes = new[] { typeof(IStory<>), typeof(Executor.Story.IStory<,>) };
