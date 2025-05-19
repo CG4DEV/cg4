@@ -59,7 +59,7 @@ namespace CG4.Impl.Dapper.Poco.ExprOptions
             string alias,
             ExprJoin exprJoin)
         {
-            var expr = SqlExprHelper.GenerateColumn(keySelector);
+            var expr = ExprHelper.GenerateColumn(keySelector);
             expr.Alias = exprSqlOptions.Alias;
 
             var mapEntity = PocoHub.GetMap<TEntity>();
@@ -111,7 +111,7 @@ namespace CG4.Impl.Dapper.Poco.ExprOptions
 
             foreach (var item in _booleans)
             {
-                SqlExprHelper.SetAlias(item, tableAlias);
+                ExprHelper.SetAlias(item, tableAlias);
             }
 
             return this;
@@ -139,7 +139,7 @@ namespace CG4.Impl.Dapper.Poco.ExprOptions
 
         public IClassJoinSqlOptions<TEntity, TJoin> Where(Expression<Func<TJoin, bool>> predicate)
         {
-            var expr = SqlExprHelper.GenerateWhere(predicate, Alias);
+            var expr = ExprHelper.GenerateWhere(predicate, Alias);
 
             _booleans.Add(expr);
             _exprSqlOptions.Sql.Where.And(expr);
@@ -149,7 +149,7 @@ namespace CG4.Impl.Dapper.Poco.ExprOptions
 
         public IClassJoinSqlOptions<TEntity, TJoin> Where(ExprBoolean predicate)
         {
-            SqlExprHelper.SetAlias(predicate, Alias);
+            ExprHelper.SetAlias(predicate, Alias);
             _booleans.Add(predicate);
             _exprSqlOptions.Sql.Where.And(predicate);
 
@@ -183,7 +183,7 @@ namespace CG4.Impl.Dapper.Poco.ExprOptions
 
         private IClassJoinSqlOptions<TEntity, TJoin> OrderByInternal<TKey>(Expression<Func<TJoin, TKey>> keySelector, bool ask)
         {
-            var column = SqlExprHelper.GenerateColumn(keySelector, Alias);
+            var column = ExprHelper.GenerateColumn(keySelector, Alias);
             var order = new ExprOrderColumn(column, ask);
             _columns.Add(order);
             _exprSqlOptions.Sql.OrderBy.Add(order);

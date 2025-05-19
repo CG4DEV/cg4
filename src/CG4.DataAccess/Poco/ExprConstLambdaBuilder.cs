@@ -2,11 +2,11 @@
 
 namespace CG4.DataAccess.Poco
 {
-    internal class LambdaExprConstBuilder : IExprConstBuilder
+    internal class ExprConstLambdaBuilder : IExprConstBuilder
     {
         private readonly Func<object, ExprConst> _build;
 
-        public LambdaExprConstBuilder(Func<object, ExprConst> func)
+        public ExprConstLambdaBuilder(Func<object, ExprConst> func)
         {
             ArgumentNullException.ThrowIfNull(func, nameof(func));
 

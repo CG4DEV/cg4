@@ -69,7 +69,7 @@ namespace CG4.Impl.Dapper.Poco.ExprOptions
 
             foreach (var item in _booleans)
             {
-                SqlExprHelper.SetAlias(item, tableAlias);
+                ExprHelper.SetAlias(item, tableAlias);
             }
 
             return this;
@@ -116,7 +116,7 @@ namespace CG4.Impl.Dapper.Poco.ExprOptions
 
         public IClassSqlOptions<TEntity> Where(Expression<Func<TEntity, bool>> predicate)
         {
-            var expr = SqlExprHelper.GenerateWhere(predicate, Alias);
+            var expr = ExprHelper.GenerateWhere(predicate, Alias);
             _booleans.Add(expr);
             Sql.Where.And(expr);
 
@@ -125,7 +125,7 @@ namespace CG4.Impl.Dapper.Poco.ExprOptions
 
         public IClassSqlOptions<TEntity> Where(ExprBoolean predicate)
         {
-            SqlExprHelper.SetAlias(predicate, Alias);
+            ExprHelper.SetAlias(predicate, Alias);
             _booleans.Add(predicate);
             Sql.Where.And(predicate);
 
@@ -156,7 +156,7 @@ namespace CG4.Impl.Dapper.Poco.ExprOptions
 
         private IClassSqlOptions<TEntity> OrderByInternal<TKey>(Expression<Func<TEntity, TKey>> keySelector, bool ask)
         {
-            var column = SqlExprHelper.GenerateColumn(keySelector, Alias);
+            var column = ExprHelper.GenerateColumn(keySelector, Alias);
             var order = new ExprOrderColumn(column, ask);
             _columns.Add(order);
             Sql.OrderBy.Add(order);

@@ -4,7 +4,7 @@ namespace CG4.DataAccess.Poco.Expressions
 {
     public abstract class ExprBoolean : Expr
     {
-        public static readonly ExprBoolean Empty = ExprBoolEmpty.Instance;
+        internal static readonly ExprBoolean Empty = ExprBoolEmpty.Instance;
 
         public static ExprBoolean operator &(ExprBoolean left, ExprBoolean right)
         {

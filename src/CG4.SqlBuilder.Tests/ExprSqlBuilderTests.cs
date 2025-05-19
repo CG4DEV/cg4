@@ -365,7 +365,7 @@ WHERE t.""code"" = 'test'", sql.TrimEnd());
         {
             var builder = new ExprSqlBuilder(_sqlSettings);
 
-            var codeExpr = SqlExprHelper.GenerateWhere<TestEntity>(a1 => a1.Code != null);
+            var codeExpr = ExprHelper.GenerateWhere<TestEntity>(a1 => a1.Code != null);
 
             var expr = codeExpr;
 
@@ -381,7 +381,7 @@ WHERE t.""code"" = 'test'", sql.TrimEnd());
         {
             var builder = new ExprSqlBuilder(_sqlSettings);
 
-            var codeExpr = SqlExprHelper.GenerateWhere<TestEntity>(a1 => a1.Code != "test");
+            var codeExpr = ExprHelper.GenerateWhere<TestEntity>(a1 => a1.Code != "test");
 
             var expr = codeExpr;
 
@@ -397,7 +397,7 @@ WHERE t.""code"" = 'test'", sql.TrimEnd());
         {
             var builder = new ExprSqlBuilder(_sqlSettings);
 
-            var codeExpr = SqlExprHelper.GenerateWhere<TestEntity>(a1 => a1.Code == null);
+            var codeExpr = ExprHelper.GenerateWhere<TestEntity>(a1 => a1.Code == null);
 
             var expr = codeExpr;
 
@@ -413,7 +413,7 @@ WHERE t.""code"" = 'test'", sql.TrimEnd());
         {
             var builder = new ExprSqlBuilder(_sqlSettings);
 
-            var codeExpr = SqlExprHelper.GenerateWhere<TestEntity>(a1 => a1.Code == "test");
+            var codeExpr = ExprHelper.GenerateWhere<TestEntity>(a1 => a1.Code == "test");
 
             var expr = codeExpr;
 
@@ -429,11 +429,11 @@ WHERE t.""code"" = 'test'", sql.TrimEnd());
         {
             var builder = new ExprSqlBuilder(_sqlSettings);
 
-            var idCheck = SqlExprHelper.GenerateWhere<TestEntity>(a1 => a1.Id == 12L);
-            var codeIs123 = SqlExprHelper.GenerateWhere<TestEntity>(a1 => a1.Code == "123");
-            var codeIs222 = SqlExprHelper.GenerateWhere<TestEntity>(a1 => a1.Code == "222");
-            var numberIsnt44 = SqlExprHelper.GenerateWhere<TestEntity>(a1 => a1.Number != 44);
-            var namecheck = SqlExprHelper.GenerateWhere<TestSecondEntity>(a2 => a2.Name == "test");
+            var idCheck = ExprHelper.GenerateWhere<TestEntity>(a1 => a1.Id == 12L);
+            var codeIs123 = ExprHelper.GenerateWhere<TestEntity>(a1 => a1.Code == "123");
+            var codeIs222 = ExprHelper.GenerateWhere<TestEntity>(a1 => a1.Code == "222");
+            var numberIsnt44 = ExprHelper.GenerateWhere<TestEntity>(a1 => a1.Number != 44);
+            var namecheck = ExprHelper.GenerateWhere<TestSecondEntity>(a2 => a2.Name == "test");
 
             var expr = idCheck
                 & (codeIs123 | codeIs222)

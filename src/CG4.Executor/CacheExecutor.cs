@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace CG4.Executor.Extensions
+namespace CG4.Executor
 {
     /// <summary>
     /// Cache for implementation of <see cref="IExecution{TExecutionContext,TExecutionResult}"/>.
@@ -10,7 +10,7 @@ namespace CG4.Executor.Extensions
         /// <summary>
         /// Cache values.
         /// </summary>
-        public static Dictionary<Type, (Type ExecutionType, MethodInfo Method)> Cache { get; } = new ();
+        public static Dictionary<Type, (Type ExecutionType, MethodInfo Method)> Cache { get; } = new();
 
         /// <summary>
         /// Try getting value from cache.
@@ -21,7 +21,7 @@ namespace CG4.Executor.Extensions
         {
             return Cache.TryGetValue(context, out executor);
         }
-    
+
         /// <summary>
         /// Try add value to cache.
         /// </summary>
@@ -32,5 +32,5 @@ namespace CG4.Executor.Extensions
         {
             return Cache.TryAdd(context, executor);
         }
-    }   
+    }
 }

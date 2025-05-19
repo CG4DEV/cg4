@@ -4,7 +4,7 @@ using BenchmarkDotNet.Attributes;
 using bgTeam;
 using bgTeam.Impl;
 using CG4.Benchmark.Tests.Preparation;
-using CG4.Executor.Extensions;
+using CG4.Executor;
 using CG4.Executor.Story;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;

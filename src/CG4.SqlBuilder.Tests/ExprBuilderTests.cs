@@ -12,7 +12,7 @@ namespace CG4.SqlBuilder.Tests
         [Fact]
         public void GenerateWhere_ContainsExpression_ReturnsILikeExpression()
         {
-            var expr = SqlExprHelper.GenerateWhere<TestEntity>(x => x.StrColumn.Contains("123"));
+            var expr = ExprHelper.GenerateWhere<TestEntity>(x => x.StrColumn.Contains("123"));
 
             Assert.NotNull(expr);
             Assert.IsType<ExprLike>(expr);
@@ -27,7 +27,7 @@ namespace CG4.SqlBuilder.Tests
         [Fact]
         public void GenerateWhere_StartsWithExpression_ReturnsILikeExpression()
         {
-            var expr = SqlExprHelper.GenerateWhere<TestEntity>(x => x.StrColumn.StartsWith("123"));
+            var expr = ExprHelper.GenerateWhere<TestEntity>(x => x.StrColumn.StartsWith("123"));
 
             Assert.NotNull(expr);
             Assert.IsType<ExprLike>(expr);
@@ -42,7 +42,7 @@ namespace CG4.SqlBuilder.Tests
         [Fact]
         public void GenerateWhere_EndsWithExpression_ReturnsILikeExpression()
         {
-            var expr = SqlExprHelper.GenerateWhere<TestEntity>(x => x.StrColumn.EndsWith("123"));
+            var expr = ExprHelper.GenerateWhere<TestEntity>(x => x.StrColumn.EndsWith("123"));
 
             Assert.NotNull(expr);
             Assert.IsType<ExprLike>(expr);
@@ -58,7 +58,7 @@ namespace CG4.SqlBuilder.Tests
         public void GenerateWhere_ArrayContainsExpression_ReturnsInExpression()
         {
             var array = new string[] { "1", "2", "3" };
-            var expr = SqlExprHelper.GenerateWhere<TestEntity>(x => array.Contains(x.StrColumn));
+            var expr = ExprHelper.GenerateWhere<TestEntity>(x => array.Contains(x.StrColumn));
 
             Assert.NotNull(expr);
             Assert.IsType<ExprIn>(expr);
@@ -72,7 +72,7 @@ namespace CG4.SqlBuilder.Tests
         public void GenerateWhere_EnumerableContainsExpression_ReturnsInExpression()
         {
             var array = (new string[] { "1", "2", "3" }).Select(x => x);
-            var expr = SqlExprHelper.GenerateWhere<TestEntity>(x => array.Contains(x.StrColumn));
+            var expr = ExprHelper.GenerateWhere<TestEntity>(x => array.Contains(x.StrColumn));
 
             Assert.NotNull(expr);
             Assert.IsType<ExprIn>(expr);

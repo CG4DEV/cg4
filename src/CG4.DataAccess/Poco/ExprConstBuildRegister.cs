@@ -6,23 +6,23 @@ namespace CG4.DataAccess.Poco
     {
         private static readonly Dictionary<Type, IExprConstBuilder> _defaultBuilders = new()
         {
-            { typeof(string), new LambdaExprConstBuilder(x => new ExprStr { Value = (string)x }) },
-            { typeof(long), new LambdaExprConstBuilder(x => new ExprLong { Value = (long)x }) },
-            { typeof(int), new LambdaExprConstBuilder(x => new ExprInt { Value = (int)x }) },
-            { typeof(short), new LambdaExprConstBuilder(x => new ExprInt { Value = (short)x }) },
-            { typeof(byte), new LambdaExprConstBuilder(x => new ExprInt { Value = (byte)x }) },
-            { typeof(DateTime), new LambdaExprConstBuilder(x => new ExprDateTime { Value = (DateTime)x }) },
-            { typeof(DateTimeOffset), new LambdaExprConstBuilder(x => new ExprDateTimeOffset { Value = (DateTimeOffset)x }) },
-            { typeof(bool), new LambdaExprConstBuilder(x => new ExprBool { Value = (bool)x }) },
-            { typeof(Guid), new LambdaExprConstBuilder(x => new ExprGuid { Value = (Guid)x }) },
+            { typeof(string), new ExprConstLambdaBuilder(x => new ExprStr { Value = (string)x }) },
+            { typeof(long), new ExprConstLambdaBuilder(x => new ExprLong { Value = (long)x }) },
+            { typeof(int), new ExprConstLambdaBuilder(x => new ExprInt { Value = (int)x }) },
+            { typeof(short), new ExprConstLambdaBuilder(x => new ExprInt { Value = (short)x }) },
+            { typeof(byte), new ExprConstLambdaBuilder(x => new ExprInt { Value = (byte)x }) },
+            { typeof(DateTime), new ExprConstLambdaBuilder(x => new ExprDateTime { Value = (DateTime)x }) },
+            { typeof(DateTimeOffset), new ExprConstLambdaBuilder(x => new ExprDateTimeOffset { Value = (DateTimeOffset)x }) },
+            { typeof(bool), new ExprConstLambdaBuilder(x => new ExprBool { Value = (bool)x }) },
+            { typeof(Guid), new ExprConstLambdaBuilder(x => new ExprGuid { Value = (Guid)x }) },
 
-            { typeof(long?), new LambdaExprConstBuilder(x => new ExprLong { Value = (long)x }) },
-            { typeof(int?), new LambdaExprConstBuilder(x => new ExprInt { Value = (int)x }) },
-            { typeof(short?), new LambdaExprConstBuilder(x => new ExprInt { Value = (short)x }) },
-            { typeof(byte?), new LambdaExprConstBuilder(x => new ExprInt { Value = (byte)x }) },
-            { typeof(DateTime?), new LambdaExprConstBuilder(x => new ExprDateTime { Value = (DateTime)x }) },
-            { typeof(DateTimeOffset?), new LambdaExprConstBuilder(x => new ExprDateTimeOffset { Value = (DateTimeOffset)x }) },
-            { typeof(bool?), new LambdaExprConstBuilder(x => new ExprBool { Value = (bool)x }) },
+            { typeof(long?), new ExprConstLambdaBuilder(x => new ExprLong { Value = (long)x }) },
+            { typeof(int?), new ExprConstLambdaBuilder(x => new ExprInt { Value = (int)x }) },
+            { typeof(short?), new ExprConstLambdaBuilder(x => new ExprInt { Value = (short)x }) },
+            { typeof(byte?), new ExprConstLambdaBuilder(x => new ExprInt { Value = (byte)x }) },
+            { typeof(DateTime?), new ExprConstLambdaBuilder(x => new ExprDateTime { Value = (DateTime)x }) },
+            { typeof(DateTimeOffset?), new ExprConstLambdaBuilder(x => new ExprDateTimeOffset { Value = (DateTimeOffset)x }) },
+            { typeof(bool?), new ExprConstLambdaBuilder(x => new ExprBool { Value = (bool)x }) },
         };
 
         private static readonly Dictionary<Type, IExprConstBuilder> _builders = new();

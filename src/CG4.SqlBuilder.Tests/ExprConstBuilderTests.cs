@@ -20,7 +20,7 @@ namespace CG4.SqlBuilder.Tests
 
             var builder = new ExprSqlBuilder(_sqlSettings);
             var date = new DateOnly(2023, 11, 22);
-            var expr = SqlExprHelper.GenerateWhere<TestEntity>(a1 => a1.Date == date);
+            var expr = ExprHelper.GenerateWhere<TestEntity>(a1 => a1.Date == date);
 
             var sql = builder.GetAll<TestEntity>(x => x.AppendWhere(expr));
 

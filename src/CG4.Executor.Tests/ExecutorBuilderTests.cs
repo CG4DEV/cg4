@@ -1,5 +1,4 @@
 using System;
-using CG4.Executor.Extensions;
 using CG4.Executor.Tests.Preparation;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;

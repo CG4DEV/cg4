@@ -2,12 +2,12 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
-namespace CG4.Executor.Extensions
+namespace CG4.Executor
 {
     /// <summary>
     /// Extensions for scan and registers executor and executions types.
     /// </summary>
-    public static class ExecutorsExtensions
+    public static class ExecutorExtensions
     {
         /// <summary>
         /// Registers executor and executions types from the specified assemblies.
@@ -72,7 +72,7 @@ namespace CG4.Executor.Extensions
             {
                 throw new ArgumentNullException(nameof(executorOptions.ExecutorImplementationType) + " must be set!");
             }
-            
+
             if (executorOptions.ExecutionTypes == null)
             {
                 throw new ArgumentNullException(nameof(executorOptions.ExecutionTypes) + " must be set!");
@@ -122,7 +122,7 @@ namespace CG4.Executor.Extensions
                         var lengthArguments = internalType.GetGenericArguments().Length;
                         var method = GetBaseMethod(lengthArguments, executionInterface);
 
-                        (Type, MethodInfo) storyType = new (executionInterface, method);
+                        (Type, MethodInfo) storyType = new(executionInterface, method);
                         CacheExecutor.TryAdd(executionInterface.GetGenericArguments().First(), storyType);
 
                         services.TryAdd(new ServiceDescriptor(executionInterface, type, options.ExecutionTypesLifetime ?? ServiceLifetime.Transient));
@@ -197,7 +197,7 @@ namespace CG4.Executor.Extensions
 
             foreach (var interfaceType in pluggedType.GetInterfaces())
             {
-                if (interfaceType.GetTypeInfo().IsGenericType && (interfaceType.GetGenericTypeDefinition() == templateType))
+                if (interfaceType.GetTypeInfo().IsGenericType && interfaceType.GetGenericTypeDefinition() == templateType)
                 {
                     yield return interfaceType;
                 }
@@ -206,5 +206,5 @@ namespace CG4.Executor.Extensions
 
         private static bool IsClassImplementation(this Type type)
             => !type.GetTypeInfo().IsAbstract && !type.GetTypeInfo().IsInterface;
-    }   
+    }
 }

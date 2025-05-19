@@ -3,7 +3,7 @@ using CG4.DataAccess.Poco.Expressions;
 
 namespace CG4.DataAccess.Poco
 {
-    public static class SqlExprHelper
+    public static class ExprHelper
     {
         public static ExprBoolean GenerateWhere<TEntity>(Expression<Func<TEntity, bool>> expression)
             where TEntity : class
@@ -45,6 +45,11 @@ namespace CG4.DataAccess.Poco
             return expr | GenerateWhere(expression, alias);
         }
 
+        public static ExprBoolean Empty()
+        {
+            return ExprBoolean.Empty;
+        }
+
         public static ExprColumn GenerateColumn<TEntity, TKey>(Expression<Func<TEntity, TKey>> keySelector)
             where TEntity : class
         {
@@ -66,6 +71,8 @@ namespace CG4.DataAccess.Poco
 
             throw new InvalidOperationException("Должно быть выбрано поле сущности");
         }
+
+
 
         public static void SetAlias(ExprBoolean expr, string alias)
         {

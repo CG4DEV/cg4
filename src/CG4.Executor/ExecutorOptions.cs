@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace CG4.Executor.Extensions
+namespace CG4.Executor
 {
     /// <summary>
     /// Options to configure executor and executions types.
@@ -32,10 +32,10 @@ namespace CG4.Executor.Extensions
         /// Execution types lifetime.
         /// </summary>
         public ServiceLifetime? ExecutionTypesLifetime { get; set; } = ServiceLifetime.Transient;
-    
+
         /// <summary>
         /// Types that implements <see cref="IExecution{TExecutionContext,TExecutionResult}"/>. Required property. 
         /// </summary>
         public Type[] ExecutionTypes { get; set; }
-    }   
+    }
 }
