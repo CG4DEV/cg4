@@ -10,7 +10,7 @@ namespace CG4.SqlBuilder.Tests
 {
     public partial class ExprSqlBuilderTests
     {
-        private readonly ISqlSettings _sqlSettings = new PostreSqlOptions();
+        private readonly ISqlSettings _sqlSettings = new PostgreSqlOptions();
 
         [Fact]
         public void DeleteById_CorrectArguments_ReturnSql()

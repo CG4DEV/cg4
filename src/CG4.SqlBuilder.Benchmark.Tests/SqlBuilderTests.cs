@@ -13,7 +13,7 @@ namespace CG4.SqlBuilder.Benchmark.Tests
 
         public SqlBuilderTests()
         {
-            var sqlSettings = new PostreSqlOptions();
+            var sqlSettings = new PostgreSqlOptions();
             _builder = new ExprSqlBuilder(sqlSettings);
         }
 

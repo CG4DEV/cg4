@@ -11,7 +11,7 @@ namespace CG4.SqlBuilder.Tests
 {
     public class ExprConstBuilderTests
     {
-        private readonly ISqlSettings _sqlSettings = new PostreSqlOptions();
+        private readonly ISqlSettings _sqlSettings = new PostgreSqlOptions();
 
         [Fact]
         public void GetAll_QueryByNewExprType_BuildSQLWithNewConstType()

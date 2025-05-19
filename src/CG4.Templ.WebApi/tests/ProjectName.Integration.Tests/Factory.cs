@@ -31,7 +31,7 @@ namespace ProjectName.Integration.Tests
             services.AddSingleton<IAppSettings, IConnectionSettings, AppSettings>();
             services.AddSingleton<IConnectionFactory, ConnectionFactoryPostgreSQL>();
             services.AddSingleton<ISqlBuilder, ExprSqlBuilder>();
-            services.AddSingleton<ISqlSettings, PostreSqlOptions>();
+            services.AddSingleton<ISqlSettings, PostgreSqlOptions>();
 
             services
                 .AddScoped<ICrudService, AppCrudService>()

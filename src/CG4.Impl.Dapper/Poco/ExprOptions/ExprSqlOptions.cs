@@ -78,7 +78,7 @@ namespace CG4.Impl.Dapper.Poco.ExprOptions
         public IClassJoinSqlOptions<TEntity, TJoin> Join<TJoin, TKey>(Expression<Func<TEntity, TKey>> keySelector, string alias)
             where TJoin : class
         {
-            var join = ExprJoinSqlOptions<TEntity, TJoin>.CreateInnerJoin<TKey>(this, keySelector, alias);
+            var join = ExprSqlJoinOptions<TEntity, TJoin>.CreateInnerJoin<TKey>(this, keySelector, alias);
 
             return join;
         }
@@ -86,7 +86,7 @@ namespace CG4.Impl.Dapper.Poco.ExprOptions
         public IClassJoinSqlOptions<TEntity, TJoin> JoinLeft<TJoin, TKey>(Expression<Func<TEntity, TKey>> keySelector, string alias)
             where TJoin : class
         {
-            var join = ExprJoinSqlOptions<TEntity, TJoin>.CreateLeftJoin<TKey>(this, keySelector, alias);
+            var join = ExprSqlJoinOptions<TEntity, TJoin>.CreateLeftJoin<TKey>(this, keySelector, alias);
 
             return join;
         }
@@ -94,7 +94,7 @@ namespace CG4.Impl.Dapper.Poco.ExprOptions
         public IClassJoinSqlOptions<TEntity, TJoin> JoinRight<TJoin, TKey>(Expression<Func<TEntity, TKey>> keySelector, string alias)
             where TJoin : class
         {
-            var join = ExprJoinSqlOptions<TEntity, TJoin>.CreateRightJoin<TKey>(this, keySelector, alias);
+            var join = ExprSqlJoinOptions<TEntity, TJoin>.CreateRightJoin<TKey>(this, keySelector, alias);
 
             return join;
         }

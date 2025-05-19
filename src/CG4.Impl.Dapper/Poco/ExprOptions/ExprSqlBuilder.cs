@@ -2,7 +2,6 @@
 using System.Text;
 using CG4.DataAccess.Poco;
 using CG4.DataAccess.Poco.Expressions;
-using CG4.Impl.Dapper.Poco.Visitors;
 
 namespace CG4.Impl.Dapper.Poco.ExprOptions
 {
@@ -42,32 +41,7 @@ namespace CG4.Impl.Dapper.Poco.ExprOptions
         {
             _sqlSettings = sqlOptions ?? throw new ArgumentNullException(nameof(sqlOptions));
         }
-
-        public string DeleteById<T>()
-            where T : class
-        {
-            var map = PocoHub.GetMap<T>();
-            return $"{SQL_DELETE} {GetTableSqlName(map)} {SQL_WHERE} {GetSqlId()} = {BuildParametr(ID)}";
-        }
-
-        public string GetAll<T>(Expression<Action<IClassSqlOptions<T>>> predicate = null)
-            where T : class
-        {
-            var options = GetSqlOptionsResult(predicate);
-            return GenerateSelectQuery(options.Sql);
-        }
-
-        public string GetById<T>(Expression<Action<IClassSqlOptions<T>>> predicate = null)
-            where T : class
-        {
-            var options = GetSqlOptionsResult(predicate);
-            var exprById = new ExprColumn(ALIAS, SQL_ID) == new ExprParam { Name = ID };
-
-            options.Sql.Where.And(exprById);
-
-            return GenerateSelectQuery(options.Sql);
-        }
-
+        
         public string Insert<T>()
             where T : class
         {
@@ -87,6 +61,31 @@ namespace CG4.Impl.Dapper.Poco.ExprOptions
                 .Select(x => $"{CoverName(x.ColumnName)} = {BuildParametr(x.Name)}");
 
             return $"{SQL_UPDATE} {GetTableSqlName(PocoHub.GetMap<T>())} {SQL_SET} {string.Join(SEPARATOR, props)} {SQL_WHERE} {GetSqlId()} = {BuildParametr(ID)}";
+        }
+
+        public string DeleteById<T>()
+            where T : class
+        {
+            var map = PocoHub.GetMap<T>();
+            return $"{SQL_DELETE} {GetTableSqlName(map)} {SQL_WHERE} {GetSqlId()} = {BuildParametr(ID)}";
+        }
+
+        public string GetById<T>(Expression<Action<IClassSqlOptions<T>>> predicate = null)
+           where T : class
+        {
+            var options = GetSqlOptionsResult(predicate);
+            var exprById = new ExprColumn(ALIAS, SQL_ID) == new ExprParam { Name = ID };
+
+            options.Sql.Where.And(exprById);
+
+            return GenerateSelectQuery(options.Sql);
+        }
+
+        public string GetAll<T>(Expression<Action<IClassSqlOptions<T>>> predicate = null)
+            where T : class
+        {
+            var options = GetSqlOptionsResult(predicate);
+            return GenerateSelectQuery(options.Sql);
         }
 
         public string Count<T>(Expression<Action<IClassSqlOptions<T>>> predicate = null)
@@ -133,7 +132,7 @@ namespace CG4.Impl.Dapper.Poco.ExprOptions
             }
 
             var sb = new StringBuilder();
-            var visitor = new ExprPostgreSqlVisitor(sb);
+            var visitor = new ExprSqlVisitor(sb);
 
             sql.Accept(visitor);
 

@@ -5,7 +5,7 @@ using CG4.DataAccess.Domain;
 using CG4.DataAccess.Poco;
 using CG4.DataAccess.Poco.Expressions;
 
-namespace CG4.Impl.Dapper.Crud
+namespace CG4.Impl.Dapper
 {
     /// <summary>
     /// Наследник <see cref="RepositoryDapper"/> и реализация <see cref="ICrudService"/>, <see cref="IAppCrudService"/>

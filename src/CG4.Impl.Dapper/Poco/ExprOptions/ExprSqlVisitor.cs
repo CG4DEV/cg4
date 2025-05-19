@@ -3,18 +3,18 @@ using System.Text;
 using CG4.DataAccess.Poco.Expressions;
 using CG4.DataAccess.Poco.Visitors;
 
-namespace CG4.Impl.Dapper.Poco.Visitors
+namespace CG4.Impl.Dapper.Poco.ExprOptions
 {
-    public class ExprPostgreSqlVisitor : IExprVisitor
+    public class ExprSqlVisitor : IExprVisitor
     {
         private readonly StringBuilder _stringBuilder;
 
-        public ExprPostgreSqlVisitor()
+        public ExprSqlVisitor()
         {
             _stringBuilder = new();
         }
 
-        public ExprPostgreSqlVisitor(StringBuilder stringBuilder)
+        public ExprSqlVisitor(StringBuilder stringBuilder)
         {
             _stringBuilder = stringBuilder;
         }

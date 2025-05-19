@@ -4,7 +4,7 @@ using CG4.DataAccess.Poco.Expressions;
 
 namespace CG4.Impl.Dapper.Poco.ExprOptions
 {
-    public class ExprJoinSqlOptions<TEntity, TJoin> : IClassJoinSqlOptions<TEntity, TJoin>
+    public class ExprSqlJoinOptions<TEntity, TJoin> : IClassJoinSqlOptions<TEntity, TJoin>
         where TEntity : class
         where TJoin : class
     {
@@ -14,14 +14,14 @@ namespace CG4.Impl.Dapper.Poco.ExprOptions
         private readonly List<ExprBoolean> _booleans = new();
         private readonly ExprJoin _join;
 
-        private ExprJoinSqlOptions(ExprSqlOptions<TEntity> exprSqlOptions, string alias, ExprJoin exprJoin)
+        private ExprSqlJoinOptions(ExprSqlOptions<TEntity> exprSqlOptions, string alias, ExprJoin exprJoin)
         {
             _exprSqlOptions = exprSqlOptions;
             Alias = alias;
             _join = exprJoin;
         }
 
-        public static ExprJoinSqlOptions<TEntity, TJoin> CreateJoin<TKey>(
+        public static ExprSqlJoinOptions<TEntity, TJoin> CreateJoin<TKey>(
             ExprSqlOptions<TEntity> exprSqlOptions,
             Expression<Func<TEntity, TKey>> keySelector,
             string alias)
@@ -29,7 +29,7 @@ namespace CG4.Impl.Dapper.Poco.ExprOptions
             return Create(exprSqlOptions, keySelector, alias, new ExprJoin());
         }
 
-        public static ExprJoinSqlOptions<TEntity, TJoin> CreateInnerJoin<TKey>(
+        public static ExprSqlJoinOptions<TEntity, TJoin> CreateInnerJoin<TKey>(
             ExprSqlOptions<TEntity> exprSqlOptions,
             Expression<Func<TEntity, TKey>> keySelector,
             string alias)
@@ -37,7 +37,7 @@ namespace CG4.Impl.Dapper.Poco.ExprOptions
             return Create(exprSqlOptions, keySelector, alias, new ExprInnerJoin());
         }
 
-        public static ExprJoinSqlOptions<TEntity, TJoin> CreateLeftJoin<TKey>(
+        public static ExprSqlJoinOptions<TEntity, TJoin> CreateLeftJoin<TKey>(
             ExprSqlOptions<TEntity> exprSqlOptions,
             Expression<Func<TEntity, TKey>> keySelector,
             string alias)
@@ -45,7 +45,7 @@ namespace CG4.Impl.Dapper.Poco.ExprOptions
             return Create(exprSqlOptions, keySelector, alias, new ExprLeftJoin());
         }
 
-        public static ExprJoinSqlOptions<TEntity, TJoin> CreateRightJoin<TKey>(
+        public static ExprSqlJoinOptions<TEntity, TJoin> CreateRightJoin<TKey>(
             ExprSqlOptions<TEntity> exprSqlOptions,
             Expression<Func<TEntity, TKey>> keySelector,
             string alias)
@@ -53,7 +53,7 @@ namespace CG4.Impl.Dapper.Poco.ExprOptions
             return Create(exprSqlOptions, keySelector, alias, new ExprRightJoin());
         }
 
-        private static ExprJoinSqlOptions<TEntity, TJoin> Create<TKey>(
+        private static ExprSqlJoinOptions<TEntity, TJoin> Create<TKey>(
             ExprSqlOptions<TEntity> exprSqlOptions,
             Expression<Func<TEntity, TKey>> keySelector,
             string alias,
@@ -71,7 +71,7 @@ namespace CG4.Impl.Dapper.Poco.ExprOptions
             exprJoin.OtherColumn = expr;
             exprJoin.TableName = new ExprTableName { Alias = aliasJoin, TableName = mapJoin.TableName };
 
-            var join = new ExprJoinSqlOptions<TEntity, TJoin>(exprSqlOptions, aliasJoin, exprJoin);
+            var join = new ExprSqlJoinOptions<TEntity, TJoin>(exprSqlOptions, aliasJoin, exprJoin);
 
             foreach (var p in mapJoin.Properties.Where(x => !x.IsIdentity && !x.IsPrymaryKey && !x.IsIgnored))
             {
@@ -168,17 +168,17 @@ namespace CG4.Impl.Dapper.Poco.ExprOptions
 
         public IClassJoinSqlOptions<TEntity, TNewJoin> Join<TNewJoin, TKey>(Expression<Func<TEntity, TKey>> predicate, string alias) where TNewJoin : class
         {
-            return ExprJoinSqlOptions<TEntity, TNewJoin>.CreateInnerJoin(_exprSqlOptions, predicate, alias);
+            return ExprSqlJoinOptions<TEntity, TNewJoin>.CreateInnerJoin(_exprSqlOptions, predicate, alias);
         }
 
         public IClassJoinSqlOptions<TEntity, TNewJoin> JoinLeft<TNewJoin, TKey>(Expression<Func<TEntity, TKey>> predicate, string alias) where TNewJoin : class
         {
-            return ExprJoinSqlOptions<TEntity, TNewJoin>.CreateLeftJoin(_exprSqlOptions, predicate, alias);
+            return ExprSqlJoinOptions<TEntity, TNewJoin>.CreateLeftJoin(_exprSqlOptions, predicate, alias);
         }
 
         public IClassJoinSqlOptions<TEntity, TNewJoin> JoinRight<TNewJoin, TKey>(Expression<Func<TEntity, TKey>> predicate, string alias) where TNewJoin : class
         {
-            return ExprJoinSqlOptions<TEntity, TNewJoin>.CreateRightJoin(_exprSqlOptions, predicate, alias);
+            return ExprSqlJoinOptions<TEntity, TNewJoin>.CreateRightJoin(_exprSqlOptions, predicate, alias);
         }
 
         private IClassJoinSqlOptions<TEntity, TJoin> OrderByInternal<TKey>(Expression<Func<TJoin, TKey>> keySelector, bool ask)

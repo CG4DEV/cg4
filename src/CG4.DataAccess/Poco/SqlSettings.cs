@@ -59,9 +59,9 @@
         }
     }
 
-    public class PostreSqlOptions : SqlSettings
+    public class PostgreSqlOptions : SqlSettings
     {
-        public PostreSqlOptions()
+        public PostgreSqlOptions()
         {
             IsUsingSchemas = true;
         }

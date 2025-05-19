@@ -13,6 +13,22 @@ namespace CG4.Executor
         /// Registers executor and executions types from the specified assemblies.
         /// </summary>
         /// <param name="services">The <see cref="IServiceCollection"/>.</param>
+        /// <param name="handlerAssemblyMarkerTypes">Mark type to find assemblies to scan</param>
+        /// <returns></returns>
+        public static IServiceCollection AddExecutors(
+            this IServiceCollection services,
+            params Type[] handlerAssemblyMarkerTypes)
+            => services.AddExecutors(options =>
+            {
+                options.ExecutionTypes = new[] { typeof(IStory<>), typeof(IStory<,>) };
+                options.ExecutorInterfaceType = typeof(IStoryExecutor);
+                options.ExecutorImplementationType = typeof(StoryExecutor);
+            }, handlerAssemblyMarkerTypes.Select(t => t.GetTypeInfo().Assembly).ToArray());
+
+        /// <summary>
+        /// Registers executor and executions types from the specified assemblies.
+        /// </summary>
+        /// <param name="services">The <see cref="IServiceCollection"/>.</param>
         /// <param name="options">Options to configure executor and executions types.</param>
         /// <param name="handlerAssemblyMarkerTypes">Mark type to find assemblies to scan</param>
         /// <returns></returns>
