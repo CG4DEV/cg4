@@ -20,8 +20,9 @@ namespace CG4.Impl.Dapper.Crud
         /// </summary>
         /// <param name="factory">Фабрика, создающая подключение к источнику данных.</param>
         /// <param name="sqlBuilder">Генератор SQL-кода.</param>
-        public AppCrudService(IConnectionFactory factory, ISqlBuilder sqlBuilder)
-            : base(factory)
+        /// <param name="logger"></param>
+        public AppCrudService(IConnectionFactory factory, ISqlBuilder sqlBuilder, ICrudServiceLogger? logger = null)
+            : base(factory, logger)
         {
             _sqlBuilder = sqlBuilder;
         }

@@ -457,7 +457,7 @@ WHERE t.""code"" = 'test'", sql.TrimEnd());
         public void GetAll_EmptyExpressions_CorrectSql()
         {
             var builder = new ExprSqlBuilder(_sqlSettings);
-            var empty = ExprBoolean.Empty;
+            var empty = ExprHelper.Empty();
 
             var sql = builder.GetAll<TestEntity>(x =>
             x.Where(empty)
@@ -476,7 +476,7 @@ WHERE t.""code"" = 'test'", sql.TrimEnd());
         public void GetAll_ExprWithEmptyExpressions_CorrectSql()
         {
             var builder = new ExprSqlBuilder(_sqlSettings);
-            var expr = ExprBoolean.Empty;
+            var expr = ExprHelper.Empty();
 
             expr = expr.And<TestEntity>(x => x.Id == 12L);
 
