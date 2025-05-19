@@ -19,13 +19,13 @@ namespace CG4.DataAccess.Poco.Expressions
             Name = name;
         }
 
-        public string Alias { get; set; }
+        public string? Alias { get; set; }
 
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
         public override void Accept(IExprVisitor visitor) => visitor.VisitColumn(this);
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             if (ReferenceEquals(this, obj))
             {
@@ -35,7 +35,7 @@ namespace CG4.DataAccess.Poco.Expressions
             return Equals(obj as ExprColumn);
         }
 
-        public bool Equals(ExprColumn other)
+        public bool Equals(ExprColumn? other)
         {
             if (other is null)
             {

@@ -1,6 +1,4 @@
 ﻿using System.Threading.Tasks;
-using CG4.Executor;
-using CG4.Executor.Story;
 
 namespace CG4.Executor.Tests.Preparation
 {

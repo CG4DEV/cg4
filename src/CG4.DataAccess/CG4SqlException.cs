@@ -1,4 +1,4 @@
-﻿namespace CG4.DataAccess.Exceptions
+﻿namespace CG4.DataAccess
 {
     public class CG4SqlException : Exception
     {

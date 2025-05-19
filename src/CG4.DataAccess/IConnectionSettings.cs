@@ -1,7 +1,7 @@
 ﻿namespace CG4.DataAccess
 {
     /// <summary>
-    /// Настройки соеденения.
+    /// Настройки соединения.
     /// </summary>
     public interface IConnectionSettings
     {

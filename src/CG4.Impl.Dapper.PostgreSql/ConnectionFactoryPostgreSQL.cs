@@ -14,9 +14,13 @@ namespace CG4.Impl.Dapper.PostgreSql
         /// <summary>
         /// Создание экземпляра класса <see cref="ConnectionFactoryPostgreSQL"/>.
         /// </summary>
-        /// <param name="connectionString">Строка подключения к БД PostgreSQL.</param>
+        /// <param name="connectionSettings">Настройки подключения к БД PostgreSQL.</param>
+        /// <exception cref="ArgumentNullException">Если connectionSettings - null.</exception>
         public ConnectionFactoryPostgreSQL(IConnectionSettings connectionSettings)
         {
+            ArgumentNullException.ThrowIfNull(connectionSettings);
+            ArgumentException.ThrowIfNullOrEmpty(connectionSettings.ConnectionString, nameof(connectionSettings.ConnectionString));
+            
             _connectionString = connectionSettings.ConnectionString;
         }
 
@@ -27,6 +31,8 @@ namespace CG4.Impl.Dapper.PostgreSql
 
         public IDbConnection Create(string connectionString)
         {
+            ArgumentException.ThrowIfNullOrEmpty(connectionString, nameof(connectionString));
+            
             NpgsqlConnection dbConnection = new NpgsqlConnection(connectionString);
             dbConnection.Open();
             return dbConnection;
@@ -39,6 +45,8 @@ namespace CG4.Impl.Dapper.PostgreSql
 
         public async Task<IDbConnection> CreateAsync(string connectionString)
         {
+            ArgumentException.ThrowIfNullOrEmpty(connectionString, nameof(connectionString));
+            
             NpgsqlConnection dbConnection = new NpgsqlConnection(connectionString);
             await dbConnection.OpenAsync().ConfigureAwait(false);
             return dbConnection;

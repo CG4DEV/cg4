@@ -5,10 +5,10 @@ namespace CG4.DataAccess.Poco
 {
     public interface ISqlBuilder
     {
-        string GetById<T>(Expression<Action<IClassSqlOptions<T>>> predicate = null)
+        string GetById<T>(Expression<Action<IClassSqlOptions<T>>>? predicate = null)
             where T : class;
 
-        string GetAll<T>(Expression<Action<IClassSqlOptions<T>>> predicate = null)
+        string GetAll<T>(Expression<Action<IClassSqlOptions<T>>>? predicate = null)
             where T : class;
 
         string Insert<T>()
@@ -20,10 +20,10 @@ namespace CG4.DataAccess.Poco
         string DeleteById<T>()
             where T : class;
 
-        string Count<T>(Expression<Action<IClassSqlOptions<T>>> predicate = null)
+        string Count<T>(Expression<Action<IClassSqlOptions<T>>>? predicate = null)
             where T : class;
 
-        ExprSql GenerateSql<T>(Expression<Action<IClassSqlOptions<T>>> predicate = null)
+        ExprSql GenerateSql<T>(Expression<Action<IClassSqlOptions<T>>>? predicate = null)
             where T : class;
 
         string Serialize(ExprSql sql);

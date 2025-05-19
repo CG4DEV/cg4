@@ -6,9 +6,9 @@ namespace CG4.DataAccess.Poco.Expressions
     public class ExprBuilder
     {
         private readonly ClassMap _map;
-        private readonly string _alias;
+        private readonly string? _alias;
 
-        public ExprBuilder(ClassMap map, string alias = null)
+        public ExprBuilder(ClassMap map, string? alias = null)
         {
             _map = map;
             _alias = alias;

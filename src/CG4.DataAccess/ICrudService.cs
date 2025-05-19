@@ -3,7 +3,7 @@
     /// <summary>
     /// CRUD-сервис.
     /// </summary>
-    public interface ICrudService : IAppCrudService, ISqlRepository, ISqlRepositoryAsync
+    public interface ICrudService : IAppCrudService, ISqlRepositoryAsync
     {
     }
 }

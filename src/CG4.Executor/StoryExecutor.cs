@@ -1,4 +1,4 @@
-﻿namespace CG4.Executor.Story
+﻿namespace CG4.Executor
 {
     /// <summary>
     /// Implemetation of <see cref="IStoryExecutor"/>.

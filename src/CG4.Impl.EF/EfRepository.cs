@@ -10,7 +10,7 @@ namespace CG4.Impl.EF
     /// <summary>
     /// Репозиторий для работы с EntityFramework.
     /// </summary>
-    public class EfRepository : IRepository, ICrudRepository
+    public class EfRepository
     {
         private readonly IDbContextFactory _dbContextFactory;
 
