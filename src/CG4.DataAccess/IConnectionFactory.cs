@@ -3,34 +3,35 @@
 namespace CG4.DataAccess
 {
     /// <summary>
-    /// Фабрика, создающая подключение к источнику данных.
+    /// Factory for creating database connections.
+    /// Provides methods to create and manage database connections with consistent configuration.
     /// </summary>
     public interface IConnectionFactory
     {
         /// <summary>
-        /// Создаёт подключение к базе данных.
+        /// Creates a database connection using the default connection configuration.
         /// </summary>
-        /// <returns>Объект подключения.</returns>
+        /// <returns>A new database connection object.</returns>
         IDbConnection Create();
 
         /// <summary>
-        /// Создаёт подключение к базе данных по переданной строке подключения.
+        /// Creates a database connection using the specified connection string.
         /// </summary>
-        /// <param name="connectionString">Строка подключения к источнику данных.</param>
-        /// <returns>Объект подключения.</returns>
+        /// <param name="connectionString">The connection string to the data source.</param>
+        /// <returns>A new database connection object.</returns>
         IDbConnection Create(string connectionString);
 
         /// <summary>
-        /// Асинхронно создаёт подключение к базе данных.
+        /// Asynchronously creates a database connection using the default connection configuration.
         /// </summary>
-        /// <returns>Объект подключения.</returns>
+        /// <returns>A new database connection object.</returns>
         Task<IDbConnection> CreateAsync();
 
         /// <summary>
-        /// Асинхронно создаёт подключение к базе данных по переданной строке подключения.
+        /// Asynchronously creates a database connection using the specified connection string.
         /// </summary>
-        /// <param name="connectionString">Строка подключения к источнику данных.</param>
-        /// <returns>Объект подключения.</returns>
+        /// <param name="connectionString">The connection string to the data source.</param>
+        /// <returns>A new database connection object.</returns>
         Task<IDbConnection> CreateAsync(string connectionString);
     }
 }

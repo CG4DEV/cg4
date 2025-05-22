@@ -3,8 +3,18 @@ using CG4.DataAccess.Poco.Expressions;
 
 namespace CG4.DataAccess.Poco
 {
+    /// <summary>
+    /// Helper class for converting LINQ expressions into SQL expressions.
+    /// Provides methods to generate WHERE clauses and other SQL expressions from strongly-typed C# expressions.
+    /// </summary>
     public static class ExprHelper
     {
+        /// <summary>
+        /// Converts a LINQ expression into a SQL WHERE clause expression using the parameter name as the table alias.
+        /// </summary>
+        /// <typeparam name="TEntity">The entity type the expression is based on.</typeparam>
+        /// <param name="expression">LINQ expression representing the WHERE conditions.</param>
+        /// <returns>A SQL boolean expression for use in WHERE clauses.</returns>
         public static ExprBoolean GenerateWhere<TEntity>(Expression<Func<TEntity, bool>> expression)
             where TEntity : class
         {
@@ -13,6 +23,13 @@ namespace CG4.DataAccess.Poco
             return GenerateWhere(expression, alias);
         }
 
+        /// <summary>
+        /// Converts a LINQ expression into a SQL WHERE clause expression using a specified table alias.
+        /// </summary>
+        /// <typeparam name="TEntity">The entity type the expression is based on.</typeparam>
+        /// <param name="expression">LINQ expression representing the WHERE conditions.</param>
+        /// <param name="alias">The table alias to use in the generated SQL.</param>
+        /// <returns>A SQL boolean expression for use in WHERE clauses.</returns>
         public static ExprBoolean GenerateWhere<TEntity>(Expression<Func<TEntity, bool>> expression, string alias)
             where TEntity : class
         {

@@ -6,148 +6,149 @@ using CG4.DataAccess.Poco;
 namespace CG4.DataAccess
 {
     /// <summary>
-    /// CRUD-сервис для работы с источником данных.
+    /// Core CRUD service interface for working with data sources.
+    /// Provides high-level access to database operations with support for transactions and typed entities.
     /// </summary>
     public interface IAppCrudService
     {
         /// <summary>
-        /// Асинхронно получает запись по уникальному идентификатору сущности.
+        /// Asynchronously retrieves an entity by its unique identifier.
         /// </summary>
-        /// <param name="id">Уникальный идентификатор сущности.</param>
-        /// <param name="connection">Открытое соединение с источником данных.</param>
-        /// <param name="transaction">Транзакция, которая должна быть выполнена в источнике данных.</param>
-        /// <typeparam name="T">Тип извлекаемой сущности. Должен реализовывать <see cref="IEntityBase"/>.</typeparam>
-        /// <returns>Сущность заданного типа T.</returns>
+        /// <param name="id">The unique identifier of the entity.</param>
+        /// <param name="connection">An open connection to the data source.</param>
+        /// <param name="transaction">The transaction to be used for the operation.</param>
+        /// <typeparam name="T">The type of entity to retrieve. Must implement <see cref="IEntityBase"/>.</typeparam>
+        /// <returns>An entity of type T or null if not found.</returns>
         Task<T?> GetAsync<T>(long id, IDbConnection? connection = null, IDbTransaction? transaction = null)
             where T : class, IEntityBase, new();
 
         /// <summary>
-        /// Асинхронно получает запись по выражению.
+        /// Asynchronously retrieves an entity based on a query expression.
         /// </summary>
-        /// <param name="predicate">Выражение типа <see cref="IClassSqlOptions{TEntity}"/>.</param>
-        /// <param name="connection">Открытое соединение с источником данных.</param>
-        /// <param name="transaction">Транзакция, которая должна быть выполнена в источнике данных.</param>
-        /// <typeparam name="T">Тип извлекаемой сущности. Должен реализовывать <see cref="IEntityBase"/>.</typeparam>
-        /// <returns>Сущность заданного типа T.</returns>
+        /// <param name="predicate">Expression of type <see cref="IClassSqlOptions{TEntity}"/> for query building.</param>
+        /// <param name="connection">An open connection to the data source.</param>
+        /// <param name="transaction">The transaction to be used for the operation.</param>
+        /// <typeparam name="T">The type of entity to retrieve. Must implement <see cref="IEntityBase"/>.</typeparam>
+        /// <returns>An entity of type T or null if not found.</returns>
         Task<T?> GetAsync<T>(Expression<Action<IClassSqlOptions<T>>> predicate, IDbConnection? connection = null, IDbTransaction? transaction = null)
             where T : class, IEntityBase, new();
 
         /// <summary>
-        /// Асинхронно получает запись по уникальному идентификатору сущности с преобразованием к другой сущности.
+        /// Asynchronously retrieves an entity by its unique identifier and converts it to another type.
         /// </summary>
-        /// <param name="id">Уникальный идентификатор сущности.</param>
-        /// <param name="connection">Открытое соединение с источником данных.</param>
-        /// <param name="transaction">Транзакция, которая должна быть выполнена в источнике данных.</param>
-        /// <typeparam name="TEntity">Тип извлекаемой сущности. Должен реализовывать <see cref="IEntityBase"/>.</typeparam>
-        /// <typeparam name="TResult">Тип сущности, в которую необходимо преобразовать. Должен являться классом.</typeparam>
-        /// <returns>Сущность заданного типа TResult.</returns>
+        /// <param name="id">The unique identifier of the entity.</param>
+        /// <param name="connection">An open connection to the data source.</param>
+        /// <param name="transaction">The transaction to be used for the operation.</param>
+        /// <typeparam name="TEntity">The source entity type. Must implement <see cref="IEntityBase"/>.</typeparam>
+        /// <typeparam name="TResult">The target type to convert the entity to.</typeparam>
+        /// <returns>A converted entity of type TResult or null if not found.</returns>
         Task<TResult?> GetAsync<TEntity, TResult>(long id, IDbConnection? connection = null, IDbTransaction? transaction = null)
             where TEntity : class, IEntityBase, new()
             where TResult : class, new();
 
         /// <summary>
-        /// Асинхронно получает запись по выражению с преобразованием к другой сущности.
+        /// Asynchronously retrieves an entity based on a query expression and converts it to another type.
         /// </summary>
-        /// <param name="predicate">Выражение типа <see cref="IClassSqlOptions{TEntity}"/>.</param>
-        /// <param name="connection">Открытое соединение с источником данных.</param>
-        /// <param name="transaction">Транзакция, которая должна быть выполнена в источнике данных.</param>
-        /// <typeparam name="TEntity">Тип извлекаемой сущности. Должен реализовывать <see cref="IEntityBase"/>.</typeparam>
-        /// <typeparam name="TResult">Тип сущности, в которую необходимо преобразовать. Должен являться классом.</typeparam>
-        /// <returns>Сущность заданного типа TResult.</returns>
+        /// <param name="predicate">Expression of type <see cref="IClassSqlOptions{TEntity}"/> for query building.</param>
+        /// <param name="connection">An open connection to the data source.</param>
+        /// <param name="transaction">The transaction to be used for the operation.</param>
+        /// <typeparam name="TEntity">The source entity type. Must implement <see cref="IEntityBase"/>.</typeparam>
+        /// <typeparam name="TResult">The target type to convert the entity to.</typeparam>
+        /// <returns>A converted entity of type TResult or null if not found.</returns>
         Task<TResult?> GetAsync<TEntity, TResult>(Expression<Action<IClassSqlOptions<TEntity>>> predicate, IDbConnection? connection = null, IDbTransaction? transaction = null)
             where TEntity : class, IEntityBase, new()
             where TResult : class, new();
             
         /// <summary>
-        /// Асинхронно получает список записей по выражению.
+        /// Asynchronously retrieves a list of entities based on a query expression.
         /// </summary>
-        /// <param name="predicate">Выражение типа <see cref="IClassSqlOptions{TEntity}"/>.</param>
-        /// <param name="connection">Открытое соединение с источником данных.</param>
-        /// <param name="transaction">Транзакция, которая должна быть выполнена в источнике данных.</param>
-        /// <typeparam name="T">Тип извлекаемой сущности. Должен реализовывать <see cref="IEntityBase"/>.</typeparam>
-        /// <returns>Список сущностей заданного типа T.</returns>
+        /// <param name="predicate">Optional expression of type <see cref="IClassSqlOptions{TEntity}"/> for query building.</param>
+        /// <param name="connection">An open connection to the data source.</param>
+        /// <param name="transaction">The transaction to be used for the operation.</param>
+        /// <typeparam name="T">The type of entities to retrieve. Must implement <see cref="IEntityBase"/>.</typeparam>
+        /// <returns>A list of entities of type T.</returns>
         Task<IEnumerable<T>> GetAllAsync<T>(Expression<Action<IClassSqlOptions<T>>>? predicate = null, IDbConnection? connection = null, IDbTransaction? transaction = null)
             where T : class, IEntityBase, new();
 
         /// <summary>
-        /// Асинхронно получает список записей по выражению с преобразованием к другой сущности.
+        /// Asynchronously retrieves a list of entities based on a query expression and converts them to another type.
         /// </summary>
-        /// <param name="predicate">Выражение типа <see cref="IClassSqlOptions{TEntity}"/>.</param>
-        /// <param name="connection">Открытое соединение с источником данных.</param>
-        /// <param name="transaction">Транзакция, которая должна быть выполнена в источнике данных.</param>
-        /// <typeparam name="TEntity">Тип извлекаемой сущности. Должен реализовывать <see cref="IEntityBase"/>.</typeparam>
-        /// <typeparam name="TResult">Тип сущности, в которую необходимо преобразовать. Должен являться классом.</typeparam>
-        /// <returns>Список сущностей заданного типа TResult.</returns>
+        /// <param name="predicate">Optional expression of type <see cref="IClassSqlOptions{TEntity}"/> for query building.</param>
+        /// <param name="connection">An open connection to the data source.</param>
+        /// <param name="transaction">The transaction to be used for the operation.</param>
+        /// <typeparam name="TEntity">The source entity type. Must implement <see cref="IEntityBase"/>.</typeparam>
+        /// <typeparam name="TResult">The target type to convert the entities to.</typeparam>
+        /// <returns>A list of converted entities of type TResult.</returns>
         Task<IEnumerable<TResult>> GetAllAsync<TEntity, TResult>(Expression<Action<IClassSqlOptions<TEntity>>>? predicate = null, IDbConnection? connection = null, IDbTransaction? transaction = null)
             where TEntity : class, IEntityBase, new()
             where TResult : class, new();
 
         /// <summary>
-        /// Асинхронно создает запись по переданному объекту.
+        /// Asynchronously creates a new entity in the data source.
         /// </summary>
-        /// <param name="entity">Сущность, которую необходимо добавить.</param>
-        /// <param name="connection">Открытое соединение с источником данных.</param>
-        /// <param name="transaction">Транзакция, которая должна быть выполнена в источнике данных.</param>
-        /// <typeparam name="T">Тип добавляемой сущности. Должен реализовывать <see cref="IEntityBase"/>.</typeparam>
-        /// <returns>Созданная сущность заданного типа T.</returns>
+        /// <param name="entity">The entity to create.</param>
+        /// <param name="connection">An open connection to the data source.</param>
+        /// <param name="transaction">The transaction to be used for the operation.</param>
+        /// <typeparam name="T">The type of entity to create. Must implement <see cref="IEntityBase"/>.</typeparam>
+        /// <returns>The created entity with its generated ID.</returns>
         Task<T> CreateAsync<T>(T entity, IDbConnection? connection = null, IDbTransaction? transaction = null)
             where T : class, IEntityBase, new();
 
         /// <summary>
-        /// Асинхронно обновляет запись по переданному объекту.
+        /// Asynchronously updates an existing entity in the data source.
         /// </summary>
-        /// <param name="entity">Сущность, которую необходимо обновить.</param>
-        /// <param name="connection">Открытое соединение с источником данных.</param>
-        /// <param name="transaction">Транзакция, которая должна быть выполнена в источнике данных.</param>
-        /// <typeparam name="T">Тип обновляемой сущности. Должен реализовывать <see cref="IEntityBase"/>.</typeparam>
-        /// <returns>Обновленная сущность заданного типа T.</returns>
+        /// <param name="entity">The entity to update.</param>
+        /// <param name="connection">An open connection to the data source.</param>
+        /// <param name="transaction">The transaction to be used for the operation.</param>
+        /// <typeparam name="T">The type of entity to update. Must implement <see cref="IEntityBase"/>.</typeparam>
+        /// <returns>The updated entity.</returns>
         Task<T> UpdateAsync<T>(T entity, IDbConnection? connection = null, IDbTransaction? transaction = null)
             where T : class, IEntityBase, new();
 
         /// <summary>
-        /// Асинхронно удаляет запись по переданному объекту.
+        /// Asynchronously deletes an entity from the data source.
         /// </summary>
-        /// <param name="entity">Сущность, которую необходимо удалить.</param>
-        /// <param name="connection">Открытое соединение с источником данных.</param>
-        /// <param name="transaction">Транзакция, которая должна быть выполнена в источнике данных.</param>
-        /// <typeparam name="T">Тип обновляемой сущности. Должен реализовывать <see cref="IEntityBase"/>.</typeparam>
+        /// <param name="entity">The entity to delete.</param>
+        /// <param name="connection">An open connection to the data source.</param>
+        /// <param name="transaction">The transaction to be used for the operation.</param>
+        /// <typeparam name="T">The type of entity to delete. Must implement <see cref="IEntityBase"/>.</typeparam>
         Task DeleteAsync<T>(T entity, IDbConnection? connection = null, IDbTransaction? transaction = null)
             where T : class, IEntityBase, new();
 
         /// <summary>
-        /// Асинхронно удаляет запись по переданному объекту.
+        /// Asynchronously deletes an entity by its unique identifier.
         /// </summary>
-        /// <param name="id">Уникальный идентификатор сущности.</param>
-        /// <param name="connection">Открытое соединение с источником данных.</param>
-        /// <param name="transaction">Транзакция, которая должна быть выполнена в источнике данных.</param>
-        /// <typeparam name="T">Тип обновляемой сущности. Должен реализовывать <see cref="IEntityBase"/>.</typeparam>
+        /// <param name="id">The unique identifier of the entity to delete.</param>
+        /// <param name="connection">An open connection to the data source.</param>
+        /// <param name="transaction">The transaction to be used for the operation.</param>
+        /// <typeparam name="T">The type of entity to delete. Must implement <see cref="IEntityBase"/>.</typeparam>
         Task DeleteAsync<T>(long id, IDbConnection? connection = null, IDbTransaction? transaction = null)
             where T : class, IEntityBase, new();
 
         /// <summary>
-        /// Асинхронно получает постраничный вывод записей по выражению.
+        /// Asynchronously retrieves a paginated list of entities based on a query expression.
         /// </summary>
-        /// <param name="page">Номер страницы.</param>
-        /// <param name="take">Количество сущностей для изъятия.</param>
-        /// <param name="predicate">Выражение типа <see cref="IClassSqlOptions{TEntity}"/>.</param>
-        /// <param name="connection">Открытое соединение с источником данных.</param>
-        /// <param name="transaction">Транзакция, которая должна быть выполнена в источнике данных.</param>
-        /// <typeparam name="TEntity">Тип извлекаемой сущности. Должен реализовывать <see cref="IEntityBase"/>.</typeparam>
-        /// <returns>Страница сущностей заданного типа TEntity.</returns>
+        /// <param name="page">The page number (1-based).</param>
+        /// <param name="take">The number of entities per page.</param>
+        /// <param name="predicate">Optional expression of type <see cref="IClassSqlOptions{TEntity}"/> for query building.</param>
+        /// <param name="connection">An open connection to the data source.</param>
+        /// <param name="transaction">The transaction to be used for the operation.</param>
+        /// <typeparam name="TEntity">The type of entities to retrieve. Must implement <see cref="IEntityBase"/>.</typeparam>
+        /// <returns>A page of entities with total count information.</returns>
         Task<PageResult<TEntity>> GetPageAsync<TEntity>(int? page, int? take, Expression<Action<IClassSqlOptions<TEntity>>>? predicate = null, IDbConnection? connection = null, IDbTransaction? transaction = null)
             where TEntity : class, IEntityBase, new();
 
         /// <summary>
-        /// Асинхронно получает постраничный вывод записей с преобразованием к другой сущности по выражению.
+        /// Asynchronously retrieves a paginated list of entities based on a query expression and converts them to another type.
         /// </summary>
-        /// <param name="page">Номер страницы.</param>
-        /// <param name="take">Количество сущностей для изъятия.</param>
-        /// <param name="predicate">Выражение типа <see cref="IClassSqlOptions{TEntity}"/>.</param>
-        /// <param name="connection">Открытое соединение с источником данных.</param>
-        /// <param name="transaction">Транзакция, которая должна быть выполнена в источнике данных.</param>
-        /// <typeparam name="TEntity">Тип извлекаемой сущности. Должен реализовывать <see cref="IEntityBase"/>.</typeparam>
-        /// <typeparam name="TResult">Тип сущности, в которую необходимо преобразовать. Должен являться классом.</typeparam>
-        /// <returns>Страница сущностей заданного типа TResult.</returns>
+        /// <param name="page">The page number (1-based).</param>
+        /// <param name="take">The number of entities per page.</param>
+        /// <param name="predicate">Optional expression of type <see cref="IClassSqlOptions{TEntity}"/> for query building.</param>
+        /// <param name="connection">An open connection to the data source.</param>
+        /// <param name="transaction">The transaction to be used for the operation.</param>
+        /// <typeparam name="TEntity">The source entity type. Must implement <see cref="IEntityBase"/>.</typeparam>
+        /// <typeparam name="TResult">The target type to convert the entities to.</typeparam>
+        /// <returns>A page of converted entities with total count information.</returns>
         Task<PageResult<TResult>> GetPageAsync<TEntity, TResult>(int? page, int? take, Expression<Action<IClassSqlOptions<TEntity>>>? predicate = null, IDbConnection? connection = null, IDbTransaction? transaction = null)
             where TEntity : class, IEntityBase, new()
             where TResult : class, new();
