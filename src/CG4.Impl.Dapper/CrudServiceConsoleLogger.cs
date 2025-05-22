@@ -5,23 +5,22 @@ namespace CG4.Impl.Dapper
     /// </summary>
     public class CrudServiceConsoleLogger : ICrudServiceLogger
     {
-        /// <summary>
-        /// Singleton instance of <see cref="CrudServiceConsoleLogger"/>.
-        /// </summary>
-        public static CrudServiceConsoleLogger Instance { get; } = new CrudServiceConsoleLogger();
-
-        private CrudServiceConsoleLogger() { }
-
         /// <inheritdoc/>
         public void LogQueryStarted(string sql)
         {
-            Console.WriteLine($"[SQL Query] SQL: {sql}");
+            Console.ForegroundColor = ConsoleColor.DarkCyan;
+            Console.WriteLine($"[SQL Query] SQL:");
+            Console.ResetColor();
+            Console.WriteLine(sql);
         }
 
         /// <inheritdoc/>
         public void LogQueryStarted<T>(string sql)
         {
-            Console.WriteLine($"[SQL Query] Type: {typeof(T).Name}, SQL: {sql}");
+            Console.ForegroundColor = ConsoleColor.DarkCyan;
+            Console.WriteLine($"[SQL Query] Type: {typeof(T).Name}, SQL:");
+            Console.ResetColor();
+            Console.WriteLine(sql);
         }
 
         /// <inheritdoc/>
@@ -29,6 +28,7 @@ namespace CG4.Impl.Dapper
         {
             if (parameters != null)
             {
+                Console.ForegroundColor = ConsoleColor.Blue;
                 Console.WriteLine($"[SQL Params] {parameters}");
             }
         }

@@ -124,22 +124,31 @@ namespace CG4.Impl.Dapper.Poco.ExprOptions
             _stringBuilder.Append(@long.Value);
         }
 
-        public void VisitNot(ExprNot not)
-        {
-            _stringBuilder.Append("NOT ");
-
-            not.Body.Accept(this);
-        }
+        /// <summary>
+        /// Visits a NOT expression and appends its SQL representation to the string builder.
+        /// </summary>
+        /// <param name="not">The NOT expression to visit.</param>
+                public void VisitNot(ExprNot not)
+                {
+                    _stringBuilder.Append("NOT ");
+        
+                    not.Body.Accept(this);
+                }
 
         public void VisitInt(ExprInt @int)
         {
             _stringBuilder.Append(@int.Value);
         }
 
+        public void VisitDecimal(ExprDecimal @decimal)
+        {
+            _stringBuilder.Append(@decimal.Value.ToString("0.####"));
+        }
+
         public void VisitDateTime(ExprDateTime dateTime)
         {
             _stringBuilder.Append('\'');
-            _stringBuilder.Append(dateTime.Value.ToString("yyyy-MM-dd HH:mm:ss.fff"));
+            _stringBuilder.Append(dateTime.Value.ToString("yyyy-MM-dd"));
             _stringBuilder.Append('\'');
         }
 

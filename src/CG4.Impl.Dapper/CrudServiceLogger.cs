@@ -34,7 +34,10 @@ namespace CG4.Impl.Dapper
         /// <inheritdoc/>
         public void LogQueryParameters(object? parameters)
         {
-            _logger.LogDebug("[SQL Parameters]: {@Params}", parameters);
+            if (parameters != null)
+            {
+                _logger.LogDebug("[SQL Parameters]: {@Params}", parameters);
+            }
         }
     }
 } 

@@ -114,6 +114,15 @@ namespace CG4.Impl.Dapper.Poco.ExprOptions
             return OrderByInternal(keySelector, false);
         }
 
+        private IClassSqlOptions<TEntity> OrderByInternal<TKey>(Expression<Func<TEntity, TKey>> keySelector, bool ask)
+        {
+            var column = ExprHelper.GenerateColumn(keySelector, Alias);
+            var order = new ExprOrderColumn(column, ask);
+            _columns.Add(order);
+            Sql.OrderBy.Add(order);
+            return this;
+        }
+
         public IClassSqlOptions<TEntity> Where(Expression<Func<TEntity, bool>> predicate)
         {
             var expr = ExprHelper.GenerateWhere(predicate, Alias);
@@ -154,13 +163,14 @@ namespace CG4.Impl.Dapper.Poco.ExprOptions
             return this;
         }
 
-        private IClassSqlOptions<TEntity> OrderByInternal<TKey>(Expression<Func<TEntity, TKey>> keySelector, bool ask)
+        public IClassSqlOptions<TEntity> GroupBy<TKey>(Expression<Func<TEntity, TKey>> predicate)
         {
-            var column = ExprHelper.GenerateColumn(keySelector, Alias);
-            var order = new ExprOrderColumn(column, ask);
-            _columns.Add(order);
-            Sql.OrderBy.Add(order);
-            return this;
+            throw new NotImplementedException();
+        }
+
+        public IClassSqlOptions<TEntity> Having<TKey>(Expression<Func<TEntity, TKey>> predicate)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -511,11 +511,109 @@ WHERE t.""guidcode"" = '{guid}'
                 sql);
         }
 
+        [Fact]
+        public void GetAll_WithLike_ReturnCorrectSql()
+        {
+            var builder = new ExprSqlBuilder(_sqlSettings);
+
+            var sql = builder.GetAll<TestEntity>(x => 
+                x.Where(p => p.Code != null)
+                 .Where(p => p.Code.EndsWith("test"))
+                 .Where(p => p.Code.Contains("middle")));
+
+            Assert.NotNull(sql);
+            Assert.Contains(@"WHERE t.""code"" IS NOT NULL", sql);
+            Assert.Contains(@"t.""code"" LIKE '%test'", sql);
+            Assert.Contains(@"t.""code"" LIKE '%middle%'", sql);
+        }
+
+        //[Fact]
+        //public void GetAll_WithNumbersInList_ReturnCorrectSql()
+        //{
+        //    var builder = new ExprSqlBuilder(_sqlSettings);
+        //    var numbers = new[] { 1, 2, 3 };
+
+        //    var sql = builder.GetAll<TestEntity>(x =>
+        //        x.Where(p => p.Number.In(numbers)));
+
+        //    Assert.NotNull(sql);
+        //    Assert.Contains(@"WHERE t.""number"" IN (1,2,3)", sql);
+        //}
+
+        [Fact]
+        public void GetAll_WithBetween_ReturnCorrectSql()
+        {
+            var builder = new ExprSqlBuilder(_sqlSettings);
+            var startDate = new DateTime(2025, 1, 1);
+            var endDate = new DateTime(2025, 12, 31);
+
+            var sql = builder.GetAll<TestEntity>(x =>
+                x.Where(p => p.CreateDate >= startDate && p.CreateDate <= endDate));
+
+            Assert.NotNull(sql);
+            Assert.Contains(@"WHERE t.""create_date"" >= '2025-01-01'", sql);
+            Assert.Contains(@"t.""create_date"" <= '2025-12-31'", sql);
+        }
+
+        //[Fact]
+        //public void GetAll_WithAggregateFunction_ReturnCorrectSql()
+        //{
+        //    var builder = new ExprSqlBuilder(_sqlSettings);
+
+        //    var sql = builder.GetAll<TestEntity>(x =>
+        //        x.Select(p => new { Count = p.Count() }));
+
+        //    Assert.NotNull(sql);
+        //    Assert.Contains(@"SELECT COUNT(*)", sql);
+        //}
+
+        [Fact]
+        public void GetAll_WithGroupByAndHaving_ReturnCorrectSql()
+        {
+            var builder = new ExprSqlBuilder(_sqlSettings);
+
+            var sql = builder.GetAll<TestEntity>(x =>
+                x.GroupBy(p => p.Code)
+                 .Having(g => g.UserId));
+
+            Assert.NotNull(sql);
+            Assert.Contains(@"GROUP BY t.""code""", sql);
+            Assert.Contains(@"HAVING COUNT(*) > 1", sql);
+        }
+
+        [Fact]
+        public void GetAll_WithLeftJoin_ReturnCorrectSql()
+        {
+            var builder = new ExprSqlBuilder(_sqlSettings);
+
+            var sql = builder.GetAll<TestEntity>(x =>
+                x.JoinLeft<TestSecondEntity, long>(j => j.SecondId, "Second"));
+
+            Assert.NotNull(sql);
+            Assert.Contains(@"LEFT JOIN ""test_second_entity"" AS t0 ON t0.""id"" = t.""test_second_entity_id""", sql);
+        }
+
+        //[Fact]
+        //public void GetAll_WithSubquery_ReturnCorrectSql()
+        //{
+        //    var builder = new ExprSqlBuilder(_sqlSettings);
+
+        //    var subquery = builder.GetAll<TestSecondEntity>(x =>
+        //        x.Where(p => p.Age > 18)
+        //         .Select(p => p.Id));
+
+        //    var sql = builder.GetAll<TestEntity>(x =>
+        //        x.Where(p => p.SecondId.In(subquery)));
+
+        //    Assert.NotNull(sql);
+        //    Assert.Contains(@"WHERE t.""test_second_entity_id"" IN (SELECT t.""id"" FROM ""test_second_entity"" AS t WHERE t.""age"" > 18)", sql);
+        //}
+
         [Table("test_entity")]
         public class TestEntity : EntityBase
         {
             [Column("code")]
-            public string Code { get; set; }
+            public string? Code { get; set; }
 
             [Column("number")]
             public int Number { get; set; }
@@ -531,7 +629,7 @@ WHERE t.""guidcode"" = '{guid}'
         public class TestSecondEntity : EntityBase
         {
             [Column("name")]
-            public string Name { get; set; }
+            public string? Name { get; set; }
 
             [NotMapped]
             public int Age { get; set; }

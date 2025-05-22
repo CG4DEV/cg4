@@ -36,5 +36,9 @@ namespace CG4.DataAccess.Poco
         IClassSqlOptions<TEntity> Offset(int offset);
 
         IClassSqlOptions<TEntity> Limit(int limit);
+
+        IClassSqlOptions<TEntity> GroupBy<TKey>(Expression<Func<TEntity, TKey>> predicate);
+
+        IClassSqlOptions<TEntity> Having<TKey>(Expression<Func<TEntity, TKey>> predicate);
     }
 }
